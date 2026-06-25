@@ -32,7 +32,7 @@ RUN composer install --no-dev --optimize-autoloader
 # Configure Nginx
 COPY ./nginx.conf /etc/nginx/sites-available/default
 
-# --- FIX: Create the view directory if missing and wipe any local cache ---
+# Create the view directory if missing and wipe any local cache
 RUN mkdir -p /var/www/storage/framework/cache/data \
     && mkdir -p /var/www/storage/framework/app/cache \
     && mkdir -p /var/www/storage/framework/sessions \
@@ -44,5 +44,5 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
 
 EXPOSE 80
 
-# Clear old cache states right before boot
-CMD php artisan config:clear && php artisan view:clear && service nginx start && php-fpm
+# --- UPDATED: Automatically migrate database tables right at startup ---
+CMD php artisan config:clear && php artisan view:clear && php artisan migrate --force && service nginx start && php-fpm
