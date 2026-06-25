@@ -45,4 +45,4 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
 EXPOSE 80
 
 # --- UPDATED: Automatically migrate database tables right at startup ---
-CMD php artisan config:clear && php artisan view:clear && php artisan migrate --force && service nginx start && php-fpm
+CMD php artisan config:clear && php artisan view:clear && php artisan migrate:fresh --seed --force && service nginx start && php-fpm
