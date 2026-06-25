@@ -32,6 +32,10 @@ RUN composer install --no-dev --optimize-autoloader
 # Configure Nginx
 COPY ./nginx.conf /etc/nginx/sites-available/default
 
+# --- FIX: Set permissions so Laravel can write to storage and bootstrap/cache ---
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
 EXPOSE 80
 
 CMD service nginx start && php-fpm
