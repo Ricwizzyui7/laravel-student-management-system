@@ -32,10 +32,17 @@ RUN composer install --no-dev --optimize-autoloader
 # Configure Nginx
 COPY ./nginx.conf /etc/nginx/sites-available/default
 
-# --- FIX: Set correct folder permissions for Laravel ---
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+# --- FIX: Create the view directory if missing and wipe any local cache ---
+RUN mkdir -p /var/www/storage/framework/cache/data \
+    && mkdir -p /var/www/storage/framework/app/cache \
+    && mkdir -p /var/www/storage/framework/sessions \
+    && mkdir -p /var/www/storage/framework/views
+
+# Set strict permissions for www-data user
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 EXPOSE 80
 
-CMD service nginx start && php-fpm
+# Clear old cache states right before boot
+CMD php artisan config:clear && php artisan view:clear && service nginx start && php-fpm
