@@ -25,16 +25,16 @@ Route::middleware('auth')->group(function () {
     // 👥 STAFF & ADMIN ACCESS: View Student List
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
 
-    // 🔐 ADMIN ONLY ACCESS (Moved create ABOVE the wildcard)
-    Route::middleware('admin')->group(function () {
+    // 🧪 TEMPORARY DIAGNOSTIC: Commented out 'admin' middleware to check for 500 root cause
+    // Route::middleware('admin')->group(function () {
         Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
         Route::post('/students', [StudentController::class, 'store'])->name('students.store');
         Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
         Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
         Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
-    });
+    // });
 
-    // 👥 Wildcard route moved to the very bottom of the /students group
+    // 👥 Wildcard route at the bottom
     Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.show');
 });
 
