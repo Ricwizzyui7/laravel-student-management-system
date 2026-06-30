@@ -14,7 +14,7 @@ Route::get('/dashboard', [StudentController::class, 'dashboard'])
     ->middleware(['auth'])
     ->name('dashboard');
 
-// 3. Authenticated Routes (Everything requiring a login goes inside here)
+// 3. Authenticated Routes
 Route::middleware('auth')->group(function () {
     
     // User Profile Routes
@@ -22,11 +22,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // 👥 STAFF & ADMIN ACCESS: Both roles can view the student list and profile details
+    // 👥 STAFF & ADMIN ACCESS: View Student List
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
-    Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.show');
 
-    // 🔐 ADMIN ONLY ACCESS: Protected by our new 'admin' middleware
+    // 🔐 ADMIN ONLY ACCESS (Moved create ABOVE the wildcard)
     Route::middleware('admin')->group(function () {
         Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
         Route::post('/students', [StudentController::class, 'store'])->name('students.store');
@@ -34,7 +33,10 @@ Route::middleware('auth')->group(function () {
         Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
         Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
     });
+
+    // 👥 Wildcard route moved to the very bottom of the /students group
+    Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.show');
 });
 
-// Load auth routes (Keep at the very bottom)
+// Load auth routes
 require __DIR__.'/auth.php';
