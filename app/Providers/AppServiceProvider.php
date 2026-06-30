@@ -19,8 +19,9 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
-        // ADD THIS LINE HERE to fix your dashboard links:
+    {if (config('app.env') === 'production' || app()->environment('production')) {
+        URL::forceScheme('https');
+    }
         Paginator::useBootstrapFive();
     }
 }

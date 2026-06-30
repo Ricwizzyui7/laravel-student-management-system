@@ -86,10 +86,7 @@ public function store(Request $request)
         'courseData'
     ));
 }
-    public function show(Student $student)
-    {
-        //
-    }
+   
     public function edit($id)
 {
     $student = Student::findOrFail($id);
@@ -120,22 +117,18 @@ public function update(Request $request, $id)
 
     return redirect('/students');
 }
-     
+     public function show($id)
+{
+    $student = Student::findOrFail($id);
+    
+    return view('students.show', compact('student'));
+}
     /**
      * Remove the specified resource from storage.
      */
   public function destroy($id)
-{        if(Auth::user()->role != 'admin'){
-        abort(403);
-    }
-    // 1. Find the student in the database using their ID
-    $student = Student::findOrFail($id);
-
-    // 2. Delete that student from the database table
-    $student->delete();
-
-    // 3. FIX: Redirect to the direct URL path '/students' instead of the named route
-    return redirect('/students')->with('success', 'Student deleted successfully');
+{       
+    
 }
 public function up(): void
 {

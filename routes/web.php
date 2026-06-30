@@ -3,18 +3,16 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 // 1. Welcome Page
 Route::get('/', function () {
     return view('welcome');
 });
 
-// 2. Dashboard (Breeze Default)
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// 2. Dashboard Route
+Route::get('/dashboard', [StudentController::class, 'dashboard'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
 // 3. Authenticated Routes (Everything requiring a login goes inside here)
 Route::middleware('auth')->group(function () {
@@ -24,19 +22,19 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Your Custom Student Management Routes
+    // 👥 STAFF & ADMIN ACCESS: Both roles can view the student list and profile details
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
-    Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
-    Route::post('/students', [StudentController::class, 'store'])->name('students.store');
-    Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
-    Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
-    Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+    Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.show');
 
-    Route::get('/dashboard', [StudentController::class, 'dashboard'])
-        ->middleware(['auth'])
-        ->name('dashboard');
+    // 🔐 ADMIN ONLY ACCESS: Protected by our new 'admin' middleware
+    Route::middleware('admin')->group(function () {
+        Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
+        Route::post('/students', [StudentController::class, 'store'])->name('students.store');
+        Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
+        Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
+        Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+    });
 });
 
-
-// Load auth routes (This MUST stay at the very bottom)
+// Load auth routes (Keep at the very bottom)
 require __DIR__.'/auth.php';
