@@ -38,11 +38,14 @@ RUN mkdir -p /var/www/storage/framework/cache/data \
     && mkdir -p /var/www/storage/framework/sessions \
     && mkdir -p /var/www/storage/framework/views
 
+# Generate the public storage link folder bridge
+RUN php artisan storage:link
+
 # Set strict permissions for www-data user
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
-    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public/storage \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache /var/www/public/storage
 
 EXPOSE 80
 
-# --- UPDATED: Automatically migrate database tables right at startup ---
-CMD php artisan config:clear && php artisan view:clear && php artisan migrate --force && service nginx start && php-fpm && RUN php artisan storage:link
+# --- Automatically clear caches, run migrations, and spin up services at startup ---
+CMD php artisan config:clear && php artisan view:clear && php artisan migrate --force && service nginx start && php-fpm
