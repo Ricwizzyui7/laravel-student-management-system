@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\Paginator; // <--- ADD THIS IMPORT LINE
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\URL; // <--- THIS IS THE FIX
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,9 +20,11 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {if (config('app.env') === 'production' || app()->environment('production')) {
-        URL::forceScheme('https');
-    }
+    {
+        if (config('app.env') === 'production' || app()->environment('production')) {
+            URL::forceScheme('https');
+        }
+
         Paginator::useBootstrapFive();
     }
 }
