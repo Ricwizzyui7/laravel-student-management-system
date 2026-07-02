@@ -78,7 +78,7 @@ public function store(Request $request)
     ->groupBy('course')
     ->get();
 
-    return view('students.dashboard', compact(
+    return view('dashboard', compact(
         'totalStudents',
         'maleStudents',
         'femaleStudents',
