@@ -30,12 +30,14 @@ COPY . /var/www
 RUN composer install --no-dev --optimize-autoloader
 
 # --- FRONTEND BUILD ENVIRONMENT FOR TAILWIND ---
-# Download and install Node.js (Node 18 is stable and great for Laravel Vite/Mix)
+# Download and install Node.js 18
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
-# Build your production CSS/JS assets via Vite/Mix
-RUN npm install && npm run build
+# Force production mode flags, clear any local state, and build clean assets
+ENV NODE_ENV=production
+RUN npm ci || npm install
+RUN npm run build
 # -----------------------------------------------
 
 # Configure Nginx
@@ -50,11 +52,17 @@ RUN mkdir -p /var/www/storage/framework/cache/data \
 # Generate the public storage link folder bridge
 RUN php artisan storage:link
 
-# Set strict permissions for www-data user
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public/storage \
-    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache /var/www/public/storage
+# Set strict permissions for www-data user across everything including built assets
+RUN chown -R www-data:www-data /var/www \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache /var/www/public
 
 EXPOSE 80
 
-# --- Automatically clear caches, run migrations, and spin up services at startup ---
-CMD php artisan config:clear && php artisan view:clear && php artisan migrate --force && service nginx start && php-fpm
+# --- Deep clean configuration, route, asset metrics caches, migrate, and run ---
+CMD php artisan config:clear && \
+    php artisan view:clear && \
+    php artisan route:clear && \
+    php artisan cache:clear && \
+    php artisan migrate --force && \
+    service nginx start && \
+    php-fpm
