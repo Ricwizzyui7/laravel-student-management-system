@@ -26,8 +26,17 @@ WORKDIR /var/www
 # Copy existing application directory contents
 COPY . /var/www
 
-# Install dependencies
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
+
+# --- FRONTEND BUILD ENVIRONMENT FOR TAILWIND ---
+# Download and install Node.js (Node 18 is stable and great for Laravel Vite/Mix)
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
+# Build your production CSS/JS assets via Vite/Mix
+RUN npm install && npm run build
+# -----------------------------------------------
 
 # Configure Nginx
 COPY ./nginx.conf /etc/nginx/sites-available/default
