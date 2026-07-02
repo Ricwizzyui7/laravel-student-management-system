@@ -4,9 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
-// 1. Welcome Page
+// 1. Welcome Page (Automatically direct to the app)
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/dashboard');
 });
 
 // 2. Dashboard Route
