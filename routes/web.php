@@ -26,13 +26,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
 
     // 🧪 TEMPORARY DIAGNOSTIC: Commented out 'admin' middleware to check for 500 root cause
-    // Route::middleware('admin')->group(function () {
+    // 🔐 ADMIN ONLY ACCESS (Now protected by our fixed, safe middleware)
+    Route::middleware('admin')->group(function () {
         Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
         Route::post('/students', [StudentController::class, 'store'])->name('students.store');
         Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
         Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
         Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
-    // });
+    });
 
     // 👥 Wildcard route at the bottom
     Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.show');
