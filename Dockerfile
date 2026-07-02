@@ -34,12 +34,10 @@ RUN composer install --no-dev --optimize-autoloader
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
-# Force production mode flags, clear any local state, and build clean assets
-ENV NODE_ENV=production
-RUN npm ci || npm install
+# Force npm to install ALL dependencies (including Vite) to compile the assets
+RUN npm install --include=dev
 RUN npm run build
 # -----------------------------------------------
-
 # Configure Nginx
 COPY ./nginx.conf /etc/nginx/sites-available/default
 
