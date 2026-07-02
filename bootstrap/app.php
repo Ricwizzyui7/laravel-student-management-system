@@ -11,12 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        
-        // 👈 THIS IS WHAT WE ARE ADDING: Registering your middleware nickname
+        // 🔐 Register your custom 'admin' alias here!
         $middleware->alias([
-            'admin' => \App\Http\Middleware::class,
+            'admin' => \App\Http\Middleware\Admin::class,
         ]);
-
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
