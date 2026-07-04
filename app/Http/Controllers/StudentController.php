@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 class StudentController extends Controller
 {
     /**
