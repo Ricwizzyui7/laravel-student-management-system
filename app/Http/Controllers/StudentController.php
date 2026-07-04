@@ -55,16 +55,16 @@ class StudentController extends Controller
         $photoPath = null;
 
         if ($request->hasFile('photo')) {
-            $photoPath = $request
-                ->file('photo')
-                ->store('students', 'public');
+            // Upload the image straight to Cloudinary and fetch its secure URL link
+            $uploadedFileUrl = $request->file('photo')->storeOnCloudinary('students');
+            $photoPath = $uploadedFileUrl->getSecurePath();
         }
 
         Student::create([
             'fullname' => $request->fullname,
             'course' => $request->course,
             'gender' => $request->gender,
-            'photo' => $photoPath
+            'photo' => $photoPath // This now safely saves a permanent https link!
         ]);
 
         return redirect('/students');
