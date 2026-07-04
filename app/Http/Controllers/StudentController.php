@@ -41,7 +41,7 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+   public function store(Request $request)
 {   
     if(Auth::user()->role != 'admin'){
         abort(403);
@@ -58,8 +58,11 @@ class StudentController extends Controller
         $photoPath = null;
 
         if ($request->hasFile('photo')) {
-            // Test if Cloudinary is throwing a silent exception
-            $uploadedFileUrl = $request->file('photo')->storeOnCloudinary('students');
+            // Explicit facade upload passing the file's temporary real path string
+            $uploadedFileUrl = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+                $request->file('photo')->getRealPath(), 
+                ['folder' => 'students']
+            );
             $photoPath = $uploadedFileUrl->getSecurePath();
         }
 
@@ -73,7 +76,6 @@ class StudentController extends Controller
         return redirect('/students');
 
     } catch (\Exception $e) {
-        // This will halt execution and display the EXACT error message on screen
         dd([
             'Message' => $e->getMessage(),
             'File' => $e->getFile(),
@@ -81,7 +83,6 @@ class StudentController extends Controller
         ]);
     }
 }
-
     /**
      * Display executive analytics workspace details.
      */
