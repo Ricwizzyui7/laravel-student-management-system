@@ -30,8 +30,8 @@ COPY . /var/www
 RUN composer install --no-dev --optimize-autoloader
 
 # --- FRONTEND BUILD ENVIRONMENT FOR TAILWIND ---
-# Download and install Node.js 18
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+# Download and install Node.js 20 (Required by Vite)
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
 # Force configuration env context to development temporarily so npm links binaries correctly
@@ -44,6 +44,7 @@ RUN rm -rf node_modules package-lock.json \
 
 # Reset environment back to production
 ENV NODE_ENV=production
+# -----------------------------------------------
 # -----------------------------------------------
 # Configure Nginx
 COPY ./nginx.conf /etc/nginx/sites-available/default
