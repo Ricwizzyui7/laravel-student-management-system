@@ -34,9 +34,16 @@ RUN composer install --no-dev --optimize-autoloader
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
-# Force npm to install ALL dependencies (including Vite) to compile the assets
-RUN npm install --include=dev
-RUN npm run build
+# Force configuration env context to development temporarily so npm links binaries correctly
+ENV NODE_ENV=development
+
+# Clear any local node modules cache and install all tools explicitly
+RUN rm -rf node_modules package-lock.json \
+    && npm install \
+    && ./node_modules/.bin/vite build
+
+# Reset environment back to production
+ENV NODE_ENV=production
 # -----------------------------------------------
 # Configure Nginx
 COPY ./nginx.conf /etc/nginx/sites-available/default
