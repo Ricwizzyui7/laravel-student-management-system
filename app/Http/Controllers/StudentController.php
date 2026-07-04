@@ -40,22 +40,23 @@ class StudentController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {   
-        if(Auth::user()->role != 'admin'){
-            abort(403);
-        }
+{   
+    if(Auth::user()->role != 'admin'){
+        abort(403);
+    }
 
-        $request->validate([
-            'fullname' => 'required|min:3',
-            'course' => 'required',
-            'gender' => 'required',
-            'photo' => 'nullable|image|max:2048' // Safe validation parameter
-        ]);
+    $request->validate([
+        'fullname' => 'required|min:3',
+        'course' => 'required',
+        'gender' => 'required',
+        'photo' => 'nullable|image|max:2048'
+    ]);
 
+    try {
         $photoPath = null;
 
         if ($request->hasFile('photo')) {
-            // Upload the image straight to Cloudinary and fetch its secure URL link
+            // Test if Cloudinary is throwing a silent exception
             $uploadedFileUrl = $request->file('photo')->storeOnCloudinary('students');
             $photoPath = $uploadedFileUrl->getSecurePath();
         }
@@ -64,11 +65,20 @@ class StudentController extends Controller
             'fullname' => $request->fullname,
             'course' => $request->course,
             'gender' => $request->gender,
-            'photo' => $photoPath // This now safely saves a permanent https link!
+            'photo' => $photoPath
         ]);
 
         return redirect('/students');
+
+    } catch (\Exception $e) {
+        // This will halt execution and display the EXACT error message on screen
+        dd([
+            'Message' => $e->getMessage(),
+            'File' => $e->getFile(),
+            'Line' => $e->getLine(),
+        ]);
     }
+}
 
     /**
      * Display executive analytics workspace details.
