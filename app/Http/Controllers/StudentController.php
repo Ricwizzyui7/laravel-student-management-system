@@ -58,15 +58,14 @@ class StudentController extends Controller
         $photoPath = null;
 
         if ($request->hasFile('photo')) {
-    $cloudinary = app(\Cloudinary\Cloudinary::class);
+            $cloudinary = app(\Cloudinary\Cloudinary::class);
 
-    $result = $cloudinary->uploadApi()->upload(
-        $request->file('photo')->getRealPath(),
-        ['folder' => 'students']
-    );
+            $result = $cloudinary->uploadApi()->upload(
+                $request->file('photo')->getRealPath(),
+                ['folder' => 'students']
+            );
 
-    $photoPath = $result['secure_url'];
-}
+            $photoPath = $result['secure_url'];
         }
 
         Student::create([
@@ -78,15 +77,14 @@ class StudentController extends Controller
 
         return redirect('/students');
 
-     catch (\Exception $e) {
+    } catch (\Exception $e) {
         dd([
             'Message' => $e->getMessage(),
             'File' => $e->getFile(),
             'Line' => $e->getLine(),
         ]);
     }
-}
-    /**
+}*
      * Display executive analytics workspace details.
      */
     public function dashboard()
