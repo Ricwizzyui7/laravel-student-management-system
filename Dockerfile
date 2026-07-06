@@ -65,8 +65,7 @@ RUN chown -R www-data:www-data /var/www \
 EXPOSE 80
 
 # --- Deep clean configuration, route, asset metrics caches, migrate, and run ---
-CMD php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-config" && \
-    php artisan config:clear && \
+CMD php artisan config:clear && \
     php artisan view:clear && \
     php artisan route:clear && \
     php artisan cache:clear && \
