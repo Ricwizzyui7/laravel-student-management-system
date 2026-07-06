@@ -5,13 +5,11 @@ use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
-Route::get('/clear-everything-force', function () {
-    Artisan::call('config:clear');
-    Artisan::call('view:clear');
-    Artisan::call('route:clear');
-    Artisan::call('cache:clear');
-    Artisan::call('clear-compiled');
-    return 'All Laravel caches have been hard-flushed successfully!';
+Route::get('/debug-cloudinary', function () {
+    dd([
+        'env_raw' => env('CLOUDINARY_URL'),
+        'config_value' => config('cloudinary.cloud_url'),
+    ]);
 });
 // 1. Welcome Page (Automatically direct to the app)
 Route::get('/', function () {
