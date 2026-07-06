@@ -78,7 +78,7 @@ class StudentController extends Controller
 
         return redirect('/students');
 
-    } catch (\Exception $e) {
+     catch (\Exception $e) {
         dd([
             'Message' => $e->getMessage(),
             'File' => $e->getFile(),
