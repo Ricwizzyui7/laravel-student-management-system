@@ -5,12 +5,7 @@ use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
-Route::get('/debug-cloudinary', function () {
-    dd([
-        'env_raw' => env('CLOUDINARY_URL'),
-        'config_value' => config('cloudinary.cloud_url'),
-    ]);
-});
+
 // 1. Welcome Page (Automatically direct to the app)
 Route::get('/', function () {
     return redirect('/dashboard');
