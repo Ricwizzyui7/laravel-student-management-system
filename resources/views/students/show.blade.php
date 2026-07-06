@@ -22,7 +22,8 @@
                 <div class="w-full md:w-1/3 flex flex-col items-center border-r pr-0 md:pr-6 border-gray-100">
                     <div class="w-40 h-40 bg-gray-200 rounded-lg flex items-center justify-content text-gray-400 overflow-hidden shadow-inner mb-2">
                         @if($student->photo)
-                            <img src="{{ asset('storage/' . $student->photo) }}" alt="Profile Photo" class="w-full h-full object-cover">
+                           <img src="{{ $student->photo }}"
+     class="h-full w-full object-cover" alt="Profile Photo">
                         @else
                             <span class="text-xs uppercase font-semibold">No Photo</span>
                         @endif

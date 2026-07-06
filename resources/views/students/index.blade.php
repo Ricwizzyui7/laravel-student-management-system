@@ -63,7 +63,8 @@
                                     <div class="flex items-center gap-3">
                                         <div class="h-11 w-11 rounded-xl bg-gray-100 overflow-hidden shrink-0 border border-gray-100 flex items-center justify-center">
                                             @if($student->photo)
-                                                <img src="{{ asset('storage/'.$student->photo) }}" class="h-full w-full object-cover">
+                                                <img src="{{ $student->photo }}"
+     class="h-full w-full object-cover">
                                             @else
                                                 <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
                                                     <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
