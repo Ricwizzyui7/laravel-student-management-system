@@ -58,12 +58,15 @@ class StudentController extends Controller
         $photoPath = null;
 
         if ($request->hasFile('photo')) {
-            // Explicit facade upload passing the file's temporary real path string
-            $uploadedFileUrl = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
-                $request->file('photo')->getRealPath(), 
-                ['folder' => 'students']
-            );
-            $photoPath = $uploadedFileUrl->getSecurePath();
+    $cloudinary = app(\Cloudinary\Cloudinary::class);
+
+    $result = $cloudinary->uploadApi()->upload(
+        $request->file('photo')->getRealPath(),
+        ['folder' => 'students']
+    );
+
+    $photoPath = $result['secure_url'];
+}
         }
 
         Student::create([
