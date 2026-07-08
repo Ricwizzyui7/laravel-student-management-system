@@ -41,50 +41,52 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   public function store(Request $request)
-{   
-    if(Auth::user()->role != 'admin'){
-        abort(403);
-    }
-
-    $request->validate([
-        'fullname' => 'required|min:3',
-        'course' => 'required',
-        'gender' => 'required',
-        'photo' => 'nullable|image|max:2048'
-    ]);
-
-    try {
-        $photoPath = null;
-
-        if ($request->hasFile('photo')) {
-            $cloudinary = app(\Cloudinary\Cloudinary::class);
-
-            $result = $cloudinary->uploadApi()->upload(
-                $request->file('photo')->getRealPath(),
-                ['folder' => 'students']
-            );
-
-            $photoPath = $result['secure_url'];
+    public function store(Request $request)
+    {   
+        if(Auth::user()->role != 'admin'){
+            abort(403);
         }
 
-        Student::create([
-            'fullname' => $request->fullname,
-            'course' => $request->course,
-            'gender' => $request->gender,
-            'photo' => $photoPath
+        $request->validate([
+            'fullname' => 'required|min:3',
+            'course' => 'required',
+            'gender' => 'required',
+            'photo' => 'nullable|image|max:2048'
         ]);
 
-        return redirect('/students');
+        try {
+            $photoPath = null;
 
-    } catch (\Exception $e) {
-        dd([
-            'Message' => $e->getMessage(),
-            'File' => $e->getFile(),
-            'Line' => $e->getLine(),
-        ]);
+            if ($request->hasFile('photo')) {
+                $cloudinary = app(\Cloudinary\Cloudinary::class);
+
+                $result = $cloudinary->uploadApi()->upload(
+                    $request->file('photo')->getRealPath(),
+                    ['folder' => 'students']
+                );
+
+                $photoPath = $result['secure_url'];
+            }
+
+            Student::create([
+                'fullname' => $request->fullname,
+                'course' => $request->course,
+                'gender' => $request->gender,
+                'photo' => $photoPath
+            ]);
+
+            return redirect('/students');
+
+        } catch (\Exception $e) {
+            dd([
+                'Message' => $e->getMessage(),
+                'File' => $e->getFile(),
+                'Line' => $e->getLine(),
+            ]);
+        }
     }
-}*
+
+    /**
      * Display executive analytics workspace details.
      */
     public function dashboard()
@@ -106,7 +108,7 @@ class StudentController extends Controller
             'courseData'
         ));
     }
-       
+
     /**
      * Show the form for editing the specified resource.
      */
