@@ -72,9 +72,9 @@
                                             @endif
                                         </div>
                                         <div>
-                                            <div class="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                            <a href="/students/{{ $student->id }}" class="font-semibold text-gray-900 group-hover:text-blue-600 hover:underline transition-colors">
                                                 {{ $student->fullname }}
-                                            </div>
+                                            </a>
                                             <div class="text-xs text-gray-400 mt-0.5">Enrolled Student</div>
                                         </div>
                                     </div>
@@ -97,8 +97,11 @@
                                 </td>
 
                                 <td class="py-4 px-6 text-right whitespace-nowrap">
-                                    @if(Auth::user()?->role == 'admin')
-                                        <div class="inline-flex items-center gap-1.5">
+                                    <div class="inline-flex items-center gap-1.5">
+                                        <a href="/students/{{ $student->id }}" class="inline-flex items-center justify-center text-gray-500 hover:text-blue-600 hover:bg-blue-50 h-8 px-3 rounded-lg text-xs font-semibold transition">
+                                            View
+                                        </a>
+                                        @if(Auth::user()?->role == 'admin')
                                             <a href="/students/{{ $student->id }}/edit" class="inline-flex items-center justify-center text-gray-500 hover:text-blue-600 hover:bg-blue-50 h-8 px-3 rounded-lg text-xs font-semibold transition">
                                                 Edit
                                             </a>
@@ -109,10 +112,8 @@
                                                     Delete
                                                 </button>
                                             </form>
-                                        </div>
-                                    @else
-                                        <span class="text-xs text-gray-400 bg-gray-50 px-2 py-1 rounded-md italic">Read Only</span>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </td>
 
                             </tr>
