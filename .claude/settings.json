@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($php = \"C:\\\\xamppp\\\\php\\\\php.exe\"; & $php artisan tinker pgtest_tmp.php 2>&1 | Select-Object -Last 5)",
+      "Bash(\"C:/xamppp/php/php.exe\" verify_pg.php)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
+    ]
+  }
+}

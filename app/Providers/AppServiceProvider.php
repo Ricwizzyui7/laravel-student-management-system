@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        Paginator::useBootstrapFive();
+        Paginator::defaultView('vendor.pagination.app');
+        Paginator::defaultSimpleView('vendor.pagination.simple-app');
     }
 }
