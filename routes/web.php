@@ -19,7 +19,7 @@ Route::get('/dashboard', [StudentController::class, 'dashboard'])
 
 // 3. Authenticated Routes
 Route::middleware('auth')->group(function () {
-    
+
     // User Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -27,6 +27,26 @@ Route::middleware('auth')->group(function () {
 
     // 👥 STAFF & ADMIN ACCESS: View Student List
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+
+    /*
+     |--------------------------------------------------------------------
+     | Attendance Management Module
+     |--------------------------------------------------------------------
+     | Dashboard entry point is available to everyone: admins see the full
+     | dashboard; a linked student is redirected to their own profile.
+     */
+    Route::get('/attendance', [AttendanceController::class, 'dashboard'])->name('attendance.dashboard');
+
+    // Student attendance profile — controller enforces owner-or-admin access.
+    Route::get('/attendance/student/{id}', [AttendanceController::class, 'student'])->name('attendance.student');
+
+    // Admin-only attendance operations.
+    Route::middleware('admin')->group(function () {
+        Route::get('/attendance/mark', [AttendanceController::class, 'markForm'])->name('attendance.mark');
+        Route::post('/attendance/mark', [AttendanceController::class, 'markStore'])->name('attendance.mark.store');
+        Route::get('/attendance/history', [AttendanceController::class, 'history'])->name('attendance.history');
+        Route::get('/attendance/report', [AttendanceController::class, 'report'])->name('attendance.report');
+    });
 
     // 🧪 TEMPORARY DIAGNOSTIC: Commented out 'admin' middleware to check for 500 root cause
     // 🔐 ADMIN ONLY ACCESS (Now protected by our fixed, safe middleware)

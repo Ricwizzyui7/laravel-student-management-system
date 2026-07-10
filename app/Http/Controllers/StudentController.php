@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,9 @@ class StudentController extends Controller
             abort(403);
         }
 
-        return view('students.create');
+        $linkableUsers = $this->linkableUsers();
+
+        return view('students.create', compact('linkableUsers'));
     }
 
     /**
@@ -54,6 +57,7 @@ class StudentController extends Controller
             'email' => 'nullable|email',
             'phone' => 'nullable|string|max:30',
             'date_of_birth' => 'nullable|date|before:today',
+            'user_id' => 'nullable|exists:users,id|unique:students,user_id',
             'photo' => 'nullable|image|max:2048'
         ]);
 
@@ -78,6 +82,7 @@ class StudentController extends Controller
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'date_of_birth' => $request->date_of_birth,
+                'user_id' => $request->user_id ?: null,
                 'photo' => $photoPath
             ]);
 
@@ -106,12 +111,18 @@ class StudentController extends Controller
             ->groupBy('course')
             ->get();
 
+        // Attendance snapshot for the dashboard integration card.
+        $presentToday = \App\Models\Attendance::whereDate('date', now())->where('status', 'present')->count();
+        $markedToday = \App\Models\Attendance::whereDate('date', now())->count();
+
         return view('dashboard', compact(
             'totalStudents',
             'maleStudents',
             'femaleStudents',
             'recentStudents',
-            'courseData'
+            'courseData',
+            'presentToday',
+            'markedToday'
         ));
     }
 
@@ -121,7 +132,8 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::findOrFail($id);
-        return view('students.edit', compact('student'));
+        $linkableUsers = $this->linkableUsers($student->user_id);
+        return view('students.edit', compact('student', 'linkableUsers'));
     }
 
     /**
@@ -140,6 +152,7 @@ class StudentController extends Controller
             'email' => 'nullable|email',
             'phone' => 'nullable|string|max:30',
             'date_of_birth' => 'nullable|date|before:today',
+            'user_id' => 'nullable|exists:users,id|unique:students,user_id,'.$id,
             'photo' => 'nullable|image|max:2048'
         ]);
 
@@ -153,6 +166,7 @@ class StudentController extends Controller
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'date_of_birth' => $request->date_of_birth,
+                'user_id' => $request->user_id ?: null,
             ];
 
             if ($request->hasFile('photo')) {
@@ -268,5 +282,20 @@ class StudentController extends Controller
         $student->delete();
 
         return redirect('/students')->with('success', 'Student record deleted successfully.');
+    }
+
+    /**
+     * Users that can be linked to a student account: those not already linked
+     * to another student (optionally including the one currently linked).
+     */
+    private function linkableUsers($currentUserId = null)
+    {
+        $takenUserIds = Student::whereNotNull('user_id')
+            ->when($currentUserId, fn ($q) => $q->where('user_id', '!=', $currentUserId))
+            ->pluck('user_id');
+
+        return User::whereNotIn('id', $takenUserIds)
+            ->orderBy('name')
+            ->get(['id', 'name', 'email']);
     }
 }

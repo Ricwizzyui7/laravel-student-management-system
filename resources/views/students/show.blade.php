@@ -187,6 +187,7 @@
                                     <option value="present" @selected(old('status') === 'present')>Present</option>
                                     <option value="absent" @selected(old('status') === 'absent')>Absent</option>
                                     <option value="late" @selected(old('status') === 'late')>Late</option>
+                                    <option value="excused" @selected(old('status') === 'excused')>Excused</option>
                                 </select>
                             </div>
                             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg px-5 py-2 shadow-sm transition shrink-0">
@@ -211,6 +212,7 @@
                                             'present' => 'bg-green-100 text-green-800',
                                             'absent'  => 'bg-red-100 text-red-800',
                                             'late'    => 'bg-yellow-100 text-yellow-800',
+                                            'excused' => 'bg-blue-100 text-blue-800',
                                             default   => 'bg-gray-100 text-gray-800',
                                         };
                                     @endphp

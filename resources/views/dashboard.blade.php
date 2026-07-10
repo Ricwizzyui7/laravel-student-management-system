@@ -96,6 +96,22 @@
                         <span class="text-gray-400 group-hover:text-blue-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5">→</span>
                     </a>
 
+                    <a href="{{ route('attendance.dashboard') }}" class="group flex items-center justify-between p-3.5 rounded-xl bg-gray-50 hover:bg-emerald-50 border border-gray-100 hover:border-emerald-100 transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="text-gray-400 group-hover:text-emerald-600 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 group-hover:text-emerald-900 transition-colors">Attendance Dashboard</span>
+                        </div>
+                        @if(($markedToday ?? 0) > 0)
+                            <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">{{ $presentToday }} present today</span>
+                        @else
+                            <span class="text-gray-400 group-hover:text-emerald-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5">→</span>
+                        @endif
+                    </a>
+
                     @if(Auth::user()?->role == 'admin')
                         <a href="/students/create" class="group flex items-center justify-between p-3.5 rounded-xl bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-100 transition-all">
                             <div class="flex items-center gap-3">

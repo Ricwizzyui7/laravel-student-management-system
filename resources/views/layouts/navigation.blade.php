@@ -18,6 +18,9 @@
                     <x-nav-link :href="url('/students')" :active="request()->is('students*')">
                             Students
                     </x-nav-link>
+                    <x-nav-link :href="route('attendance.dashboard')" :active="request()->is('attendance*')">
+                            Attendance
+                    </x-nav-link>
                     @if(Auth::user()->role == 'admin')
                     <x-nav-link :href="url('/students/create')"
                                 :active="request()->is('students/create')">
@@ -78,6 +81,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="url('/students')" :active="request()->is('students*')">
+                {{ __('Students') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('attendance.dashboard')" :active="request()->is('attendance*')">
+                {{ __('Attendance') }}
             </x-responsive-nav-link>
         </div>
 

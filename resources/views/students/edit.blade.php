@@ -122,6 +122,19 @@
                             </div>
                         </div>
 
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Linked Login Account <span class="text-gray-400 font-medium normal-case">(optional)</span></label>
+                            <select name="user_id"
+                                    class="w-full bg-white border @error('user_id') border-red-300 @else border-gray-200 @enderror focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-sm rounded-xl px-4 py-2.5 transition appearance-none cursor-pointer">
+                                <option value="">— No linked account —</option>
+                                @foreach($linkableUsers as $user)
+                                    <option value="{{ $user->id }}" @selected(old('user_id', $student->user_id) == $user->id)>{{ $user->name }} ({{ $user->email }})</option>
+                                @endforeach
+                            </select>
+                            <p class="text-[11px] text-gray-400 mt-1">Link this student to a user login so they can view their own attendance record.</p>
+                            @error('user_id') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
+                        </div>
+
                     </div>
                 </div>
 

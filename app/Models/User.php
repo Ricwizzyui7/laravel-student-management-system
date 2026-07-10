@@ -14,6 +14,20 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * The student record linked to this user login (optional).
+     */
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    /** Convenience: is this user an administrator? */
+    public function isAdmin(): bool
+    {
+        return strtolower((string) $this->role) === 'admin';
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>

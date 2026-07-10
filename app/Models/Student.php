@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
     protected $table = 'students';
     protected $fillable = [
+        'user_id',
         'fullname',
         'course',
         'gender',
@@ -29,6 +31,12 @@ class Student extends Model
         return $this->hasMany(Attendance::class)->latest('date');
     }
 
+    /** The user login this student is linked to (optional). */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Age calculated from date_of_birth when available,
      * otherwise falls back to the manually stored age.
@@ -40,5 +48,28 @@ class Student extends Model
         }
 
         return $this->age;
+    }
+
+    /**
+     * Attendance percentage: (present + late) / (total excluding excused).
+     * Excused days are authorised absences and don't count against the rate.
+     * Returns 0 when there are no countable records.
+     *
+     * @param  \Illuminate\Support\Collection|null  $records  Optional pre-loaded set.
+     */
+    public function attendancePercentage($records = null): int
+    {
+        $records = $records ?? $this->attendances;
+
+        $countable = $records->whereNotIn('status', ['excused']);
+        $total = $countable->count();
+
+        if ($total === 0) {
+            return 0;
+        }
+
+        $attended = $countable->whereIn('status', Attendance::ATTENDED)->count();
+
+        return (int) round($attended / $total * 100);
     }
 }
