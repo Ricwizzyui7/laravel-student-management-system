@@ -96,6 +96,23 @@
                         <span class="text-gray-400 group-hover:text-blue-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5">→</span>
                     </a>
 
+                    <a href="{{ route('courses.index') }}" class="group flex items-center justify-between p-3.5 rounded-xl bg-gray-50 hover:bg-indigo-50 border border-gray-100 hover:border-indigo-100 transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="text-gray-400 group-hover:text-indigo-600 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 group-hover:text-indigo-900 transition-colors">Course Catalog</span>
+                        </div>
+                        @if(($totalCourses ?? 0) > 0)
+                            <span class="text-[11px] font-semibold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded-md">{{ $totalCourses }} courses</span>
+                        @else
+                            <span class="text-gray-400 group-hover:text-indigo-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5">→</span>
+                        @endif
+                    </a>
+
                     <a href="{{ route('attendance.dashboard') }}" class="group flex items-center justify-between p-3.5 rounded-xl bg-gray-50 hover:bg-emerald-50 border border-gray-100 hover:border-emerald-100 transition-all">
                         <div class="flex items-center gap-3">
                             <div class="text-gray-400 group-hover:text-emerald-600 transition-colors">

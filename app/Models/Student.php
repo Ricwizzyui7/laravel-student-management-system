@@ -14,6 +14,7 @@ class Student extends Model
         'user_id',
         'fullname',
         'course',
+        'course_id',
         'gender',
         'email',
         'phone',
@@ -29,6 +30,12 @@ class Student extends Model
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class)->latest('date');
+    }
+
+    /** The course this student is enrolled in (optional link). */
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Course::class);
     }
 
     /** The user login this student is linked to (optional). */

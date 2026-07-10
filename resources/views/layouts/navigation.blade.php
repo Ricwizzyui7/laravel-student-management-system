@@ -18,6 +18,9 @@
                     <x-nav-link :href="url('/students')" :active="request()->is('students*')">
                             Students
                     </x-nav-link>
+                    <x-nav-link :href="route('courses.index')" :active="request()->is('courses*')">
+                            Courses
+                    </x-nav-link>
                     <x-nav-link :href="route('attendance.dashboard')" :active="request()->is('attendance*')">
                             Attendance
                     </x-nav-link>
@@ -84,6 +87,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="url('/students')" :active="request()->is('students*')">
                 {{ __('Students') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('courses.index')" :active="request()->is('courses*')">
+                {{ __('Courses') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('attendance.dashboard')" :active="request()->is('attendance*')">
                 {{ __('Attendance') }}

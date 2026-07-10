@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -37,8 +38,9 @@ class StudentController extends Controller
         }
 
         $linkableUsers = $this->linkableUsers();
+        $courses = Course::orderBy('name')->get();
 
-        return view('students.create', compact('linkableUsers'));
+        return view('students.create', compact('linkableUsers', 'courses'));
     }
 
     /**
@@ -52,7 +54,7 @@ class StudentController extends Controller
 
         $request->validate([
             'fullname' => 'required|min:3',
-            'course' => 'required',
+            'course_id' => 'required|exists:courses,id',
             'gender' => 'required',
             'email' => 'nullable|email',
             'phone' => 'nullable|string|max:30',
@@ -75,9 +77,12 @@ class StudentController extends Controller
                 $photoPath = $result['secure_url'];
             }
 
+            $course = Course::find($request->course_id);
+
             Student::create([
                 'fullname' => $request->fullname,
-                'course' => $request->course,
+                'course_id' => $course->id,
+                'course' => $course->name, // denormalised display value
                 'gender' => $request->gender,
                 'email' => $request->email,
                 'phone' => $request->phone,
@@ -115,6 +120,9 @@ class StudentController extends Controller
         $presentToday = \App\Models\Attendance::whereDate('date', now())->where('status', 'present')->count();
         $markedToday = \App\Models\Attendance::whereDate('date', now())->count();
 
+        // Course snapshot for the dashboard integration card.
+        $totalCourses = Course::count();
+
         return view('dashboard', compact(
             'totalStudents',
             'maleStudents',
@@ -122,7 +130,8 @@ class StudentController extends Controller
             'recentStudents',
             'courseData',
             'presentToday',
-            'markedToday'
+            'markedToday',
+            'totalCourses'
         ));
     }
 
@@ -133,7 +142,8 @@ class StudentController extends Controller
     {
         $student = Student::findOrFail($id);
         $linkableUsers = $this->linkableUsers($student->user_id);
-        return view('students.edit', compact('student', 'linkableUsers'));
+        $courses = Course::orderBy('name')->get();
+        return view('students.edit', compact('student', 'linkableUsers', 'courses'));
     }
 
     /**
@@ -147,7 +157,7 @@ class StudentController extends Controller
 
         $request->validate([
             'fullname' => 'required|min:3',
-            'course' => 'required',
+            'course_id' => 'required|exists:courses,id',
             'gender' => 'required',
             'email' => 'nullable|email',
             'phone' => 'nullable|string|max:30',
@@ -159,9 +169,12 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
 
         try {
+            $course = Course::find($request->course_id);
+
             $data = [
                 'fullname' => $request->fullname,
-                'course' => $request->course,
+                'course_id' => $course->id,
+                'course' => $course->name, // denormalised display value
                 'gender' => $request->gender,
                 'email' => $request->email,
                 'phone' => $request->phone,

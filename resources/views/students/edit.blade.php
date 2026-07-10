@@ -72,13 +72,15 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Course / Department</label>
-                            <input type="text"
-                                   name="course"
-                                   value="{{ old('course', $student->course) }}"
-                                   class="w-full bg-white border @error('course') border-red-300 focus:ring-red-500 focus:border-red-500 @else border-gray-200 focus:ring-blue-500 focus:border-blue-500 @enderror text-gray-900 text-sm rounded-xl px-4 py-2.5 transition"
-                                   placeholder="e.g. Cyber Security">
-                            @error('course')
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Course</label>
+                            <select name="course_id"
+                                    class="w-full bg-white border @error('course_id') border-red-300 focus:ring-red-500 focus:border-red-500 @else border-gray-200 focus:ring-blue-500 focus:border-blue-500 @enderror text-gray-900 text-sm rounded-xl px-4 py-2.5 transition appearance-none cursor-pointer">
+                                <option value="">— Select a course —</option>
+                                @foreach($courses as $course)
+                                    <option value="{{ $course->id }}" @selected(old('course_id', $student->course_id) == $course->id)>{{ $course->name }} ({{ $course->code }})</option>
+                                @endforeach
+                            </select>
+                            @error('course_id')
                                 <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p>
                             @enderror
                         </div>

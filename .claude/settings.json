@@ -4,7 +4,8 @@
       "PowerShell($php = \"C:\\\\xamppp\\\\php\\\\php.exe\"; & $php artisan tinker pgtest_tmp.php 2>&1 | Select-Object -Last 5)",
       "Bash(\"C:/xamppp/php/php.exe\" verify_pg.php)",
       "PowerShell($php = \"C:\\\\xamppp\\\\php\\\\php.exe\"; & $php artisan view:cache 2>&1 | Select-Object -Last 1; & $php artisan view:clear 2>&1 | Out-Null)",
-      "Bash(grep '\\\\$table')"
+      "Bash(grep '\\\\$table')",
+      "Bash(\"C:/xamppp/php/php.exe\" vc.php)"
     ],
     "additionalDirectories": [
       "\\tmp"

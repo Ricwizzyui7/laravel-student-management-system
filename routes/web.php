@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
@@ -27,6 +28,26 @@ Route::middleware('auth')->group(function () {
 
     // 👥 STAFF & ADMIN ACCESS: View Student List
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+
+    /*
+     |--------------------------------------------------------------------
+     | Course Management Module
+     |--------------------------------------------------------------------
+     | Listing + detail are viewable by any authenticated user; creating,
+     | editing and deleting courses are admin-only.
+     */
+    Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+
+    Route::middleware('admin')->group(function () {
+        Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
+        Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
+        Route::get('/courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
+        Route::put('/courses/{id}', [CourseController::class, 'update'])->name('courses.update');
+        Route::delete('/courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
+    });
+
+    // Wildcard course detail at the bottom of the course group.
+    Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
 
     /*
      |--------------------------------------------------------------------
