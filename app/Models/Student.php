@@ -58,6 +58,27 @@ class Student extends Model
     }
 
     /**
+     * Deterministic student number for ID cards, e.g. "STU-2026-0007".
+     * Derived from the enrolment year and record id (no extra column needed).
+     */
+    public function getStudentNumberAttribute(): string
+    {
+        $year = $this->created_at ? $this->created_at->format('Y') : date('Y');
+
+        return 'STU-' . $year . '-' . str_pad((string) $this->id, 4, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * ID card expiry date: four years after enrolment (end of that month).
+     */
+    public function getIdCardExpiryAttribute(): Carbon
+    {
+        $base = $this->created_at ? $this->created_at->copy() : Carbon::now();
+
+        return $base->addYears(4)->endOfMonth();
+    }
+
+    /**
      * Attendance percentage: (present + late) / (total excluding excused).
      * Excused days are authorised absences and don't count against the rate.
      * Returns 0 when there are no countable records.

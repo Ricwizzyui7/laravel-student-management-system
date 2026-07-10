@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\IdCardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
@@ -82,6 +83,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/students/{id}/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
         Route::delete('/students/{id}/attendance/{attendanceId}', [AttendanceController::class, 'destroy'])->name('attendance.destroy');
     });
+
+    // Student ID card — controller enforces owner-or-admin access.
+    Route::get('/students/{id}/id-card', [IdCardController::class, 'show'])->name('students.idcard');
 
     // 👥 Wildcard route at the bottom
     Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.show');

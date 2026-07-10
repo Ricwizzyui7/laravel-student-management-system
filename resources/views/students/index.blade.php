@@ -101,6 +101,9 @@
                                         <a href="/students/{{ $student->id }}" class="inline-flex items-center justify-center text-gray-500 hover:text-blue-600 hover:bg-blue-50 h-8 px-3 rounded-lg text-xs font-semibold transition">
                                             View
                                         </a>
+                                        <a href="/students/{{ $student->id }}/id-card" class="inline-flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 h-8 px-3 rounded-lg text-xs font-semibold transition">
+                                            ID Card
+                                        </a>
                                         @if(Auth::user()?->role == 'admin')
                                             <a href="/students/{{ $student->id }}/edit" class="inline-flex items-center justify-center text-gray-500 hover:text-blue-600 hover:bg-blue-50 h-8 px-3 rounded-lg text-xs font-semibold transition">
                                                 Edit
