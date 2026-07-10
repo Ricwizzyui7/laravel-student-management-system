@@ -51,6 +51,9 @@ class StudentController extends Controller
             'fullname' => 'required|min:3',
             'course' => 'required',
             'gender' => 'required',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string|max:30',
+            'date_of_birth' => 'nullable|date|before:today',
             'photo' => 'nullable|image|max:2048'
         ]);
 
@@ -72,6 +75,9 @@ class StudentController extends Controller
                 'fullname' => $request->fullname,
                 'course' => $request->course,
                 'gender' => $request->gender,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'date_of_birth' => $request->date_of_birth,
                 'photo' => $photoPath
             ]);
 
@@ -131,6 +137,9 @@ class StudentController extends Controller
             'fullname' => 'required|min:3',
             'course' => 'required',
             'gender' => 'required',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string|max:30',
+            'date_of_birth' => 'nullable|date|before:today',
             'photo' => 'nullable|image|max:2048'
         ]);
 
@@ -141,6 +150,9 @@ class StudentController extends Controller
                 'fullname' => $request->fullname,
                 'course' => $request->course,
                 'gender' => $request->gender,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'date_of_birth' => $request->date_of_birth,
             ];
 
             if ($request->hasFile('photo')) {
@@ -182,7 +194,65 @@ class StudentController extends Controller
 
         $recentAttendances = $student->attendances->take(10);
 
-        return view('students.show', compact('student', 'summary', 'recentAttendances'));
+        // Attendance rate across all recorded days.
+        $totalRecords = $student->attendances->count();
+        $attendanceRate = $totalRecords > 0
+            ? round(($summary['present'] + $summary['late']) / $totalRecords * 100)
+            : 0;
+
+        // Profile completion — how many key fields are filled in.
+        $profileFields = [
+            'fullname'      => $student->fullname,
+            'course'        => $student->course,
+            'gender'        => $student->gender,
+            'email'         => $student->email,
+            'phone'         => $student->phone,
+            'date_of_birth' => $student->date_of_birth,
+            'photo'         => $student->photo,
+        ];
+        $filled = collect($profileFields)->filter(fn ($value) => !empty($value))->count();
+        $profileCompletion = (int) round($filled / count($profileFields) * 100);
+
+        // Recent activity feed built from real timestamps (no fabricated data).
+        $activities = collect();
+
+        if ($student->created_at) {
+            $activities->push([
+                'icon'  => 'user-plus',
+                'color' => 'blue',
+                'title' => 'Student record created',
+                'time'  => $student->created_at,
+            ]);
+        }
+
+        if ($student->updated_at && $student->created_at && $student->updated_at->gt($student->created_at)) {
+            $activities->push([
+                'icon'  => 'pencil',
+                'color' => 'amber',
+                'title' => 'Profile information updated',
+                'time'  => $student->updated_at,
+            ]);
+        }
+
+        foreach ($student->attendances->take(3) as $record) {
+            $activities->push([
+                'icon'  => 'calendar-check',
+                'color' => $record->status === 'present' ? 'emerald' : ($record->status === 'late' ? 'amber' : 'red'),
+                'title' => 'Marked '.$record->status.' on '.$record->date->format('M d, Y'),
+                'time'  => $record->created_at ?? $record->date,
+            ]);
+        }
+
+        $activities = $activities->sortByDesc('time')->take(5)->values();
+
+        return view('students.show', compact(
+            'student',
+            'summary',
+            'recentAttendances',
+            'attendanceRate',
+            'profileCompletion',
+            'activities'
+        ));
     }
 
     /**

@@ -84,6 +84,36 @@
                             </select>
                         </div>
 
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Email <span class="text-gray-400 font-medium normal-case">(optional)</span></label>
+                            <input type="email"
+                                   name="email"
+                                   value="{{ old('email') }}"
+                                   class="w-full bg-white border @error('email') border-red-300 focus:ring-red-500 focus:border-red-500 @else border-gray-200 focus:ring-blue-500 focus:border-blue-500 @enderror text-gray-900 text-sm rounded-xl px-4 py-2.5 transition"
+                                   placeholder="e.g. student@example.com">
+                            @error('email') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Phone <span class="text-gray-400 font-medium normal-case">(optional)</span></label>
+                                <input type="text"
+                                       name="phone"
+                                       value="{{ old('phone') }}"
+                                       class="w-full bg-white border border-gray-200 focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-sm rounded-xl px-4 py-2.5 transition"
+                                       placeholder="e.g. +255 7XX XXX XXX">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Date of Birth <span class="text-gray-400 font-medium normal-case">(optional)</span></label>
+                                <input type="date"
+                                       name="date_of_birth"
+                                       value="{{ old('date_of_birth') }}"
+                                       max="{{ now()->format('Y-m-d') }}"
+                                       class="w-full bg-white border @error('date_of_birth') border-red-300 @else border-gray-200 @enderror focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-sm rounded-xl px-4 py-2.5 transition">
+                                @error('date_of_birth') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
