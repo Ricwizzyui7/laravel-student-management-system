@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
+
         <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-sm p-6 sm:p-8 mb-8 text-white relative overflow-hidden">
             <div class="relative z-10">
                 <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Welcome Back, {{ Auth::user()->name }}!</h2>
@@ -12,19 +12,49 @@
             <div class="absolute right-20 -bottom-20 h-48 w-48 rounded-full bg-indigo-500/20 blur-2xl pointer-events-none"></div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
-            
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+
             <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
                 <div>
                     <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Total Registered</span>
-                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight">Active</span>
-                    <span class="block text-xs text-blue-600 font-medium mt-1.5 flex items-center gap-1">
+                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight">{{ number_format($totalStudents) }}</span>
+                    <a href="/students" class="text-xs text-blue-600 font-medium mt-1.5 inline-flex items-center gap-1 hover:underline">
                         View Complete Directory →
-                    </span>
+                    </a>
                 </div>
                 <div class="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+                <div>
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Male Students</span>
+                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight">{{ number_format($maleStudents) }}</span>
+                    <span class="block text-xs text-gray-400 font-medium mt-1.5">
+                        {{ $totalStudents > 0 ? round($maleStudents / $totalStudents * 100) : 0 }}% of cohort
+                    </span>
+                </div>
+                <div class="h-12 w-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+                <div>
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Female Students</span>
+                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight">{{ number_format($femaleStudents) }}</span>
+                    <span class="block text-xs text-gray-400 font-medium mt-1.5">
+                        {{ $totalStudents > 0 ? round($femaleStudents / $totalStudents * 100) : 0 }}% of cohort
+                    </span>
+                </div>
+                <div class="h-12 w-12 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
             </div>
@@ -36,7 +66,7 @@
                         {{ Auth::user()->role ?? 'Staff' }}
                     </span>
                     <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-md mt-2">
-                        ● Safe Connection Secure
+                        ● Connection Secure
                     </span>
                 </div>
                 <div class="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
@@ -46,29 +76,14 @@
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between sm:col-span-2 lg:col-span-1">
-                <div>
-                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Host Platform Deployment</span>
-                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight">Cloud Live</span>
-                    <span class="block text-xs text-gray-400 font-medium mt-1.5">
-                        Dockerized Container Services
-                    </span>
-                </div>
-                <div class="h-12 w-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-                </div>
-            </div>
-
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
+
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:col-span-1">
                 <h3 class="text-base font-bold text-gray-900 mb-4">Quick Navigation Links</h3>
                 <div class="space-y-3">
-                    
+
                     <a href="/students" class="group flex items-center justify-between p-3.5 rounded-xl bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-100 transition-all">
                         <div class="flex items-center gap-3">
                             <div class="text-gray-400 group-hover:text-blue-600 transition-colors">
@@ -109,13 +124,57 @@
                     </a>
 
                 </div>
+
+                <h3 class="text-base font-bold text-gray-900 mt-6 mb-4">Enrollment by Course</h3>
+                <div class="space-y-3">
+                    @forelse($courseData as $course)
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="font-medium text-gray-700 truncate pr-2">{{ $course->course }}</span>
+                                <span class="font-semibold text-gray-500 shrink-0">{{ $course->total }}</span>
+                            </div>
+                            <div class="h-2 w-full rounded-full bg-gray-100 overflow-hidden">
+                                <div class="h-full rounded-full bg-blue-500" style="width: {{ $totalStudents > 0 ? max(4, round($course->total / $totalStudents * 100)) : 0 }}%"></div>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-xs text-gray-400">No course data available yet.</p>
+                    @endforelse
+                </div>
             </div>
 
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:col-span-2">
-                <h3 class="text-base font-bold text-gray-900 mb-3">System Operating Guidelines</h3>
-                <p class="text-xs text-gray-500 leading-relaxed">
-                    This administrative suite handles role-based access management. Users assigned the <strong class="text-gray-700">Staff</strong> role are permitted full system visibility to access and view student records, while creation structural modification pipelines remain exclusively restricted to verified <strong class="text-gray-700">System Administrators</strong>.
-                </p>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-base font-bold text-gray-900">Recently Added Students</h3>
+                    <a href="/students" class="text-xs font-semibold text-blue-600 hover:underline">View all</a>
+                </div>
+
+                <div class="divide-y divide-gray-50">
+                    @forelse($recentStudents as $student)
+                        <a href="/students/{{ $student->id }}" class="flex items-center gap-3 py-3 group">
+                            <div class="h-10 w-10 rounded-xl bg-gray-100 overflow-hidden shrink-0 border border-gray-100 flex items-center justify-center">
+                                @if($student->photo)
+                                    <img src="{{ $student->photo }}" class="h-full w-full object-cover" alt="">
+                                @else
+                                    <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                @endif
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate">{{ $student->fullname }}</div>
+                                <div class="text-xs text-gray-400 truncate">{{ $student->course }}</div>
+                            </div>
+                            <div class="text-xs text-gray-400 shrink-0">{{ $student->created_at?->diffForHumans() }}</div>
+                        </a>
+                    @empty
+                        <div class="py-12 text-center">
+                            <h3 class="text-sm font-semibold text-gray-900">No students yet</h3>
+                            <p class="text-xs text-gray-500 mt-1">Records you add will appear here.</p>
+                        </div>
+                    @endforelse
+                </div>
+
                 <div class="mt-4 p-4 rounded-xl bg-blue-50/50 border border-blue-100/40 flex gap-3 items-start">
                     <div class="text-blue-600 mt-0.5 shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -123,7 +182,7 @@
                         </svg>
                     </div>
                     <div class="text-xs text-blue-800 leading-relaxed">
-                        <strong>Deployment Notice:</strong> Media and file streams are synchronized with public local link assets. Ensure Docker storage configurations match your permanent environmental node permissions during live operational cycles.
+                        <strong>Access notice:</strong> Users with the <strong>Staff</strong> role can view student records, while creating, editing, and deleting records is restricted to <strong>System Administrators</strong>.
                     </div>
                 </div>
             </div>

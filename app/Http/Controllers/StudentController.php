@@ -75,14 +75,14 @@ class StudentController extends Controller
                 'photo' => $photoPath
             ]);
 
-            return redirect('/students');
+            return redirect('/students')->with('success', 'Student record created successfully.');
 
         } catch (\Exception $e) {
-            dd([
-                'Message' => $e->getMessage(),
-                'File' => $e->getFile(),
-                'Line' => $e->getLine(),
-            ]);
+            report($e);
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Could not save the student record. Please try again.');
         }
     }
 
@@ -130,18 +130,41 @@ class StudentController extends Controller
         $request->validate([
             'fullname' => 'required|min:3',
             'course' => 'required',
-            'gender' => 'required'
+            'gender' => 'required',
+            'photo' => 'nullable|image|max:2048'
         ]);
 
         $student = Student::findOrFail($id);
 
-        $student->update([
-            'fullname' => $request->fullname,
-            'course' => $request->course,
-            'gender' => $request->gender
-        ]);
+        try {
+            $data = [
+                'fullname' => $request->fullname,
+                'course' => $request->course,
+                'gender' => $request->gender,
+            ];
 
-        return redirect('/students');
+            if ($request->hasFile('photo')) {
+                $cloudinary = app(\Cloudinary\Cloudinary::class);
+
+                $result = $cloudinary->uploadApi()->upload(
+                    $request->file('photo')->getRealPath(),
+                    ['folder' => 'students']
+                );
+
+                $data['photo'] = $result['secure_url'];
+            }
+
+            $student->update($data);
+
+            return redirect('/students')->with('success', 'Student record updated successfully.');
+
+        } catch (\Exception $e) {
+            report($e);
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Could not update the student record. Please try again.');
+        }
     }
 
     /**
@@ -149,8 +172,17 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $student = Student::findOrFail($id);
-        return view('students.show', compact('student'));
+        $student = Student::with('attendances')->findOrFail($id);
+
+        $summary = [
+            'present' => $student->attendances->where('status', 'present')->count(),
+            'absent'  => $student->attendances->where('status', 'absent')->count(),
+            'late'    => $student->attendances->where('status', 'late')->count(),
+        ];
+
+        $recentAttendances = $student->attendances->take(10);
+
+        return view('students.show', compact('student', 'summary', 'recentAttendances'));
     }
 
     /**
@@ -165,6 +197,6 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $student->delete();
 
-        return redirect('/students');
+        return redirect('/students')->with('success', 'Student record deleted successfully.');
     }
 }

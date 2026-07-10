@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AttendanceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
@@ -35,6 +36,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
         Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
         Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+
+        // Attendance management (admin only)
+        Route::post('/students/{id}/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
+        Route::delete('/students/{id}/attendance/{attendanceId}', [AttendanceController::class, 'destroy'])->name('attendance.destroy');
     });
 
     // 👥 Wildcard route at the bottom
