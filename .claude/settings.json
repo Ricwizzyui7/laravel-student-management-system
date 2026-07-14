@@ -6,7 +6,10 @@
       "PowerShell($php = \"C:\\\\xamppp\\\\php\\\\php.exe\"; & $php artisan view:cache 2>&1 | Select-Object -Last 1; & $php artisan view:clear 2>&1 | Out-Null)",
       "Bash(grep '\\\\$table')",
       "Bash(\"C:/xamppp/php/php.exe\" vc.php)",
-      "PowerShell(npm install qrcode html2canvas jspdf 2>&1)"
+      "PowerShell(npm install qrcode html2canvas jspdf 2>&1)",
+      "Bash(cd /c/xamppp/htdocs/student-management-laravel)",
+      "Bash(\"C:/xamppp/php/php.exe\" -l app/Http/Controllers/IdCardController.php)",
+      "Bash(\"C:/xamppp/php/php.exe\" -l app/Models/Student.php)"
     ],
     "additionalDirectories": [
       "\\tmp"
