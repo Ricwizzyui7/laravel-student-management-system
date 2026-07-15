@@ -27,6 +27,26 @@ class User extends Authenticatable
         return strtolower((string) $this->role) === 'admin';
     }
 
+    /** Query scope: administrators only. */
+    public function scopeAdmins($query)
+    {
+        return $query->whereRaw('LOWER(role) = ?', ['admin']);
+    }
+
+    /**
+     * Send a system notification to every administrator.
+     * Safe to call from anywhere; failures are swallowed so a notification
+     * problem never blocks the primary action (creating a student, etc.).
+     */
+    public static function notifyAdmins(\Illuminate\Notifications\Notification $notification): void
+    {
+        try {
+            static::admins()->get()->each->notify($notification);
+        } catch (\Throwable $e) {
+            report($e);
+        }
+    }
+
     /**
      * The attributes that are mass assignable.
      *

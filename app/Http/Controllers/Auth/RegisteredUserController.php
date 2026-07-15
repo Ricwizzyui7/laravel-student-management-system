@@ -44,6 +44,13 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        User::notifyAdmins(new \App\Notifications\SystemNotification(
+            'New user registered',
+            "{$user->name} ({$user->email}) created an account.",
+            'user-check',
+            null,
+        ));
+
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));

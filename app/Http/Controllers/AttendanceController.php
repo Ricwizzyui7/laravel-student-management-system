@@ -147,6 +147,15 @@ class AttendanceController extends Controller
             $saved++;
         }
 
+        if ($saved > 0) {
+            \App\Models\User::notifyAdmins(new \App\Notifications\SystemNotification(
+                'Attendance marked',
+                "Attendance was recorded for {$saved} student(s) on {$validated['date']}.",
+                'calendar',
+                route('attendance.history'),
+            ));
+        }
+
         return redirect()
             ->route('attendance.mark', ['date' => $validated['date']])
             ->with('success', "Attendance saved for {$saved} student(s) on {$validated['date']}.");

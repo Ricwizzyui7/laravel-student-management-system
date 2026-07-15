@@ -79,7 +79,7 @@ class StudentController extends Controller
 
             $course = Course::find($request->course_id);
 
-            Student::create([
+            $student = Student::create([
                 'fullname' => $request->fullname,
                 'course_id' => $course->id,
                 'course' => $course->name, // denormalised display value
@@ -90,6 +90,13 @@ class StudentController extends Controller
                 'user_id' => $request->user_id ?: null,
                 'photo' => $photoPath
             ]);
+
+            User::notifyAdmins(new \App\Notifications\SystemNotification(
+                'New student added',
+                "{$student->fullname} was enrolled in {$course->name}.",
+                'user-plus',
+                url('/students/'.$student->id),
+            ));
 
             return redirect('/students')->with('success', 'Student record created successfully.');
 

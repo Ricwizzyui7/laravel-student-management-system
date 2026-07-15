@@ -34,6 +34,13 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
+        \App\Models\User::notifyAdmins(new \App\Notifications\SystemNotification(
+            'Profile updated',
+            "{$request->user()->name} updated their account profile.",
+            'user-edit',
+            null,
+        ));
+
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
