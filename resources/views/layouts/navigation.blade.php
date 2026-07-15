@@ -25,6 +25,9 @@
                             Attendance
                     </x-nav-link>
                     @if(Auth::user()->role == 'admin')
+                    <x-nav-link :href="route('reports.index')" :active="request()->is('reports*')">
+                            Reports
+                    </x-nav-link>
                     <x-nav-link :href="url('/students/create')"
                                 :active="request()->is('students/create')">
                             Add Student
@@ -94,6 +97,11 @@
             <x-responsive-nav-link :href="route('attendance.dashboard')" :active="request()->is('attendance*')">
                 {{ __('Attendance') }}
             </x-responsive-nav-link>
+            @if(Auth::user()->role == 'admin')
+            <x-responsive-nav-link :href="route('reports.index')" :active="request()->is('reports*')">
+                {{ __('Reports') }}
+            </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

@@ -5,6 +5,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\IdCardController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
@@ -45,6 +46,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
         Route::put('/courses/{id}', [CourseController::class, 'update'])->name('courses.update');
         Route::delete('/courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
+    });
+
+    /*
+     |--------------------------------------------------------------------
+     | PDF Report Module (admin only)
+     |--------------------------------------------------------------------
+     */
+    Route::middleware('admin')->group(function () {
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('/reports/students', [ReportController::class, 'studentList'])->name('reports.students');
+        Route::get('/reports/students/{id}', [ReportController::class, 'studentProfile'])->name('reports.student');
+        Route::get('/reports/attendance', [ReportController::class, 'attendance'])->name('reports.attendance');
+        Route::get('/reports/courses', [ReportController::class, 'courses'])->name('reports.courses');
+        Route::get('/reports/departments', [ReportController::class, 'departments'])->name('reports.departments');
     });
 
     // Wildcard course detail at the bottom of the course group.

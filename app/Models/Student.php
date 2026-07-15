@@ -45,6 +45,15 @@ class Student extends Model
     }
 
     /**
+     * Department resolved from the linked course.
+     * ($student->course is the denormalised name string, so read the relation.)
+     */
+    public function getDepartmentNameAttribute(): ?string
+    {
+        return $this->getRelationValue('course')->department ?? null;
+    }
+
+    /**
      * Age calculated from date_of_birth when available,
      * otherwise falls back to the manually stored age.
      */

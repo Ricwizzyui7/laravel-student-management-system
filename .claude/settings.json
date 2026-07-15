@@ -9,7 +9,16 @@
       "PowerShell(npm install qrcode html2canvas jspdf 2>&1)",
       "Bash(cd /c/xamppp/htdocs/student-management-laravel)",
       "Bash(\"C:/xamppp/php/php.exe\" -l app/Http/Controllers/IdCardController.php)",
-      "Bash(\"C:/xamppp/php/php.exe\" -l app/Models/Student.php)"
+      "Bash(\"C:/xamppp/php/php.exe\" -l app/Models/Student.php)",
+      "Bash(xargs -n1 basename)",
+      "Bash(composer --version)",
+      "Bash(\"C:/xamppp/php/php.exe\" -v)",
+      "Bash(\"C:/xamppp/php/php.exe\" /c/ProgramData/ComposerSetup/bin/composer.phar --version)",
+      "Read(//c/ProgramData/ComposerSetup/bin//**)",
+      "Bash(\"C:/xamppp/php/php.exe\" /c/ProgramData/ComposerSetup/bin/composer.phar require barryvdh/laravel-dompdf)",
+      "Bash(\"C:/xamppp/php/php.exe\" -l app/Http/Controllers/ReportController.php)",
+      "Bash(\"C:/xamppp/php/php.exe\" -r \"require 'vendor/autoload.php'; echo class_exists\\('Barryvdh\\\\DomPDF\\\\Facade\\\\Pdf'\\) ? 'Pdf facade OK' : 'MISSING';\")",
+      "Bash(\"C:/xamppp/php/php.exe\" artisan *)"
     ],
     "additionalDirectories": [
       "\\tmp"
