@@ -28,6 +28,9 @@
                     <x-nav-link :href="route('reports.index')" :active="request()->is('reports*')">
                             Reports
                     </x-nav-link>
+                    <x-nav-link :href="route('exports.index')" :active="request()->is('exports*')">
+                            Exports
+                    </x-nav-link>
                     <x-nav-link :href="url('/students/create')"
                                 :active="request()->is('students/create')">
                             Add Student
@@ -100,6 +103,9 @@
             @if(Auth::user()->role == 'admin')
             <x-responsive-nav-link :href="route('reports.index')" :active="request()->is('reports*')">
                 {{ __('Reports') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('exports.index')" :active="request()->is('exports*')">
+                {{ __('Exports') }}
             </x-responsive-nav-link>
             @endif
         </div>

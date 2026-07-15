@@ -6,6 +6,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\IdCardController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ExportController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
@@ -60,6 +61,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/reports/attendance', [ReportController::class, 'attendance'])->name('reports.attendance');
         Route::get('/reports/courses', [ReportController::class, 'courses'])->name('reports.courses');
         Route::get('/reports/departments', [ReportController::class, 'departments'])->name('reports.departments');
+    });
+
+    /*
+     |--------------------------------------------------------------------
+     | Excel Export Module (admin only)
+     |--------------------------------------------------------------------
+     */
+    Route::middleware('admin')->group(function () {
+        Route::get('/exports', [ExportController::class, 'index'])->name('exports.index');
+        Route::get('/exports/students', [ExportController::class, 'students'])->name('exports.students');
+        Route::get('/exports/courses', [ExportController::class, 'courses'])->name('exports.courses');
+        Route::get('/exports/departments', [ExportController::class, 'departments'])->name('exports.departments');
+        Route::get('/exports/attendance', [ExportController::class, 'attendance'])->name('exports.attendance');
     });
 
     // Wildcard course detail at the bottom of the course group.

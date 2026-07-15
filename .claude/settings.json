@@ -18,7 +18,16 @@
       "Bash(\"C:/xamppp/php/php.exe\" /c/ProgramData/ComposerSetup/bin/composer.phar require barryvdh/laravel-dompdf)",
       "Bash(\"C:/xamppp/php/php.exe\" -l app/Http/Controllers/ReportController.php)",
       "Bash(\"C:/xamppp/php/php.exe\" -r \"require 'vendor/autoload.php'; echo class_exists\\('Barryvdh\\\\DomPDF\\\\Facade\\\\Pdf'\\) ? 'Pdf facade OK' : 'MISSING';\")",
-      "Bash(\"C:/xamppp/php/php.exe\" artisan *)"
+      "Bash(\"C:/xamppp/php/php.exe\" artisan *)",
+      "Bash(\"C:/xamppp/php/php.exe\" /c/ProgramData/ComposerSetup/bin/composer.phar require maatwebsite/excel)",
+      "Bash(\"C:/xamppp/php/php.exe\" -m)",
+      "Read(//c/xampp/php/**)",
+      "Bash(\"C:/xamppp/php/php.exe\" --ini)",
+      "Read(//c/xamppp/php/ext/**)",
+      "Read(//c/xamppp/php/**)",
+      "Bash(cp /c/xamppp/php/php.ini /c/xamppp/php/php.ini.bak-gd)",
+      "Bash(C:/xamppp/php/php.exe -r ' *)",
+      "Bash(\"C:/xamppp/php/php.exe\" -r \"require 'vendor/autoload.php'; echo class_exists\\('Maatwebsite\\\\Excel\\\\Facades\\\\Excel'\\) ? 'Excel OK' : 'MISSING';\")"
     ],
     "additionalDirectories": [
       "\\tmp"
