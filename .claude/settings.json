@@ -27,7 +27,10 @@
       "Read(//c/xamppp/php/**)",
       "Bash(cp /c/xamppp/php/php.ini /c/xamppp/php/php.ini.bak-gd)",
       "Bash(C:/xamppp/php/php.exe -r ' *)",
-      "Bash(\"C:/xamppp/php/php.exe\" -r \"require 'vendor/autoload.php'; echo class_exists\\('Maatwebsite\\\\Excel\\\\Facades\\\\Excel'\\) ? 'Excel OK' : 'MISSING';\")"
+      "Bash(\"C:/xamppp/php/php.exe\" -r \"require 'vendor/autoload.php'; echo class_exists\\('Maatwebsite\\\\Excel\\\\Facades\\\\Excel'\\) ? 'Excel OK' : 'MISSING';\")",
+      "Bash(ls /c/xamppp/mysql/bin/mysqld.exe)",
+      "Bash(C:/xamppp/php/php.exe -r '$c=@fsockopen\\('\\\\''127.0.0.1'\\\\'',3307,$e,$s,1\\); echo $c?'\\\\''port 3307 OPEN'\\\\'':'\\\\''port 3307 CLOSED'\\\\'';')",
+      "Bash(\"C:/xamppp/php/php.exe\" ntest.php)"
     ],
     "additionalDirectories": [
       "\\tmp"
