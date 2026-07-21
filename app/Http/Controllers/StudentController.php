@@ -98,6 +98,10 @@ class StudentController extends Controller
                 url('/students/'.$student->id),
             ));
 
+            if (!empty($student->email)) {
+                \Mail::to($student->email)->queue(new \App\Mail\StudentRegisteredMail($student));
+            }
+
             return redirect('/students')->with('success', 'Student record created successfully.');
 
         } catch (\Exception $e) {

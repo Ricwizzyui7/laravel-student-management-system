@@ -109,4 +109,27 @@ class Student extends Model
 
         return (int) round($attended / $total * 100);
     }
+
+    /**
+     * Check if attendance is below the threshold and send a warning email to the student
+     * if linked to a user account, or to their direct email. Silently fails (logs only).
+     *
+     * @param  int  $threshold  Minimum allowed percentage (default 75)
+     */
+    public function checkAttendanceAndNotify(int $threshold = 75): void
+    {
+        $percentage = $this->attendancePercentage();
+
+        if ($percentage < $threshold && !empty($this->email)) {
+            try {
+                \Mail::to($this->email)->queue(new \App\Mail\AttendanceWarningMail(
+                    $this,
+                    $percentage,
+                    $threshold,
+                ));
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+    }
 }

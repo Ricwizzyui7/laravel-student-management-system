@@ -134,6 +134,7 @@ class AttendanceController extends Controller
         ]);
 
         $saved = 0;
+        $threshold = config('attendance.threshold', 75);
 
         foreach ($validated['statuses'] as $studentId => $status) {
             if (empty($status)) {
@@ -145,6 +146,9 @@ class AttendanceController extends Controller
                 ['status' => $status]
             );
             $saved++;
+
+            // Check if this student's attendance has dropped below threshold.
+            Student::find($studentId)?->checkAttendanceAndNotify($threshold);
         }
 
         if ($saved > 0) {

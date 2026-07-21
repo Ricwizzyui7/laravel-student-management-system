@@ -32,6 +32,11 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
+        $changedFields = [];
+        foreach ($request->user()->getDirty() as $key => $value) {
+            $changedFields[] = ucfirst(str_replace('_', ' ', $key));
+        }
+
         $request->user()->save();
 
         \App\Models\User::notifyAdmins(new \App\Notifications\SystemNotification(
@@ -39,6 +44,11 @@ class ProfileController extends Controller
             "{$request->user()->name} updated their account profile.",
             'user-edit',
             null,
+        ));
+
+        \Mail::to($request->user()->email)->queue(new \App\Mail\ProfileUpdatedMail(
+            $request->user(),
+            $changedFields
         ));
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');

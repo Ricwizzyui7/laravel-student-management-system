@@ -81,4 +81,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Override the default password reset notification to use our custom PasswordResetMail.
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $url = route('password.reset', ['token' => $token, 'email' => $this->email]);
+
+        \Mail::to($this->email)->queue(new \App\Mail\PasswordResetMail(
+            $this->name,
+            $url,
+            60, // expires in 60 minutes
+        ));
+    }
 }
