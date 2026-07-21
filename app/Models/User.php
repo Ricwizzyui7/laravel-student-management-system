@@ -21,6 +21,14 @@ class User extends Authenticatable
         return $this->hasOne(Student::class);
     }
 
+    /**
+     * User's notification preferences.
+     */
+    public function preferences()
+    {
+        return $this->hasOne(UserPreference::class);
+    }
+
     /** Convenience: is this user an administrator? */
     public function isAdmin(): bool
     {
@@ -57,6 +65,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'theme',
+        'language',
     ];
 
     /**

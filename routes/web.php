@@ -8,6 +8,8 @@ use App\Http\Controllers\IdCardController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\UserSettingsController;
+use App\Http\Controllers\AdminSettingsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
@@ -36,6 +38,27 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/clear', [NotificationController::class, 'clear'])->name('notifications.clear');
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+
+    // User Settings (all authenticated users)
+    Route::prefix('settings/user')->group(function () {
+        Route::get('/', [UserSettingsController::class, 'index'])->name('settings.user.index');
+        Route::post('/profile-picture', [UserSettingsController::class, 'updateProfilePicture'])->name('settings.user.profile-picture');
+        Route::post('/password', [UserSettingsController::class, 'updatePassword'])->name('settings.user.password');
+        Route::post('/email', [UserSettingsController::class, 'updateEmail'])->name('settings.user.email');
+        Route::post('/theme', [UserSettingsController::class, 'updateTheme'])->name('settings.user.theme');
+        Route::post('/language', [UserSettingsController::class, 'updateLanguage'])->name('settings.user.language');
+        Route::post('/notifications', [UserSettingsController::class, 'updateNotificationPreferences'])->name('settings.user.notifications');
+    });
+
+    // Admin Settings (admins only)
+    Route::prefix('settings/admin')->middleware('auth')->group(function () {
+        Route::get('/', [AdminSettingsController::class, 'index'])->name('settings.admin.index');
+        Route::post('/system-name', [AdminSettingsController::class, 'updateSystemName'])->name('settings.admin.system-name');
+        Route::post('/institution', [AdminSettingsController::class, 'updateInstitution'])->name('settings.admin.institution');
+        Route::post('/logo', [AdminSettingsController::class, 'updateLogo'])->name('settings.admin.logo');
+        Route::post('/contact', [AdminSettingsController::class, 'updateContact'])->name('settings.admin.contact');
+        Route::post('/academic-year', [AdminSettingsController::class, 'updateAcademicYear'])->name('settings.admin.academic-year');
+    });
 
     // 👥 STAFF & ADMIN ACCESS: View Student List
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
