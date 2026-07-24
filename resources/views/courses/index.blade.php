@@ -2,27 +2,27 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {{-- Header --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Course Catalog</h2>
-                    <p class="text-sm text-gray-500 mt-1">Manage academic programs, departments, and enrolment.</p>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">Course Catalog</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage academic programs, departments, and enrolment.</p>
                 </div>
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
                     <form method="GET" action="{{ route('courses.index') }}" class="relative w-full sm:w-72 m-0">
                         <input type="text" name="search" value="{{ $search ?? '' }}"
-                               class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block pl-10 pr-4 py-2.5 transition"
+                               class="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block pl-10 pr-4 py-2.5 transition"
                                placeholder="Search code, name, department...">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400 dark:text-gray-500">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         </div>
                     </form>
                     @if(Auth::user()?->role == 'admin')
-                        <a href="{{ route('reports.courses') }}" target="_blank" class="inline-flex items-center justify-center bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium text-sm rounded-xl px-4 py-2.5 transition gap-2 shrink-0">
+                        <a href="{{ route('reports.courses') }}" target="_blank" class="inline-flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm rounded-xl px-4 py-2.5 transition gap-2 shrink-0">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             PDF
                         </a>
-                        <a href="{{ route('exports.courses') }}" class="inline-flex items-center justify-center bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium text-sm rounded-xl px-4 py-2.5 transition gap-2 shrink-0">
+                        <a href="{{ route('exports.courses') }}" class="inline-flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm rounded-xl px-4 py-2.5 transition gap-2 shrink-0">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                             Excel
                         </a>
@@ -45,10 +45,10 @@
                 ];
             @endphp
             @foreach($cards as $card)
-                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between">
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between">
                     <div>
-                        <div class="text-2xl font-bold text-gray-900 tracking-tight">{{ $card['value'] }}</div>
-                        <div class="text-xs font-medium text-gray-400 uppercase tracking-wider mt-0.5">{{ $card['label'] }}</div>
+                        <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">{{ $card['value'] }}</div>
+                        <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">{{ $card['label'] }}</div>
                     </div>
                     <div class="h-11 w-11 rounded-xl {{ $card['bg'] }} {{ $card['text'] }} flex items-center justify-center shrink-0">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $card['icon'] }}"/></svg>
@@ -59,29 +59,29 @@
 
         {{-- Course cards grid --}}
         @if($courses->isEmpty())
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
-                <div class="mx-auto h-12 w-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-12 text-center">
+                <div class="mx-auto h-12 w-12 rounded-2xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-3">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                 </div>
-                <h3 class="text-sm font-semibold text-gray-900">No courses found</h3>
-                <p class="text-xs text-gray-500 mt-1">{{ $search ? 'Try a different search term.' : 'Add your first course to get started.' }}</p>
+                <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100">No courses found</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ $search ? 'Try a different search term.' : 'Add your first course to get started.' }}</p>
             </div>
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 @foreach($courses as $course)
-                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col overflow-hidden">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col overflow-hidden">
                         <div class="p-5 flex-1">
                             <div class="flex items-start justify-between gap-3">
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-50 text-blue-700 border border-blue-100/60 tracking-wider">{{ $course->code }}</span>
-                                <span class="inline-flex items-center gap-1 text-xs font-medium text-gray-500">
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-100/60 dark:border-blue-800/60 tracking-wider">{{ $course->code }}</span>
+                                <span class="inline-flex items-center gap-1 text-xs font-medium text-gray-500 dark:text-gray-400">
                                     <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                                     {{ $course->students_count }}
                                 </span>
                             </div>
-                            <h3 class="mt-3 text-base font-bold text-gray-900 leading-snug">
+                            <h3 class="mt-3 text-base font-bold text-gray-900 dark:text-gray-100 leading-snug">
                                 <a href="{{ route('courses.show', $course->id) }}" class="hover:text-blue-600 transition">{{ $course->name }}</a>
                             </h3>
-                            <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
+                            <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
                                 @if($course->department)
                                     <span class="inline-flex items-center gap-1"><svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg>{{ $course->department }}</span>
                                 @endif
@@ -90,18 +90,18 @@
                                 @endif
                             </div>
                             @if($course->description)
-                                <p class="mt-3 text-xs text-gray-500 leading-relaxed line-clamp-2">{{ $course->description }}</p>
+                                <p class="mt-3 text-xs text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2">{{ $course->description }}</p>
                             @endif
                         </div>
-                        <div class="px-5 py-3 border-t border-gray-50 bg-gray-50/40 flex items-center justify-between">
-                            <a href="{{ route('courses.show', $course->id) }}" class="text-xs font-semibold text-blue-600 hover:underline">View details</a>
+<div class="px-5 py-3 border-t border-gray-50 dark:border-gray-700 bg-gray-50/40 dark:bg-gray-900/50 flex items-center justify-between">
+                            <a href="{{ route('courses.show', $course->id) }}" class="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline">
                             @if(Auth::user()?->role == 'admin')
                                 <div class="flex items-center gap-1">
-                                    <a href="{{ route('courses.edit', $course->id) }}" class="text-xs font-semibold text-gray-500 hover:text-blue-600 hover:bg-blue-50 px-2.5 py-1 rounded-lg transition">Edit</a>
+                                    <a href="{{ route('courses.edit', $course->id) }}" class="text-xs font-semibold text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950 px-2.5 py-1 rounded-lg transition">Edit</a>
                                     <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="inline m-0" onsubmit="return confirm('Delete this course?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="text-xs font-semibold text-gray-400 hover:text-red-600 hover:bg-red-50 px-2.5 py-1 rounded-lg transition">Delete</button>
+                                        <button class="text-xs font-semibold text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950 px-2.5 py-1 rounded-lg transition">Delete</button>
                                     </form>
                                 </div>
                             @endif

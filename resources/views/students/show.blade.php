@@ -3,7 +3,7 @@
 
         {{-- Back link --}}
         <div class="mb-6">
-            <a href="{{ route('students.index') }}" class="inline-flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-blue-600 transition">
+            <a href="{{ route('students.index') }}" class="inline-flex items-center gap-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
@@ -12,7 +12,7 @@
         </div>
 
         {{-- ===== HERO / PROFILE HEADER ===== --}}
-        <div class="relative bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-6">
+        <div class="relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden mb-6">
             <div class="h-28 sm:h-32 bg-gradient-to-r from-blue-600 to-indigo-700 relative">
                 <div class="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10 blur-xl"></div>
                 <div class="absolute right-24 -bottom-16 h-40 w-40 rounded-full bg-indigo-500/20 blur-2xl"></div>
@@ -21,11 +21,11 @@
             <div class="px-6 sm:px-8 pb-6">
                 <div class="flex flex-col sm:flex-row sm:items-end gap-4 -mt-14 sm:-mt-16">
                     {{-- Photo --}}
-                    <div class="h-28 w-28 sm:h-32 sm:w-32 rounded-2xl bg-gray-100 border-4 border-white shadow-md overflow-hidden shrink-0 flex items-center justify-center">
+                    <div class="h-28 w-28 sm:h-32 sm:w-32 rounded-2xl bg-gray-100 dark:bg-gray-900 border-4 border-white dark:border-gray-800 shadow-md overflow-hidden shrink-0 flex items-center justify-center">
                         @if($student->photo)
                             <img src="{{ $student->photo }}" alt="{{ $student->fullname }}" class="h-full w-full object-cover">
                         @else
-                            <svg class="w-14 h-14 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-14 h-14 text-gray-300 dark:text-gray-600" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
                         @endif

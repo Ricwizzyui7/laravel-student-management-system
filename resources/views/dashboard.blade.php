@@ -14,62 +14,62 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
 
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between dark:bg-gray-800 dark:border-gray-700">
                 <div>
-                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Total Registered</span>
-                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight">{{ number_format($totalStudents) }}</span>
-                    <a href="/students" class="text-xs text-blue-600 font-medium mt-1.5 inline-flex items-center gap-1 hover:underline">
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">Total Registered</span>
+                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight dark:text-gray-100">{{ number_format($totalStudents) }}</span>
+                    <a href="/students" class="text-xs text-blue-600 font-medium mt-1.5 inline-flex items-center gap-1 hover:underline dark:text-blue-400">
                         View Complete Directory →
                     </a>
                 </div>
-                <div class="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                <div class="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 dark:bg-blue-950 dark:text-blue-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between dark:bg-gray-800 dark:border-gray-700">
                 <div>
-                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Male Students</span>
-                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight">{{ number_format($maleStudents) }}</span>
-                    <span class="block text-xs text-gray-400 font-medium mt-1.5">
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">Male Students</span>
+                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight dark:text-gray-100">{{ number_format($maleStudents) }}</span>
+                    <span class="block text-xs text-gray-400 font-medium mt-1.5 dark:text-gray-500">
                         {{ $totalStudents > 0 ? round($maleStudents / $totalStudents * 100) : 0 }}% of cohort
                     </span>
                 </div>
-                <div class="h-12 w-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                <div class="h-12 w-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 dark:bg-sky-950 dark:text-sky-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between dark:bg-gray-800 dark:border-gray-700">
                 <div>
-                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Female Students</span>
-                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight">{{ number_format($femaleStudents) }}</span>
-                    <span class="block text-xs text-gray-400 font-medium mt-1.5">
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">Female Students</span>
+                    <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight dark:text-gray-100">{{ number_format($femaleStudents) }}</span>
+                    <span class="block text-xs text-gray-400 font-medium mt-1.5 dark:text-gray-500">
                         {{ $totalStudents > 0 ? round($femaleStudents / $totalStudents * 100) : 0 }}% of cohort
                     </span>
                 </div>
-                <div class="h-12 w-12 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center shrink-0">
+                <div class="h-12 w-12 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center shrink-0 dark:bg-pink-950 dark:text-pink-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between dark:bg-gray-800 dark:border-gray-700">
                 <div>
-                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Your Access Level</span>
-                    <span class="block text-2xl font-bold text-gray-900 mt-2 tracking-tight uppercase">
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">Your Access Level</span>
+                    <span class="block text-2xl font-bold text-gray-900 mt-2 tracking-tight uppercase dark:text-gray-100">
                         {{ Auth::user()->role ?? 'Staff' }}
                     </span>
-                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-md mt-2">
+                    <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-md mt-2 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800">
                         ● Connection Secure
                     </span>
                 </div>
-                <div class="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <div class="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 dark:bg-emerald-950 dark:text-emerald-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
@@ -80,18 +80,18 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:col-span-1">
-                <h3 class="text-base font-bold text-gray-900 mb-4">Quick Navigation Links</h3>
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:col-span-1 dark:bg-gray-800 dark:border-gray-700">
+                <h3 class="text-base font-bold text-gray-900 mb-4 dark:text-gray-100">Quick Navigation Links</h3>
                 <div class="space-y-3">
 
-                    <a href="/students" class="group flex items-center justify-between p-3.5 rounded-xl bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-100 transition-all">
+                    <a href="/students" class="group flex items-center justify-between p-3.5 rounded-xl bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-100 transition-all dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-blue-950/30 dark:hover:border-blue-800">
                         <div class="flex items-center gap-3">
-                            <div class="text-gray-400 group-hover:text-blue-600 transition-colors">
+                            <div class="text-gray-400 group-hover:text-blue-600 transition-colors dark:text-gray-500 dark:group-hover:text-blue-400">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                                 </svg>
                             </div>
-                            <span class="text-sm font-medium text-gray-700 group-hover:text-blue-900 transition-colors">View All Students</span>
+                            <span class="text-sm font-medium text-gray-700 group-hover:text-blue-900 transition-colors dark:text-gray-300 dark:group-hover:text-blue-300">View All Students</span>
                         </div>
                         <span class="text-gray-400 group-hover:text-blue-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5">→</span>
                     </a>
@@ -139,7 +139,7 @@
                                 </div>
                                 <span class="text-sm font-medium text-gray-700 group-hover:text-blue-900 transition-colors">Add New Record</span>
                             </div>
-                            <span class="text-gray-400 group-hover:text-blue-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5">→</span>
+                        <span class="text-gray-400 group-hover:text-blue-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5 dark:text-gray-500 dark:group-hover:text-blue-400">→</span>
                         </a>
                     @endif
 
