@@ -12,16 +12,16 @@
 
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
     <div>
-        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Course Code</label>
+        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1.5">Course Code</label>
         <input type="text" name="code" value="{{ old('code', $course->code ?? '') }}"
-               class="w-full bg-white border @error('code') border-red-300 @else border-gray-200 @enderror focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-sm rounded-xl px-4 py-2.5 transition uppercase"
+               class="w-full bg-white dark:bg-gray-800 border @error('code') border-red-300 @else border-gray-200 dark:border-gray-700 @enderror focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition uppercase"
                placeholder="e.g. CS101">
         @error('code') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
     </div>
     <div class="sm:col-span-2">
-        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Course Name</label>
+        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1.5">Course Name</label>
         <input type="text" name="name" value="{{ old('name', $course->name ?? '') }}"
-               class="w-full bg-white border @error('name') border-red-300 @else border-gray-200 @enderror focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-sm rounded-xl px-4 py-2.5 transition"
+               class="w-full bg-white dark:bg-gray-800 border @error('name') border-red-300 @else border-gray-200 dark:border-gray-700 @enderror focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition"
                placeholder="e.g. Cyber Security">
         @error('name') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
     </div>
@@ -29,25 +29,25 @@
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
     <div>
-        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Department <span class="text-gray-400 font-medium normal-case">(optional)</span></label>
+        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1.5">Department <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">(optional)</span></label>
         <input type="text" name="department" value="{{ old('department', $course->department ?? '') }}"
-               class="w-full bg-white border border-gray-200 focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-sm rounded-xl px-4 py-2.5 transition"
+               class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition"
                placeholder="e.g. Computing & IT">
         @error('department') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
     </div>
     <div>
-        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Duration <span class="text-gray-400 font-medium normal-case">(optional)</span></label>
+        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1.5">Duration <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">(optional)</span></label>
         <input type="text" name="duration" value="{{ old('duration', $course->duration ?? '') }}"
-               class="w-full bg-white border border-gray-200 focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-sm rounded-xl px-4 py-2.5 transition"
+               class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition"
                placeholder="e.g. 3 Years">
         @error('duration') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
     </div>
 </div>
 
 <div>
-    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">Description <span class="text-gray-400 font-medium normal-case">(optional)</span></label>
+    <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1.5">Description <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">(optional)</span></label>
     <textarea name="description" rows="4"
-              class="w-full bg-white border border-gray-200 focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-sm rounded-xl px-4 py-2.5 transition"
+              class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition"
               placeholder="Brief overview of the course...">{{ old('description', $course->description ?? '') }}</textarea>
     @error('description') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
 </div>

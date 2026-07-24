@@ -4,15 +4,15 @@
         {{-- Header --}}
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Attendance Dashboard</h1>
-                <p class="text-sm text-gray-500 mt-1">Overview of attendance across all students · {{ now()->format('l, M d, Y') }}</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">Attendance Dashboard</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Overview of attendance across all students · {{ now()->format('l, M d, Y') }}</p>
             </div>
             <div class="flex items-center gap-2">
                 <a href="{{ route('attendance.mark') }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl px-4 py-2.5 shadow-sm transition">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                     Mark Attendance
                 </a>
-                <a href="{{ route('attendance.report') }}" class="inline-flex items-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-semibold rounded-xl px-4 py-2.5 transition">
+                <a href="{{ route('attendance.report') }}" class="inline-flex items-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-semibold rounded-xl px-4 py-2.5 transition dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700">
                     Monthly Report
                 </a>
             </div>
@@ -29,28 +29,28 @@
                 ];
             @endphp
             @foreach($cards as $card)
-                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                     <div class="h-10 w-10 rounded-xl {{ $card['bg'] }} {{ $card['text'] }} flex items-center justify-center">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $card['icon'] }}"/></svg>
                     </div>
-                    <div class="mt-3 text-2xl font-bold text-gray-900 tracking-tight">{{ $card['value'] }}</div>
-                    <div class="text-xs font-medium text-gray-400 uppercase tracking-wider mt-0.5">{{ $card['label'] }}</div>
+                    <div class="mt-3 text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">{{ $card['value'] }}</div>
+                    <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">{{ $card['label'] }}</div>
                 </div>
             @endforeach
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             {{-- Trend line chart --}}
-            <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h3 class="text-base font-bold text-gray-900 mb-4">Last 14 Days</h3>
+            <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6">
+                <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">Last 14 Days</h3>
                 <div class="h-64">
                     <canvas id="trendChart"></canvas>
                 </div>
             </div>
 
             {{-- Distribution doughnut --}}
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h3 class="text-base font-bold text-gray-900 mb-4">Status Distribution</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6">
+                <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">Status Distribution</h3>
                 <div class="h-64 flex items-center justify-center">
                     <canvas id="distChart"></canvas>
                 </div>
@@ -59,43 +59,43 @@
 
         {{-- Today breakdown + recent --}}
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h3 class="text-base font-bold text-gray-900 mb-4">Today at a Glance</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6">
+                <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">Today at a Glance</h3>
                 <div class="space-y-3">
                     @foreach(['present' => 'Present', 'late' => 'Late', 'excused' => 'Excused', 'absent' => 'Absent'] as $key => $label)
                         <div class="flex items-center justify-between">
-                            <span class="inline-flex items-center gap-2 text-sm text-gray-600">
+                            <span class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                 <span class="h-2.5 w-2.5 rounded-full {{ \App\Models\Attendance::badgeFor($key) }}"></span>
                                 {{ $label }}
                             </span>
-                            <span class="text-sm font-semibold text-gray-900">{{ $today[$key] }}</span>
+                            <span class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ $today[$key] }}</span>
                         </div>
                     @endforeach
-                    <div class="flex items-center justify-between border-t border-gray-100 pt-3">
-                        <span class="text-sm text-gray-500">Marked / Total</span>
-                        <span class="text-sm font-semibold text-gray-900">{{ $today['marked'] }} / {{ $totalStudents }}</span>
+                    <div class="flex items-center justify-between border-t border-gray-100 dark:border-gray-700 pt-3">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Marked / Total</span>
+                        <span class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{ $today['marked'] }} / {{ $totalStudents }}</span>
                     </div>
                 </div>
             </div>
 
-            <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-base font-bold text-gray-900">Recent Marks</h3>
+                    <h3 class="text-base font-bold text-gray-900 dark:text-gray-100">Recent Marks</h3>
                     <a href="{{ route('attendance.history') }}" class="text-xs font-semibold text-blue-600 hover:underline">View history</a>
                 </div>
-                <div class="divide-y divide-gray-50">
+                <div class="divide-y divide-gray-50 dark:divide-gray-700">
                     @forelse($recent as $record)
                         <div class="flex items-center justify-between py-2.5">
-                            <a href="{{ route('attendance.student', $record->student_id) }}" class="text-sm font-medium text-gray-800 hover:text-blue-600 transition">
+                            <a href="{{ route('attendance.student', $record->student_id) }}" class="text-sm font-medium text-gray-800 hover:text-blue-600 transition dark:text-gray-200 dark:hover:text-blue-400">
                                 {{ $record->student->fullname ?? 'Unknown' }}
                             </a>
                             <div class="flex items-center gap-3">
-                                <span class="text-xs text-gray-400">{{ $record->date->format('M d, Y') }}</span>
+                                <span class="text-xs text-gray-400 dark:text-gray-500">{{ $record->date->format('M d, Y') }}</span>
                                 <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold {{ $record->status_badge }}">{{ $record->status_label }}</span>
                             </div>
                         </div>
                     @empty
-                        <p class="text-sm text-gray-500 py-4 text-center">No attendance recorded yet.</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 py-4 text-center">No attendance recorded yet.</p>
                     @endforelse
                 </div>
             </div>
