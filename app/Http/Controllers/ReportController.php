@@ -27,7 +27,7 @@ class ReportController extends Controller
     private function makePdf(string $view, array $data, string $filename, Request $request)
     {
         $data = array_merge([
-            'institution' => config('app.institution_name', 'Global Institute of Technology'),
+            'institution' => \App\Models\SystemSetting::get('institution_name', 'Global Institute of Technology'),
             'generatedAt' => Carbon::now(),
         ], $data);
 

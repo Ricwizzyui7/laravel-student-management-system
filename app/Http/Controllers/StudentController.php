@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
@@ -33,10 +32,6 @@ class StudentController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role != 'admin'){
-            abort(403);
-        }
-
         $linkableUsers = $this->linkableUsers();
         $courses = Course::orderBy('name')->get();
 
@@ -48,10 +43,6 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {   
-        if(Auth::user()->role != 'admin'){
-            abort(403);
-        }
-
         $request->validate([
             'fullname' => 'required|min:3',
             'course_id' => 'required|exists:courses,id',
@@ -128,8 +119,10 @@ class StudentController extends Controller
             ->get();
 
         // Attendance snapshot for the dashboard integration card.
-        $presentToday = \App\Models\Attendance::whereDate('date', now())->where('status', 'present')->count();
-        $markedToday = \App\Models\Attendance::whereDate('date', now())->count();
+        $todayStart = now()->startOfDay();
+        $todayEnd = now()->copy()->endOfDay();
+        $presentToday = \App\Models\Attendance::whereBetween('date', [$todayStart, $todayEnd])->where('status', 'present')->count();
+        $markedToday = \App\Models\Attendance::whereBetween('date', [$todayStart, $todayEnd])->count();
 
         // Course snapshot for the dashboard integration card.
         $totalCourses = Course::count();
@@ -162,10 +155,6 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {        
-        if(Auth::user()->role != 'admin'){
-            abort(403);
-        }
-
         $request->validate([
             'fullname' => 'required|min:3',
             'course_id' => 'required|exists:courses,id',
@@ -298,10 +287,6 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {       
-        if(Auth::user()->role != 'admin'){
-            abort(403);
-        }
-        
         $student = Student::findOrFail($id);
         $student->delete();
 

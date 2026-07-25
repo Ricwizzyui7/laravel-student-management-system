@@ -48,12 +48,13 @@ class AttendanceController extends Controller
             return redirect()->route('attendance.student', $student->id);
         }
 
-        $today = Carbon::today();
+        $todayStart = Carbon::today()->startOfDay();
+        $todayEnd = Carbon::today()->copy()->endOfDay();
 
         $totalStudents = Student::count();
 
         // Today's status breakdown.
-        $todayCounts = Attendance::whereDate('date', $today)
+        $todayCounts = Attendance::whereBetween('date', [$todayStart, $todayEnd])
             ->select('status', DB::raw('count(*) as total'))
             ->groupBy('status')
             ->pluck('total', 'status');
@@ -81,13 +82,22 @@ class AttendanceController extends Controller
             ? (int) round(($distribution['present'] + $distribution['late']) / $countable * 100)
             : 0;
 
-        // Last 14 days present-count trend (line chart).
-        $trend = collect(range(13, 0))->map(function ($daysAgo) {
-            $day = Carbon::today()->subDays($daysAgo);
+        // Last 14 days present/absent trend (single query, no N+1).
+        $fourteenDaysAgo = Carbon::today()->subDays(13)->startOfDay();
+        $rawTrend = Attendance::where('date', '>=', $fourteenDaysAgo)
+            ->where('date', '<', Carbon::today()->copy()->addDay()->startOfDay())
+            ->selectRaw('DATE(date) as day, status, COUNT(*) as total')
+            ->groupByRaw('DATE(date), status')
+            ->get()
+            ->groupBy(fn ($r) => $r->day);
+
+        $trend = collect(range(13, 0))->map(function ($daysAgo) use ($rawTrend) {
+            $day = Carbon::today()->subDays($daysAgo)->format('Y-m-d');
+            $items = $rawTrend->get($day, collect());
             return [
-                'label'   => $day->format('M d'),
-                'present' => Attendance::whereDate('date', $day)->where('status', 'present')->count(),
-                'absent'  => Attendance::whereDate('date', $day)->where('status', 'absent')->count(),
+                'label'   => Carbon::today()->subDays($daysAgo)->format('M d'),
+                'present' => (int) $items->where('status', 'present')->first()?->total ?? 0,
+                'absent'  => (int) $items->where('status', 'absent')->first()?->total ?? 0,
             ];
         });
 
@@ -117,7 +127,7 @@ class AttendanceController extends Controller
         $students = Student::orderBy('fullname')->get();
 
         // Existing marks for the chosen date, keyed by student id.
-        $existing = Attendance::whereDate('date', $date)
+        $existing = Attendance::where('date', $date)
             ->pluck('status', 'student_id');
 
         return view('attendance.mark', compact('students', 'date', 'existing'));
@@ -177,8 +187,8 @@ class AttendanceController extends Controller
 
         $records = Attendance::with('student')
             ->status($filters['status'] ?? null)
-            ->when($filters['from'] ?? null, fn ($q, $from) => $q->whereDate('date', '>=', $from))
-            ->when($filters['to'] ?? null, fn ($q, $to) => $q->whereDate('date', '<=', $to))
+            ->when($filters['from'] ?? null, fn ($q, $from) => $q->where('date', '>=', $from))
+            ->when($filters['to'] ?? null, fn ($q, $to) => $q->where('date', '<=', $to))
             ->when($filters['search'] ?? null, function ($q, $search) {
                 $q->whereHas('student', fn ($s) => $s->where('fullname', 'like', "%{$search}%"));
             })

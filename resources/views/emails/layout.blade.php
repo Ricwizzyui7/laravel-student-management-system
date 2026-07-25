@@ -18,12 +18,12 @@
                                 <tr>
                                     <td width="48" style="vertical-align:middle;">
                                         <div style="width:44px; height:44px; background-color:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); border-radius:12px; text-align:center; line-height:44px; color:#ffffff; font-size:22px; font-weight:bold;">
-                                            {{ strtoupper(substr($institution ?? config('app.institution_name', 'Global Institute of Technology'), 0, 1)) }}
+                                            {{ strtoupper(substr($institution ?? \App\Models\SystemSetting::get('institution_name', 'Global Institute of Technology'), 0, 1)) }}
                                         </div>
                                     </td>
                                     <td style="vertical-align:middle; padding-left:14px;">
                                         <div style="color:#ffffff; font-size:17px; font-weight:bold; letter-spacing:0.5px;">
-                                            {{ $institution ?? config('app.institution_name', 'Global Institute of Technology') }}
+                                            {{ $institution ?? \App\Models\SystemSetting::get('institution_name', 'Global Institute of Technology') }}
                                         </div>
                                         <div style="color:#bfdbfe; font-size:11px; text-transform:uppercase; letter-spacing:2px; margin-top:2px;">
                                             Student Management System
@@ -47,7 +47,7 @@
                             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td style="color:#9ca3af; font-size:11px; line-height:1.6;">
-                                        This is an automated message from {{ $institution ?? config('app.institution_name', 'Global Institute of Technology') }}.<br>
+                                        This is an automated message from {{ $institution ?? \App\Models\SystemSetting::get('institution_name', 'Global Institute of Technology') }}.<br>
                                         Please do not reply directly to this email.
                                     </td>
                                     <td align="right" style="color:#6b7280; font-size:11px; vertical-align:bottom;">

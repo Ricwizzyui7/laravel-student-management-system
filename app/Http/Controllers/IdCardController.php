@@ -30,8 +30,8 @@ class IdCardController extends Controller
         $course = $student->course_id ? Course::find($student->course_id) : null;
         $department = $course->department ?? '—';
 
-        // Institution identity (falls back to the app name).
-        $institution = config('app.institution_name', 'Global Institute of Technology');
+        // Institution identity (falls back to the default).
+        $institution = \App\Models\SystemSetting::get('institution_name', 'Global Institute of Technology');
 
         // QR payload: compact verification string scanners can read.
         $qrPayload = implode(' | ', array_filter([

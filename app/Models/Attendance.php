@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -40,7 +41,8 @@ class Attendance extends Model
     {
         [$year, $m] = array_pad(explode('-', $month), 2, null);
 
-        return $query->whereYear('date', $year)->whereMonth('date', $m);
+        return $query->where('date', '>=', "{$year}-{$m}-01")
+                     ->where('date', '<', Carbon::parse("{$year}-{$m}-01")->addMonth()->format('Y-m-d'));
     }
 
     /** Scope: filter by a specific status when provided. */

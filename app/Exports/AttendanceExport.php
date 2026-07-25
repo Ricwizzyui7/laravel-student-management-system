@@ -22,8 +22,8 @@ class AttendanceExport implements FromCollection, WithHeadings, WithMapping, Wit
         return Attendance::with('student')
             ->when($this->filters['month'] ?? null, fn ($q, $m) => $q->forMonth($m))
             ->when($this->filters['status'] ?? null, fn ($q, $s) => $q->where('status', $s))
-            ->when($this->filters['from'] ?? null, fn ($q, $from) => $q->whereDate('date', '>=', $from))
-            ->when($this->filters['to'] ?? null, fn ($q, $to) => $q->whereDate('date', '<=', $to))
+            ->when($this->filters['from'] ?? null, fn ($q, $from) => $q->where('date', '>=', $from))
+            ->when($this->filters['to'] ?? null, fn ($q, $to) => $q->where('date', '<=', $to))
             ->when($this->filters['student_id'] ?? null, fn ($q, $id) => $q->where('student_id', $id))
             ->latest('date')
             ->get();
