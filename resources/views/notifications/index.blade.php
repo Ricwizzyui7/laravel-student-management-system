@@ -49,7 +49,7 @@
                             <div class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{{ $note->data['message'] ?? '' }}</div>
                             <div class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ $note->created_at->diffForHumans() }}</div>
                         </div>
-                        <div class="flex items-center gap-1 shrink-0">
+                        <div class="flex sm:items-center gap-1 shrink-0 sm:flex-row flex-col">
                             @if(!empty($note->data['url']))
                                 <form method="POST" action="{{ route('notifications.read', $note->id) }}" class="m-0">
                                     @csrf

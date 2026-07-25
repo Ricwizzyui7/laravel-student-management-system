@@ -59,9 +59,9 @@
                 </div>
                 <h3 class="text-base font-bold text-gray-900 dark:text-gray-100">Student Profile</h3>
                 <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mt-1 flex-1">Individual student report — open any student's profile and click <strong>PDF</strong>, or enter an ID below.</p>
-                <form onsubmit="event.preventDefault(); const id=this.sid.value.trim(); if(id) window.open('{{ url('reports/students') }}/'+id, '_blank');" class="mt-4 flex items-center gap-2">
+                <form onsubmit="event.preventDefault(); const id=this.sid.value.trim(); if(id) window.open('{{ url('reports/students') }}/'+id, '_blank');" class="mt-4 flex sm:items-center gap-2 sm:flex-row flex-col">
                     <input type="number" name="sid" min="1" placeholder="Student ID" class="w-full border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-xs rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900">
-                    <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg px-4 py-2 transition shrink-0">Generate</button>
+                    <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg px-4 py-2 transition shrink-0 sm:self-auto self-end">Generate</button>
                 </form>
             </div>
         </div>

@@ -25,9 +25,9 @@
 
         {{-- ===================== ID CARD ===================== --}}
         {{-- Fixed pixel size = CR80 card at ~300dpi-ish ratio (1012 x 638 ≈ 3.375" x 2.125"). --}}
-        <div class="print-area flex justify-center">
+        <div class="print-area flex justify-center overflow-x-auto">
             <div id="idCard"
-                 class="relative bg-white overflow-hidden shadow-xl"
+                 class="relative bg-white overflow-hidden shadow-xl max-w-full"
                  style="width: 640px; height: 404px; border-radius: 18px;">
 
                 {{-- Top band --}}

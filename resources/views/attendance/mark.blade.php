@@ -15,13 +15,13 @@
             </div>
 
             {{-- Date picker (GET reloads roster with existing marks) --}}
-            <form method="GET" action="{{ route('attendance.mark') }}" class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-end gap-3 m-0">
-                <div>
+            <form method="GET" action="{{ route('attendance.mark') }}" class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-end gap-3 m-0 flex-col sm:flex-row">
+                <div class="w-full sm:w-auto">
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1">Attendance Date</label>
                     <input type="date" name="date" value="{{ $date }}" max="{{ now()->format('Y-m-d') }}"
-                           class="border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:focus:border-blue-400">
+                           class="w-full sm:w-auto border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 dark:focus:border-blue-400">
                 </div>
-                <button type="submit" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold rounded-lg px-4 py-2 transition dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-300">Load</button>
+                <button type="submit" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold rounded-lg px-4 py-2 transition dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-300 w-full sm:w-auto">Load</button>
             </form>
 
             @if($students->isEmpty())
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                                 <select name="statuses[{{ $student->id }}]" data-status
-                                        class="border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 shrink-0 w-36">
+                                        class="border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-900 shrink-0 w-28 sm:w-36">
                                     <option value="">— Not marked —</option>
                                     @foreach(\App\Models\Attendance::STATUSES as $s)
                                         <option value="{{ $s }}" @selected(($existing[$student->id] ?? '') === $s)>{{ ucfirst($s) }}</option>

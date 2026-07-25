@@ -112,6 +112,9 @@
             <x-responsive-nav-link :href="route('exports.index')" :active="request()->is('exports*')">
                 {{ __('Exports') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="url('/students/create')" :active="request()->is('students/create')">
+                {{ __('Add Student') }}
+            </x-responsive-nav-link>
             @endif
         </div>
 
@@ -125,6 +128,9 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('settings.user.index')">
+                    {{ __('Settings') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
