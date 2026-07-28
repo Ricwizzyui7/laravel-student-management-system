@@ -22,11 +22,11 @@ Route::get('/', function () {
 
 // 2. Dashboard Route
 Route::get('/dashboard', [StudentController::class, 'dashboard'])
-    ->middleware(['auth'])
+    ->middleware(['auth', 'locale'])
     ->name('dashboard');
 
 // 3. Authenticated Routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'locale'])->group(function () {
 
     // User Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
