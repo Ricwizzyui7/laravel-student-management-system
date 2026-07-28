@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('attendance.dashboard')" :active="request()->is('attendance*')">
                             Attendance
                     </x-nav-link>
+                    <x-nav-link :href="route('finance.index')" :active="request()->is('finance*')">
+                            Finance
+                    </x-nav-link>
                     @if(Auth::user()->role == 'admin')
                     <x-nav-link :href="route('reports.index')" :active="request()->is('reports*')">
                             Reports
@@ -104,6 +107,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('attendance.dashboard')" :active="request()->is('attendance*')">
                 {{ __('Attendance') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('finance.index')" :active="request()->is('finance*')">
+                {{ __('Finance') }}
             </x-responsive-nav-link>
             @if(Auth::user()->role == 'admin')
             <x-responsive-nav-link :href="route('reports.index')" :active="request()->is('reports*')">

@@ -10,6 +10,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserSettingsController;
 use App\Http\Controllers\AdminSettingsController;
+use App\Http\Controllers\FinanceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
@@ -105,6 +106,44 @@ Route::middleware('auth')->group(function () {
         Route::get('/exports/courses', [ExportController::class, 'courses'])->name('exports.courses');
         Route::get('/exports/departments', [ExportController::class, 'departments'])->name('exports.departments');
         Route::get('/exports/attendance', [ExportController::class, 'attendance'])->name('exports.attendance');
+    });
+
+    /*
+     |--------------------------------------------------------------------
+     | Finance / Fee Management Module
+     |--------------------------------------------------------------------
+     | Accessible by any authenticated user (both staff and admin).
+     */
+    Route::prefix('finance')->group(function () {
+        Route::get('/', [FinanceController::class, 'index'])->name('finance.index');
+
+        // Fee categories (admin only for CRUD)
+        Route::middleware('admin')->group(function () {
+            Route::get('/categories', [FinanceController::class, 'categories'])->name('finance.categories');
+            Route::get('/categories/create', [FinanceController::class, 'createCategory'])->name('finance.categories.create');
+            Route::post('/categories', [FinanceController::class, 'storeCategory'])->name('finance.categories.store');
+            Route::get('/categories/{feeCategory}/edit', [FinanceController::class, 'editCategory'])->name('finance.categories.edit');
+            Route::put('/categories/{feeCategory}', [FinanceController::class, 'updateCategory'])->name('finance.categories.update');
+            Route::delete('/categories/{feeCategory}', [FinanceController::class, 'destroyCategory'])->name('finance.categories.destroy');
+        });
+
+        // Fee assignment (staff & admin)
+        Route::get('/assign', [FinanceController::class, 'assign'])->name('finance.assign');
+        Route::post('/assign', [FinanceController::class, 'storeAssign'])->name('finance.assign.store');
+
+        // Payments (staff & admin)
+        Route::get('/payments/create', [FinanceController::class, 'recordPayment'])->name('finance.payments.create');
+        Route::post('/payments', [FinanceController::class, 'storePayment'])->name('finance.payments.store');
+        Route::get('/payments/{studentFee}/history', [FinanceController::class, 'paymentHistory'])->name('finance.payments.history');
+        Route::delete('/payments/{payment}', [FinanceController::class, 'destroyPayment'])->name('finance.payments.destroy');
+
+        // Student fee records (staff & admin)
+        Route::get('/student/{id}', [FinanceController::class, 'studentFees'])->name('finance.student');
+
+        // Edit/delete individual fee records (staff & admin)
+        Route::get('/fees/{studentFee}/edit', [FinanceController::class, 'editFee'])->name('finance.fees.edit');
+        Route::put('/fees/{studentFee}', [FinanceController::class, 'updateFee'])->name('finance.fees.update');
+        Route::delete('/fees/{studentFee}', [FinanceController::class, 'destroyFee'])->name('finance.fees.destroy');
     });
 
     // Wildcard course detail at the bottom of the course group.
