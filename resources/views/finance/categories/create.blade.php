@@ -4,18 +4,18 @@
         <div class="mb-6">
             <a href="/finance/categories" class="inline-flex items-center gap-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                Back to Categories
+                {{ __('Back to Categories') }}
             </a>
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">Create Fee Category</h2>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">{{ __('Create Fee Category') }}</h2>
 
             <form method="POST" action="/finance/categories">
                 @csrf
 
                 <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Name</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Name') }}</label>
                     <input type="text" name="name" value="{{ old('name') }}" required
                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500"
                            placeholder="e.g. Tuition, Hostel, Food">
@@ -23,15 +23,15 @@
                 </div>
 
                 <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Description (optional)</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Description') }}</label>
                     <textarea name="description" rows="3"
                               class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500"
-                              placeholder="Brief description of this fee type">{{ old('description') }}</textarea>
+                              placeholder="{{ __('Brief description of this fee type') }}">{{ old('description') }}</textarea>
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-xl px-6 py-2.5 shadow-sm transition">Create Category</button>
-                    <a href="/finance/categories" class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition">Cancel</a>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-xl px-6 py-2.5 shadow-sm transition">{{ __('Create Category') }}</button>
+                    <a href="/finance/categories" class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition">{{ __('Cancel') }}</a>
                 </div>
             </form>
         </div>

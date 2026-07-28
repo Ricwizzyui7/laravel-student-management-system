@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\Admin::class,
         ]);
+
+        $middleware->web(prepend: [
+            \App\Http\Middleware\Locale::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

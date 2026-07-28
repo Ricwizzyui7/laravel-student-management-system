@@ -98,7 +98,7 @@ class UserSettingsController extends Controller
     public function updateLanguage(Request $request)
     {
         $validated = $request->validate([
-            'language' => ['required', 'in:en,es,fr,de'],
+            'language' => ['required', 'in:en,sw'],
         ]);
 
         $request->user()->update($validated);

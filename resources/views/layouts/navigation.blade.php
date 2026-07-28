@@ -66,6 +66,30 @@
                             {{ __('Settings') }}
                         </x-dropdown-link>
 
+                        <div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
+
+                        <div class="px-4 py-2 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                            {{ __('Language') }}
+                        </div>
+                        <div class="flex px-3 py-1 gap-1">
+                            <form method="POST" action="{{ route('settings.user.language') }}" class="flex-1 m-0">
+                                @csrf
+                                <input type="hidden" name="language" value="en">
+                                <button type="submit" class="w-full text-left px-3 py-1.5 text-sm rounded-lg transition {{ app()->getLocale() === 'en' ? 'bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-semibold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700' }}">
+                                    🇬🇧 English
+                                </button>
+                            </form>
+                            <form method="POST" action="{{ route('settings.user.language') }}" class="flex-1 m-0">
+                                @csrf
+                                <input type="hidden" name="language" value="sw">
+                                <button type="submit" class="w-full text-left px-3 py-1.5 text-sm rounded-lg transition {{ app()->getLocale() === 'sw' ? 'bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-semibold' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700' }}">
+                                    🇹🇿 Kiswahili
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
