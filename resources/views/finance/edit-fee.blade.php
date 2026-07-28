@@ -10,7 +10,7 @@
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6">
             <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Edit Fee Record</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">{{ $studentFee->student?->fullname }} &mdash; Current: ${{ number_format($studentFee->amount, 2) }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">{{ $studentFee->student?->fullname }} &mdash; Current: TSh {{ number_format($studentFee->amount, 2) }}</p>
 
             <form method="POST" action="/finance/fees/{{ $studentFee->id }}">
                 @csrf
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Amount ($)</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Amount (TSh)</label>
                     <input type="number" name="amount" value="{{ old('amount', $studentFee->amount) }}" step="0.01" min="0" required
                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500">
                 </div>

@@ -36,16 +36,16 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
             <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5">
                 <div class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Total Fees</div>
-                <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-1">${{ number_format($totalFees, 2) }}</div>
+                <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-1">TSh {{ number_format($totalFees, 2) }}</div>
             </div>
             <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5">
                 <div class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Total Paid</div>
-                <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">${{ number_format($totalPaid, 2) }}</div>
+                <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">TSh {{ number_format($totalPaid, 2) }}</div>
             </div>
             <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-5">
                 <div class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Balance</div>
                 <div class="text-2xl font-bold {{ $totalBalance > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400' }} mt-1">
-                    ${{ number_format($totalBalance, 2) }}
+                    TSh {{ number_format($totalBalance, 2) }}
                 </div>
             </div>
         </div>
@@ -91,16 +91,16 @@
                     <div class="flex items-center gap-6">
                         <div>
                             <span class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase">Amount</span>
-                            <div class="text-lg font-bold text-gray-900 dark:text-gray-100">${{ number_format($fee->amount, 2) }}</div>
+                            <div class="text-lg font-bold text-gray-900 dark:text-gray-100">TSh {{ number_format($fee->amount, 2) }}</div>
                         </div>
                         <div>
                             <span class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase">Paid</span>
-                            <div class="text-lg font-bold text-emerald-600 dark:text-emerald-400">${{ number_format($fee->paid_amount, 2) }}</div>
+                            <div class="text-lg font-bold text-emerald-600 dark:text-emerald-400">TSh {{ number_format($fee->paid_amount, 2) }}</div>
                         </div>
                         <div>
                             <span class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase">Balance</span>
                             <div class="text-lg font-bold {{ $fee->balance > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400' }}">
-                                ${{ number_format($fee->balance, 2) }}
+                                TSh {{ number_format($fee->balance, 2) }}
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                                 @foreach($fee->payments->sortByDesc('payment_date')->take(3) as $payment)
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="text-gray-500 dark:text-gray-400">{{ $payment->payment_date->format('M d, Y') }} &mdash; {{ str_replace('_', ' ', $payment->payment_method) }}</span>
-                                        <span class="font-semibold text-emerald-600 dark:text-emerald-400">${{ number_format($payment->amount, 2) }}</span>
+                                        <span class="font-semibold text-emerald-600 dark:text-emerald-400">TSh {{ number_format($payment->amount, 2) }}</span>
                                     </div>
                                 @endforeach
                             </div>

@@ -21,7 +21,7 @@
                         <option value="">Select a fee assignment...</option>
                         @foreach($fees as $fee)
                             <option value="{{ $fee->id }}" @selected(isset($fee) && $fee->id == $fee->id)>
-                                {{ $fee->student?->fullname }} - {{ $fee->feeCategory?->name }} (${{ number_format($fee->amount, 2) }}, Due: {{ $fee->due_date?->format('M d, Y') ?? 'N/A' }})
+                                {{ $fee->student?->fullname }} - {{ $fee->feeCategory?->name }} (TSh {{ number_format($fee->amount, 2) }}, Due: {{ $fee->due_date?->format('M d, Y') ?? 'N/A' }})
                             </option>
                         @endforeach
                     </select>
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Amount ($)</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Amount (TSh)</label>
                     <input type="number" name="amount" value="{{ old('amount') }}" step="0.01" min="0.01" required
                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500"
                            placeholder="0.00">

@@ -15,7 +15,7 @@
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
                         {{ $studentFee->student?->fullname }} —
                         <span class="font-semibold">{{ $studentFee->feeCategory?->name }}</span> —
-                        ${{ number_format($studentFee->amount, 2) }}
+                        TSh {{ number_format($studentFee->amount, 2) }}
                     </p>
                 </div>
                 <div class="flex items-center gap-2">
@@ -51,7 +51,7 @@
                             <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
                                 <td class="py-4 px-6 text-gray-400 dark:text-gray-500 font-medium">#{{ $payment->id }}</td>
                                 <td class="py-4 px-6 text-gray-900 dark:text-gray-100">{{ $payment->payment_date->format('M d, Y') }}</td>
-                                <td class="py-4 px-6 text-right font-semibold text-emerald-600 dark:text-emerald-400">${{ number_format($payment->amount, 2) }}</td>
+                                <td class="py-4 px-6 text-right font-semibold text-emerald-600 dark:text-emerald-400">TSh {{ number_format($payment->amount, 2) }}</td>
                                 <td class="py-4 px-6">
                                     <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 capitalize">
                                         {{ str_replace('_', ' ', $payment->payment_method) }}
@@ -91,11 +91,11 @@
             <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6">
                 <div class="flex justify-between items-center">
                     <span class="text-sm font-semibold text-gray-500 dark:text-gray-400">Total Paid:</span>
-                    <span class="text-lg font-bold text-emerald-600 dark:text-emerald-400">${{ number_format($studentFee->paid_amount, 2) }}</span>
+                    <span class="text-lg font-bold text-emerald-600 dark:text-emerald-400">TSh {{ number_format($studentFee->paid_amount, 2) }}</span>
                 </div>
                 <div class="flex justify-between items-center mt-2">
                     <span class="text-sm font-semibold text-gray-500 dark:text-gray-400">Remaining Balance:</span>
-                    <span class="text-lg font-bold text-amber-600 dark:text-amber-400">${{ number_format($studentFee->balance, 2) }}</span>
+                    <span class="text-lg font-bold text-amber-600 dark:text-amber-400">TSh {{ number_format($studentFee->balance, 2) }}</span>
                 </div>
             </div>
         @endif
