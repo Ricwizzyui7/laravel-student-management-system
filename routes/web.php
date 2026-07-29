@@ -47,7 +47,7 @@ Route::middleware(['auth', 'locale'])->group(function () {
         Route::post('/password', [UserSettingsController::class, 'updatePassword'])->name('settings.user.password');
         Route::post('/email', [UserSettingsController::class, 'updateEmail'])->name('settings.user.email');
         Route::post('/theme', [UserSettingsController::class, 'updateTheme'])->name('settings.user.theme');
-        Route::post('/language', [UserSettingsController::class, 'updateLanguage'])->name('settings.user.language');
+        Route::match(['GET', 'POST'], '/language', [UserSettingsController::class, 'updateLanguage'])->name('settings.user.language');
         Route::post('/notifications', [UserSettingsController::class, 'updateNotificationPreferences'])->name('settings.user.notifications');
     });
 
