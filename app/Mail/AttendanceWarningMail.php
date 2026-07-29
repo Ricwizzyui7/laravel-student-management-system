@@ -23,7 +23,7 @@ class AttendanceWarningMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Attendance Warning — Action Required',
+            subject: __('Attendance Warning — Action Required'),
         );
     }
 

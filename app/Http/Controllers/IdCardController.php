@@ -21,7 +21,7 @@ class IdCardController extends Controller
         if (Auth::user()->role != 'admin') {
             $own = Student::where('user_id', Auth::id())->first();
             if (!$own || $own->id !== $student->id) {
-                abort(403, 'You can only view your own ID card.');
+                abort(403, __('You can only view your own ID card.'));
             }
         }
 

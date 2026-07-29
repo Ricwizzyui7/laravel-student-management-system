@@ -3,12 +3,12 @@
         <div class="mb-6 flex items-center justify-between">
             <a href="{{ route('courses.index') }}" class="inline-flex items-center gap-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-600 transition">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                Back to Courses
+                {{ __('Back to Courses') }}
             </a>
             @if(auth()->user()->role === 'admin')
                 <a href="{{ route('courses.edit', $course->id) }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl px-4 py-2.5 shadow-sm transition">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                    Edit Course
+                    {{ __('Edit Course') }}
                 </a>
             @endif
         </div>
@@ -38,22 +38,22 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
             <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
                 <div class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $course->students_count }}</div>
-                <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">Enrolled Students</div>
+                <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">{{ __('Enrolled Students') }}</div>
             </div>
             <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
                 <div class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $course->duration ?? '—' }}</div>
-                <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">Duration</div>
+                <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">{{ __('Duration') }}</div>
             </div>
             <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm col-span-2 sm:col-span-1">
                 <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 truncate">{{ $course->department ?? '—' }}</div>
-                <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">Department</div>
+                <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">{{ __('Department') }}</div>
             </div>
         </div>
 
         {{-- Enrolled students --}}
         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700">
-                <h3 class="text-base font-bold text-gray-900 dark:text-gray-100">Enrolled Students</h3>
+                <h3 class="text-base font-bold text-gray-900 dark:text-gray-100">{{ __('Enrolled Students') }}</h3>
             </div>
             <div class="divide-y divide-gray-50 dark:divide-gray-700">
                 @forelse($course->students as $student)
@@ -72,7 +72,7 @@
                         <span class="text-gray-300 dark:text-gray-600 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition">→</span>
                     </a>
                 @empty
-                    <p class="px-6 py-10 text-center text-sm text-gray-500 dark:text-gray-400">No students are enrolled in this course yet.</p>
+                    <p class="px-6 py-10 text-center text-sm text-gray-500 dark:text-gray-400">{{ __('No students are enrolled in this course yet.') }}</p>
                 @endforelse
             </div>
         </div>

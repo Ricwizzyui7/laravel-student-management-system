@@ -5,12 +5,12 @@
             @if(auth()->user()->isAdmin())
                 <a href="{{ route('attendance.dashboard') }}" class="inline-flex items-center gap-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-600 transition">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                    Back to Dashboard
+                    {{ __('Back to Dashboard') }}
                 </a>
             @else
                 <span></span>
             @endif
-            <a href="{{ route('students.show', $student->id) }}" class="text-sm font-semibold text-blue-600 hover:underline">Full Profile →</a>
+            <a href="{{ route('students.show', $student->id) }}" class="text-sm font-semibold text-blue-600 hover:underline">{{ __('Full Profile') }} →</a>
         </div>
 
         {{-- Header --}}
@@ -25,18 +25,18 @@
                 </div>
                 <div class="min-w-0">
                     <h1 class="text-xl font-bold text-gray-900 dark:text-gray-100 truncate">{{ $student->fullname }}</h1>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ $student->course }} · Attendance Record</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ $student->course }} · {{ __('Attendance Record') }}</p>
                 </div>
                 <div class="ml-auto text-right">
                     <div class="text-3xl font-bold {{ $percentage >= 75 ? 'text-green-600' : ($percentage >= 50 ? 'text-yellow-600' : 'text-red-600') }}">{{ $percentage }}%</div>
-                    <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">Attendance Rate</div>
+                    <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ __('Attendance Rate') }}</div>
                 </div>
             </div>
         </div>
 
         {{-- Summary cards --}}
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-            @foreach(['present' => ['Present','text-green-600'], 'absent' => ['Absent','text-red-600'], 'late' => ['Late','text-yellow-600'], 'excused' => ['Excused','text-blue-600']] as $key => $meta)
+            @foreach(['present' => [__('Present'),'text-green-600'], 'absent' => [__('Absent'),'text-red-600'], 'late' => [__('Late'),'text-yellow-600'], 'excused' => [__('Excused'),'text-blue-600']] as $key => $meta)
                 <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition">
                     <div class="text-2xl font-bold {{ $meta[1] }}">{{ $summary[$key] }}</div>
                     <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">{{ $meta[0] }} Days</div>
@@ -47,7 +47,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {{-- This-month chart --}}
             <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6">
-                <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">This Month</h3>
+                <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">{{ __('This Month') }}</h3>
                 <div class="h-56 flex items-center justify-center">
                     <canvas id="studentChart"></canvas>
                 </div>
@@ -55,7 +55,7 @@
 
             {{-- Full record --}}
             <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6">
-                <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">Attendance Log ({{ $summary['total'] }} records)</h3>
+                <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">{{ __('Attendance Log') }} ({{ $summary['total'] }} {{ __('records') }})</h3>
                 <div class="divide-y divide-gray-50 dark:divide-gray-700 max-h-96 overflow-y-auto">
                     @forelse($records as $record)
                         <div class="flex items-center justify-between py-2.5">
@@ -63,7 +63,7 @@
                             <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold {{ $record->status_badge }}">{{ $record->status_label }}</span>
                         </div>
                     @empty
-                        <p class="text-sm text-gray-500 dark:text-gray-400 py-6 text-center">No attendance has been recorded yet.</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 py-6 text-center">{{ __('No attendance has been recorded yet.') }}</p>
                     @endforelse
                 </div>
             </div>
@@ -77,12 +77,12 @@
             const monthly = @json($monthly);
             const total = monthly.present + monthly.absent + monthly.late + monthly.excused;
             const el = document.getElementById('studentChart');
-            if (!total) { el.parentElement.innerHTML = '<p class="text-sm text-gray-400 dark:text-gray-500">No records this month.</p>'; return; }
+            if (!total) { el.parentElement.innerHTML = '<p class="text-sm text-gray-400 dark:text-gray-500">{{ __('No records this month.') }}</p>'; return; }
 
             new Chart(el, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Present', 'Absent', 'Late', 'Excused'],
+                    labels: ['{{ __('Present') }}', '{{ __('Absent') }}', '{{ __('Late') }}', '{{ __('Excused') }}'],
                     datasets: [{
                         data: [monthly.present, monthly.absent, monthly.late, monthly.excused],
                         backgroundColor: ['#16a34a', '#dc2626', '#ca8a04', '#2563eb'],

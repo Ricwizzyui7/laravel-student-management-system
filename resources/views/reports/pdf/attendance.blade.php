@@ -3,12 +3,12 @@
 @section('content')
     <table style="width: 100%; margin: 0 0 10px 0;">
         <tr>
-            <td class="muted">Students: <strong>{{ $rows->count() }}</strong></td>
+            <td class="muted">{{ __('Students:') }} <strong>{{ $rows->count() }}</strong></td>
             <td class="text-right muted">
-                <span class="badge b-green">Present {{ $totals['present'] }}</span>
-                <span class="badge b-red">Absent {{ $totals['absent'] }}</span>
-                <span class="badge b-yellow">Late {{ $totals['late'] }}</span>
-                <span class="badge b-blue">Excused {{ $totals['excused'] }}</span>
+                <span class="badge b-green">{{ __('Present') }} {{ $totals['present'] }}</span>
+                <span class="badge b-red">{{ __('Absent') }} {{ $totals['absent'] }}</span>
+                <span class="badge b-yellow">{{ __('Late') }} {{ $totals['late'] }}</span>
+                <span class="badge b-blue">{{ __('Excused') }} {{ $totals['excused'] }}</span>
             </td>
         </tr>
     </table>
@@ -17,14 +17,14 @@
         <thead>
             <tr>
                 <th style="width: 30px;">#</th>
-                <th>Student</th>
-                <th>Course</th>
-                <th class="text-center">Present</th>
-                <th class="text-center">Absent</th>
-                <th class="text-center">Late</th>
-                <th class="text-center">Excused</th>
-                <th class="text-center">Total</th>
-                <th class="text-center">Rate</th>
+                <th>{{ __('Student') }}</th>
+                <th>{{ __('Course') }}</th>
+                <th class="text-center">{{ __('Present') }}</th>
+                <th class="text-center">{{ __('Absent') }}</th>
+                <th class="text-center">{{ __('Late') }}</th>
+                <th class="text-center">{{ __('Excused') }}</th>
+                <th class="text-center">{{ __('Total') }}</th>
+                <th class="text-center">{{ __('Rate') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +44,7 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="9" class="text-center muted" style="padding: 20px;">No attendance data for this period.</td></tr>
+                <tr><td colspan="9" class="text-center muted" style="padding: 20px;">{{ __('No attendance data for this period.') }}</td></tr>
             @endforelse
         </tbody>
     </table>

@@ -4,29 +4,29 @@
         <div class="mb-6">
             <a href="{{ route('attendance.dashboard') }}" class="inline-flex items-center gap-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-600 transition">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                Back to Dashboard
+                {{ __('Back to Dashboard') }}
             </a>
         </div>
 
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
             <div>
-                <h1 class="text-xl font-bold text-gray-900 dark:text-gray-100">Monthly Attendance Report</h1>
+                <h1 class="text-xl font-bold text-gray-900 dark:text-gray-100">{{ __('Monthly Attendance Report') }}</h1>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $monthLabel }}</p>
             </div>
             <form method="GET" action="{{ route('attendance.report') }}" class="flex items-end gap-2 m-0">
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1">Select Month</label>
+                    <label class="block text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-1">{{ __('Select Month') }}</label>
                     <input type="month" name="month" value="{{ $month }}"
                            class="border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg px-4 py-2 transition">View</button>
-                <button type="button" onclick="window.print()" class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900/50 text-gray-700 dark:text-gray-300 text-sm font-semibold rounded-lg px-4 py-2 transition">Print</button>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg px-4 py-2 transition">{{ __('View') }}</button>
+                <button type="button" onclick="window.print()" class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900/50 text-gray-700 dark:text-gray-300 text-sm font-semibold rounded-lg px-4 py-2 transition">{{ __('Print') }}</button>
             </form>
         </div>
 
         {{-- Totals summary --}}
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-            @foreach(['present' => ['Present','text-green-600','bg-green-50'], 'absent' => ['Absent','text-red-600','bg-red-50'], 'late' => ['Late','text-yellow-600','bg-yellow-50'], 'excused' => ['Excused','text-blue-600','bg-blue-50']] as $key => $meta)
+            @foreach(['present' => [__('Present'),'text-green-600','bg-green-50'], 'absent' => [__('Absent'),'text-red-600','bg-red-50'], 'late' => [__('Late'),'text-yellow-600','bg-yellow-50'], 'excused' => [__('Excused'),'text-blue-600','bg-blue-50']] as $key => $meta)
                 <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
                     <div class="text-2xl font-bold {{ $meta[1] }}">{{ $totals[$key] }}</div>
                     <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">{{ $meta[0] }} (month)</div>
@@ -36,7 +36,7 @@
 
         {{-- Chart --}}
         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 mb-6">
-            <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">Attendance % by Student</h3>
+            <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">{{ __('Attendance % by Student') }}</h3>
             <div class="h-72">
                 <canvas id="reportChart"></canvas>
             </div>
@@ -48,13 +48,13 @@
                 <table class="w-full text-left">
                     <thead>
                         <tr class="bg-gray-50/70 dark:bg-gray-900/50 border-b border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-400 text-xs font-semibold uppercase tracking-wider">
-                            <th class="py-4 px-6">Student</th>
-                            <th class="py-4 px-6 text-center">Present</th>
-                            <th class="py-4 px-6 text-center">Absent</th>
-                            <th class="py-4 px-6 text-center">Late</th>
-                            <th class="py-4 px-6 text-center">Excused</th>
-                            <th class="py-4 px-6 text-center">Total</th>
-                            <th class="py-4 px-6 w-48">Attendance %</th>
+                            <th class="py-4 px-6">{{ __('Student') }}</th>
+                            <th class="py-4 px-6 text-center">{{ __('Present') }}</th>
+                            <th class="py-4 px-6 text-center">{{ __('Absent') }}</th>
+                            <th class="py-4 px-6 text-center">{{ __('Late') }}</th>
+                            <th class="py-4 px-6 text-center">{{ __('Excused') }}</th>
+                            <th class="py-4 px-6 text-center">{{ __('Total') }}</th>
+                            <th class="py-4 px-6 w-48">{{ __('Attendance %') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50 dark:divide-gray-700 text-sm">
@@ -85,7 +85,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="7" class="py-12 px-6 text-center text-sm text-gray-500 dark:text-gray-400">No students to report.</td></tr>
+                            <tr><td colspan="7" class="py-12 px-6 text-center text-sm text-gray-500 dark:text-gray-400">{{ __('No students to report.') }}</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -105,7 +105,7 @@
                 data: {
                     labels: rows.map(r => r.name),
                     datasets: [{
-                        label: 'Attendance %',
+                        label: '{{ __('Attendance %') }}',
                         data: rows.map(r => r.pct),
                         backgroundColor: rows.map(r => r.pct >= 75 ? '#22c55e' : (r.pct >= 50 ? '#eab308' : '#ef4444')),
                         borderRadius: 6,

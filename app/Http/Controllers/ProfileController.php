@@ -40,8 +40,8 @@ class ProfileController extends Controller
         $request->user()->save();
 
         \App\Models\User::notifyAdmins(new \App\Notifications\SystemNotification(
-            'Profile updated',
-            "{$request->user()->name} updated their account profile.",
+            __('Profile updated'),
+            __(':name updated their account profile.', ['name' => $request->user()->name]),
             'user-edit',
             null,
         ));

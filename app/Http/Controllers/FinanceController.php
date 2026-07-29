@@ -56,7 +56,7 @@ class FinanceController extends Controller
 
         FeeCategory::create($request->only(['name', 'description']));
 
-        return redirect('/finance/categories')->with('success', 'Fee category created successfully.');
+        return redirect('/finance/categories')->with('success', __('Fee category created successfully.'));
     }
 
     public function editCategory(FeeCategory $feeCategory)
@@ -74,18 +74,18 @@ class FinanceController extends Controller
 
         $feeCategory->update($request->only(['name', 'description', 'is_active']));
 
-        return redirect('/finance/categories')->with('success', 'Fee category updated successfully.');
+        return redirect('/finance/categories')->with('success', __('Fee category updated successfully.'));
     }
 
     public function destroyCategory(FeeCategory $feeCategory)
     {
         if ($feeCategory->studentFees()->exists()) {
-            return redirect('/finance/categories')->with('error', 'Cannot delete category with assigned fees.');
+            return redirect('/finance/categories')->with('error', __('Cannot delete category with assigned fees.'));
         }
 
         $feeCategory->delete();
 
-        return redirect('/finance/categories')->with('success', 'Fee category deleted successfully.');
+        return redirect('/finance/categories')->with('success', __('Fee category deleted successfully.'));
     }
 
     public function assign()
@@ -120,7 +120,7 @@ class FinanceController extends Controller
             'status' => 'unpaid',
         ]);
 
-        return redirect('/finance/assign')->with('success', 'Fee assigned successfully.');
+        return redirect('/finance/assign')->with('success', __('Fee assigned successfully.'));
     }
 
     public function recordPayment(Request $request, StudentFee $studentFee = null)
@@ -172,7 +172,7 @@ class FinanceController extends Controller
             }
         });
 
-        return redirect('/finance')->with('success', 'Payment recorded successfully.');
+        return redirect('/finance')->with('success', __('Payment recorded successfully.'));
     }
 
     public function studentFees($id)
@@ -205,7 +205,7 @@ class FinanceController extends Controller
             'academic_year', 'term', 'description', 'status',
         ]));
 
-        return redirect('/finance/student/' . $studentFee->student_id)->with('success', 'Fee updated successfully.');
+        return redirect('/finance/student/' . $studentFee->student_id)->with('success', __('Fee updated successfully.'));
     }
 
     public function destroyFee(StudentFee $studentFee)
@@ -213,7 +213,7 @@ class FinanceController extends Controller
         $studentId = $studentFee->student_id;
         $studentFee->delete();
 
-        return redirect('/finance/student/' . $studentId)->with('success', 'Fee record deleted successfully.');
+        return redirect('/finance/student/' . $studentId)->with('success', __('Fee record deleted successfully.'));
     }
 
     public function paymentHistory(StudentFee $studentFee)
@@ -241,6 +241,6 @@ class FinanceController extends Controller
         });
 
         return redirect('/finance/payments/' . $studentFee->id . '/history')
-            ->with('success', 'Payment record deleted successfully.');
+            ->with('success', __('Payment record deleted successfully.'));
     }
 }

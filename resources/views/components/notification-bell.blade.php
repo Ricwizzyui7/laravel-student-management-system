@@ -30,13 +30,13 @@
 
         {{-- Header --}}
         <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">Notifications
-                @if($unreadCount > 0)<span class="ml-1 text-xs font-medium text-gray-400 dark:text-gray-500">({{ $unreadCount }} unread)</span>@endif
+            <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{ __('Notifications') }}
+                @if($unreadCount > 0)<span class="ml-1 text-xs font-medium text-gray-400 dark:text-gray-500">({{ $unreadCount }} {{ __('unread') }})</span>@endif
             </h3>
             @if($unreadCount > 0)
                 <form method="POST" action="{{ route('notifications.readAll') }}" class="m-0">
                     @csrf
-                    <button class="text-xs font-semibold text-blue-600 hover:underline">Mark all read</button>
+                    <button class="text-xs font-semibold text-blue-600 hover:underline">{{ __('Mark all read') }}</button>
                 </form>
             @endif
         </div>
@@ -65,7 +65,7 @@
                             @csrf
                             <button type="submit" class="text-left w-full">
                                 <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                                    {{ $note->data['title'] ?? 'Notification' }}
+                                    {{ $note->data['title'] ?? __('Notification') }}
                                     @if($isUnread)<span class="h-2 w-2 rounded-full bg-blue-500 shrink-0"></span>@endif
                                 </div>
                                 <div class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-snug">{{ $note->data['message'] ?? '' }}</div>
@@ -76,7 +76,7 @@
                     <form method="POST" action="{{ route('notifications.destroy', $note->id) }}" class="m-0 shrink-0">
                         @csrf
                         @method('DELETE')
-                        <button class="text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition p-1" title="Delete">
+                        <button class="text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition p-1" title="{{ __('Delete') }}">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                         </button>
                     </form>
@@ -84,7 +84,7 @@
             @empty
                     <div class="px-4 py-10 text-center">
                     <svg class="h-10 w-10 mx-auto text-gray-200 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-                    <p class="text-sm text-gray-400 dark:text-gray-500 mt-2">No notifications yet</p>
+                    <p class="text-sm text-gray-400 dark:text-gray-500 mt-2">{{ __('No notifications yet') }}</p>
                 </div>
             @endforelse
         </div>
@@ -92,7 +92,7 @@
         {{-- Footer --}}
         @if($notifications->isNotEmpty())
             <div class="px-4 py-2.5 border-t border-gray-100 bg-gray-50/50 text-center dark:border-gray-700 dark:bg-gray-800/50">
-                <a href="{{ route('notifications.index') }}" class="text-xs font-semibold text-blue-600 hover:underline">View all notifications</a>
+                <a href="{{ route('notifications.index') }}" class="text-xs font-semibold text-blue-600 hover:underline">{{ __('View all notifications') }}</a>
             </div>
         @endif
     </div>

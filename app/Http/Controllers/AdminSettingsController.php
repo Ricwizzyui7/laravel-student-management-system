@@ -14,7 +14,7 @@ class AdminSettingsController extends Controller
     public function index(Request $request)
     {
         if (!$request->user()?->isAdmin()) {
-            abort(403, 'Unauthorized');
+            abort(403, __('Unauthorized'));
         }
 
         $settings = [
@@ -36,7 +36,7 @@ class AdminSettingsController extends Controller
     public function updateSystemName(Request $request)
     {
         if (!$request->user()?->isAdmin()) {
-            abort(403, 'Unauthorized');
+            abort(403, __('Unauthorized'));
         }
 
         $validated = $request->validate([
@@ -45,7 +45,7 @@ class AdminSettingsController extends Controller
 
         SystemSetting::put('system_name', $validated['system_name']);
 
-        return redirect()->back()->with('success', 'System name updated successfully.');
+        return redirect()->back()->with('success', __('System name updated successfully.'));
     }
 
     /**
@@ -54,7 +54,7 @@ class AdminSettingsController extends Controller
     public function updateInstitution(Request $request)
     {
         if (!$request->user()?->isAdmin()) {
-            abort(403, 'Unauthorized');
+            abort(403, __('Unauthorized'));
         }
 
         $validated = $request->validate([
@@ -63,7 +63,7 @@ class AdminSettingsController extends Controller
 
         SystemSetting::put('institution_name', $validated['institution_name']);
 
-        return redirect()->back()->with('success', 'Institution name updated successfully.');
+        return redirect()->back()->with('success', __('Institution name updated successfully.'));
     }
 
     /**
@@ -72,7 +72,7 @@ class AdminSettingsController extends Controller
     public function updateLogo(Request $request)
     {
         if (!$request->user()?->isAdmin()) {
-            abort(403, 'Unauthorized');
+            abort(403, __('Unauthorized'));
         }
 
         $validated = $request->validate([
@@ -91,7 +91,7 @@ class AdminSettingsController extends Controller
             SystemSetting::put('institution_logo', $path);
         }
 
-        return redirect()->back()->with('success', 'Institution logo updated successfully.');
+        return redirect()->back()->with('success', __('Institution logo updated successfully.'));
     }
 
     /**
@@ -100,7 +100,7 @@ class AdminSettingsController extends Controller
     public function updateContact(Request $request)
     {
         if (!$request->user()?->isAdmin()) {
-            abort(403, 'Unauthorized');
+            abort(403, __('Unauthorized'));
         }
 
         $validated = $request->validate([
@@ -113,7 +113,7 @@ class AdminSettingsController extends Controller
             SystemSetting::put($key, $value);
         }
 
-        return redirect()->back()->with('success', 'Contact information updated successfully.');
+        return redirect()->back()->with('success', __('Contact information updated successfully.'));
     }
 
     /**
@@ -122,7 +122,7 @@ class AdminSettingsController extends Controller
     public function updateAcademicYear(Request $request)
     {
         if (!$request->user()?->isAdmin()) {
-            abort(403, 'Unauthorized');
+            abort(403, __('Unauthorized'));
         }
 
         $validated = $request->validate([
@@ -131,6 +131,6 @@ class AdminSettingsController extends Controller
 
         SystemSetting::put('academic_year', $validated['academic_year']);
 
-        return redirect()->back()->with('success', 'Academic year updated successfully.');
+        return redirect()->back()->with('success', __('Academic year updated successfully.'));
     }
 }

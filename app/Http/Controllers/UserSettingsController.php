@@ -44,7 +44,7 @@ class UserSettingsController extends Controller
         $path = $request->file('photo')->store('users', 'public');
         $user->update(['photo' => $path]);
 
-        return redirect()->back()->with('success', 'Profile picture updated successfully.');
+        return redirect()->back()->with('success', __('Profile picture updated successfully.'));
     }
 
     /**
@@ -61,7 +61,7 @@ class UserSettingsController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->back()->with('success', 'Password updated successfully.');
+        return redirect()->back()->with('success', __('Password updated successfully.'));
     }
 
     /**
@@ -75,7 +75,7 @@ class UserSettingsController extends Controller
 
         $request->user()->update($validated);
 
-        return redirect()->back()->with('success', 'Email updated successfully.');
+        return redirect()->back()->with('success', __('Email updated successfully.'));
     }
 
     /**
@@ -89,7 +89,7 @@ class UserSettingsController extends Controller
 
         $request->user()->update($validated);
 
-        return redirect()->back()->with('success', 'Theme updated successfully.');
+        return redirect()->back()->with('success', __('Theme updated successfully.'));
     }
 
     /**
@@ -103,7 +103,7 @@ class UserSettingsController extends Controller
 
         $request->user()->update($validated);
 
-        return redirect()->back()->with('success', 'Language updated successfully.');
+        return redirect()->back()->with('success', __('Language updated successfully.'));
     }
 
     /**
@@ -122,6 +122,6 @@ class UserSettingsController extends Controller
         $preferences = $request->user()->preferences()->firstOrCreate(['user_id' => $request->user()->id]);
         $preferences->update($validated);
 
-        return redirect()->back()->with('success', 'Notification preferences updated successfully.');
+        return redirect()->back()->with('success', __('Notification preferences updated successfully.'));
     }
 }

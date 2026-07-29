@@ -20,7 +20,7 @@ class StudentRegisteredMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome — Your Student Registration is Complete',
+            subject: __('Welcome — Your Student Registration is Complete'),
         );
     }
 

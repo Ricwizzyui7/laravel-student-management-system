@@ -67,7 +67,7 @@ class ReportController extends Controller
         $students = Student::with('course')->orderBy('fullname')->get();
 
         return $this->makePdf('reports.pdf.student-list', [
-            'title'       => 'Student List Report',
+            'title'       => __('Student List Report'),
             'students'    => $students,
             'orientation' => 'landscape',
         ], 'student-list.pdf', $request);
@@ -91,7 +91,7 @@ class ReportController extends Controller
         ];
 
         return $this->makePdf('reports.pdf.student-profile', [
-            'title'      => 'Student Profile Report',
+            'title'      => __('Student Profile Report'),
             'student'    => $student,
             'summary'    => $summary,
             'percentage' => $student->attendancePercentage(),
@@ -132,7 +132,7 @@ class ReportController extends Controller
         ];
 
         return $this->makePdf('reports.pdf.attendance', [
-            'title'       => 'Attendance Report',
+            'title'       => __('Attendance Report'),
             'subtitle'    => Carbon::createFromFormat('Y-m', $month)->format('F Y'),
             'rows'        => $rows,
             'totals'      => $totals,
@@ -150,7 +150,7 @@ class ReportController extends Controller
         $courses = Course::withCount('students')->orderBy('name')->get();
 
         return $this->makePdf('reports.pdf.courses', [
-            'title'    => 'Course Report',
+            'title'    => __('Course Report'),
             'courses'  => $courses,
             'totalStudents' => $courses->sum('students_count'),
         ], 'course-report.pdf', $request);
@@ -165,7 +165,7 @@ class ReportController extends Controller
 
         $courses = Course::withCount('students')->orderBy('name')->get();
 
-        $groups = $courses->groupBy(fn ($c) => $c->department ?: 'Unassigned')
+        $groups = $courses->groupBy(fn ($c) => $c->department ?: __('Unassigned'))
             ->map(fn ($items, $dept) => [
                 'department'    => $dept,
                 'courses'       => $items,
@@ -176,7 +176,7 @@ class ReportController extends Controller
             ->values();
 
         return $this->makePdf('reports.pdf.departments', [
-            'title'   => 'Department Report',
+            'title'   => __('Department Report'),
             'groups'  => $groups,
             'totalCourses'  => $courses->count(),
             'totalStudents' => $courses->sum('students_count'),

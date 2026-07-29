@@ -45,8 +45,8 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         User::notifyAdmins(new \App\Notifications\SystemNotification(
-            'New user registered',
-            "{$user->name} ({$user->email}) created an account.",
+            __('New user registered'),
+            __(':name (:email) created an account.', ['name' => $user->name, 'email' => $user->email]),
             'user-check',
             null,
         ));

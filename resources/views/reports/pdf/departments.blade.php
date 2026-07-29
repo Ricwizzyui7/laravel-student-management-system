@@ -3,25 +3,25 @@
 @section('content')
     <table style="width: 100%; margin: 0 0 10px 0;">
         <tr>
-            <td class="muted">Departments: <strong>{{ $groups->count() }}</strong></td>
-            <td class="text-center muted">Courses: <strong>{{ $totalCourses }}</strong></td>
-            <td class="text-right muted">Students: <strong>{{ $totalStudents }}</strong></td>
+            <td class="muted">{{ __('Departments:') }} <strong>{{ $groups->count() }}</strong></td>
+            <td class="text-center muted">{{ __('Courses:') }} <strong>{{ $totalCourses }}</strong></td>
+            <td class="text-right muted">{{ __('Students:') }} <strong>{{ $totalStudents }}</strong></td>
         </tr>
     </table>
 
     @forelse($groups as $group)
         <h2 class="section">{{ $group['department'] }}
             <span class="muted" style="font-size: 10px; font-weight: normal;">
-                — {{ $group['courseCount'] }} course(s), {{ $group['studentCount'] }} student(s)
+                — {{ $group['courseCount'] }} {{ __('course(s)') }}, {{ $group['studentCount'] }} {{ __('student(s)') }}
             </span>
         </h2>
         <table class="data">
             <thead>
                 <tr>
-                    <th style="width: 90px;">Code</th>
-                    <th>Course Name</th>
-                    <th>Duration</th>
-                    <th class="text-center">Students</th>
+                    <th style="width: 90px;">{{ __('Code') }}</th>
+                    <th>{{ __('Course Name') }}</th>
+                    <th>{{ __('Duration') }}</th>
+                    <th class="text-center">{{ __('Students') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,6 +36,6 @@
             </tbody>
         </table>
     @empty
-        <p class="text-center muted" style="padding: 20px;">No departments found.</p>
+        <p class="text-center muted" style="padding: 20px;">{{ __('No departments found.') }}</p>
     @endforelse
 @endsection

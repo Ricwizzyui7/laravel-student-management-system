@@ -23,7 +23,7 @@ class ProfileUpdatedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your Profile Was Updated',
+            subject: __('Your Profile Was Updated'),
         );
     }
 

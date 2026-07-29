@@ -6,19 +6,19 @@
             <div>
                 <a href="{{ route('students.show', $student->id) }}" class="inline-flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-blue-600 transition">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                    Back to Profile
+                    {{ __('Back to Profile') }}
                 </a>
-                <h1 class="text-2xl font-bold text-gray-900 tracking-tight mt-2">Student ID Card</h1>
-                <p class="text-sm text-gray-500">Preview, print, or download the card as a PDF.</p>
+                <h1 class="text-2xl font-bold text-gray-900 tracking-tight mt-2">{{ __('Student ID Card') }}</h1>
+                <p class="text-sm text-gray-500">{{ __('Preview, print, or download the card as a PDF.') }}</p>
             </div>
             <div class="flex items-center gap-2">
                 <button type="button" onclick="window.print()" class="inline-flex items-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-semibold rounded-xl px-4 py-2.5 transition">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                    Print
+                    {{ __('Print') }}
                 </button>
                 <button type="button" id="downloadPdfBtn" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl px-4 py-2.5 shadow-sm transition">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    <span id="downloadPdfLabel">Download PDF</span>
+                    <span id="downloadPdfLabel">{{ __('Download PDF') }}</span>
                 </button>
             </div>
         </div>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="leading-tight">
                         <div class="text-base font-extrabold tracking-wide uppercase">{{ $institution }}</div>
-                        <div class="text-[11px] font-medium text-blue-100 tracking-widest uppercase">Student Identity Card</div>
+                        <div class="text-[11px] font-medium text-blue-100 tracking-widest uppercase">{{ __('Student Identity Card') }}</div>
                     </div>
                 </div>
 
@@ -70,19 +70,19 @@
 
                         <div class="mt-3 space-y-1.5">
                             <div class="flex items-baseline gap-2">
-                                <span class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider w-20 shrink-0">Course</span>
+                                <span class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider w-20 shrink-0">{{ __('Course') }}</span>
                                 <span class="text-xs font-semibold text-gray-800 truncate">{{ $student->course ?? '—' }}</span>
                             </div>
                             <div class="flex items-baseline gap-2">
-                                <span class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider w-20 shrink-0">Department</span>
+                                <span class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider w-20 shrink-0">{{ __('Department') }}</span>
                                 <span class="text-xs font-semibold text-gray-800 truncate">{{ $department }}</span>
                             </div>
                             <div class="flex items-baseline gap-2">
-                                <span class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider w-20 shrink-0">Gender</span>
+                                <span class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider w-20 shrink-0">{{ __('Gender') }}</span>
                                 <span class="text-xs font-semibold text-gray-800">{{ ucfirst($student->gender) }}</span>
                             </div>
                             <div class="flex items-baseline gap-2">
-                                <span class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider w-20 shrink-0">Issued</span>
+                                <span class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider w-20 shrink-0">{{ __('Issued') }}</span>
                                 <span class="text-xs font-semibold text-gray-800">{{ optional($issued)->format('M Y') ?? '—' }}</span>
                             </div>
                         </div>
@@ -93,22 +93,22 @@
                         <div class="p-1.5 bg-white rounded-lg ring-1 ring-gray-200">
                             <canvas id="qrCanvas" width="96" height="96" class="block h-24 w-24"></canvas>
                         </div>
-                        <div class="text-[9px] text-gray-400 mt-1 font-medium tracking-wide">SCAN TO VERIFY</div>
+                        <div class="text-[9px] text-gray-400 mt-1 font-medium tracking-wide">{{ __('SCAN TO VERIFY') }}</div>
                     </div>
                 </div>
 
                 {{-- Footer strip --}}
                 <div class="absolute inset-x-0 bottom-0 h-11 bg-gray-900 flex items-center justify-between px-6">
                     <div class="text-[10px] text-gray-300 font-medium">
-                        <span class="text-gray-500 uppercase tracking-wider">Valid Thru</span>
+                        <span class="text-gray-500 uppercase tracking-wider">{{ __('Valid Thru') }}</span>
                         <span class="ml-1 font-bold text-white">{{ optional($expiry)->format('M Y') }}</span>
                     </div>
-                    <div class="text-[10px] text-gray-400 tracking-widest uppercase">Authorised Signature</div>
+                    <div class="text-[10px] text-gray-400 tracking-widest uppercase">{{ __('Authorised Signature') }}</div>
                 </div>
             </div>
         </div>
 
-        <p class="no-print text-center text-xs text-gray-400 mt-4">Standard CR80 card size · Optimised for print &amp; PDF export.</p>
+        <p class="no-print text-center text-xs text-gray-400 mt-4">{{ __('Standard CR80 card size · Optimised for print') }} &amp; {{ __('PDF export.') }}</p>
     </div>
 
     @push('scripts')
@@ -141,7 +141,7 @@
                 btn.addEventListener('click', async function () {
                     if (!window.html2canvas || !window.jspdf) return;
                     const original = label.textContent;
-                    label.textContent = 'Generating…';
+                    label.textContent = '{{ __('Generating…') }}';
                     btn.disabled = true;
                     try {
                         const card = document.getElementById('idCard');
@@ -155,7 +155,7 @@
                         pdf.save('{{ \Illuminate\Support\Str::slug($student->fullname) }}-id-card.pdf');
                     } catch (e) {
                         console.error(e);
-                        alert('Could not generate the PDF. If the photo failed to load, try again.');
+                        alert('{{ __('Could not generate the PDF. If the photo failed to load, try again.') }}');
                     } finally {
                         label.textContent = original;
                         btn.disabled = false;

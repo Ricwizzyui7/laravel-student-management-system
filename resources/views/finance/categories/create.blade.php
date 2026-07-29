@@ -18,7 +18,7 @@
                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Name') }}</label>
                     <input type="text" name="name" value="{{ old('name') }}" required
                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500"
-                           placeholder="e.g. Tuition, Hostel, Food">
+                           placeholder="{{ __('e.g. Tuition, Hostel, Food') }}">
                     @error('name') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
                 </div>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{{ $title ?? 'Report' }}</title>
+    <title>{{ $title ?? __('Report') }}</title>
     <style>
         @page {
             margin: 130px 40px 80px 40px;
@@ -76,7 +76,7 @@
                 </td>
                 <td style="vertical-align: middle; padding-left: 10px;">
                     <div class="inst-name">{{ $institution }}</div>
-                    <div class="inst-sub">Student Management System</div>
+                    <div class="inst-sub">{{ __('Student Management System') }}</div>
                 </td>
                 <td class="hdr-right">
                     <div class="report-title">{{ $title }}</div>
@@ -90,9 +90,9 @@
     <footer>
         <table class="foot-table">
             <tr>
-                <td>Generated: {{ $generatedAt->format('d M Y, H:i') }}</td>
+                <td>{{ __('Generated:') }} {{ $generatedAt->format('d M Y, H:i') }}</td>
                 <td style="text-align:center;">{{ $institution }}</td>
-                <td class="foot-right">Page <span class="pagenum"></span> of <span class="pagecount"></span></td>
+                <td class="foot-right">{{ __('Page') }} <span class="pagenum"></span> {{ __('of') }} <span class="pagecount"></span></td>
             </tr>
         </table>
     </footer>

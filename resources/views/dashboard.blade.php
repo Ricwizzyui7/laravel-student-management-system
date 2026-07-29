@@ -3,9 +3,9 @@
 
         <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-sm p-6 sm:p-8 mb-8 text-white relative overflow-hidden">
             <div class="relative z-10">
-                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Welcome Back, {{ Auth::user()->name }}!</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">{{ __('Welcome Back') }}, {{ Auth::user()->name }}!</h2>
                 <p class="text-blue-100 text-sm sm:text-base mt-1.5 max-w-xl">
-                    Here is an overview of what is happening across your student ecosystem today. Manage records, monitor enrollments, and check security access rules.
+                    {{ __('Here is an overview of what is happening across your student ecosystem today. Manage records, monitor enrollments, and check security access rules.') }}
                 </p>
             </div>
             <div class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-xl pointer-events-none"></div>
@@ -16,10 +16,10 @@
 
             <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between dark:bg-gray-800 dark:border-gray-700">
                 <div>
-                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">Total Registered</span>
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">{{ __('Total Registered') }}</span>
                     <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight dark:text-gray-100">{{ number_format($totalStudents) }}</span>
                     <a href="/students" class="text-xs text-blue-600 font-medium mt-1.5 inline-flex items-center gap-1 hover:underline dark:text-blue-400">
-                        View Complete Directory →
+                        {{ __('View Complete Directory') }} →
                     </a>
                 </div>
                 <div class="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 dark:bg-blue-950 dark:text-blue-400">
@@ -31,10 +31,10 @@
 
             <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between dark:bg-gray-800 dark:border-gray-700">
                 <div>
-                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">Male Students</span>
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">{{ __('Male Students') }}</span>
                     <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight dark:text-gray-100">{{ number_format($maleStudents) }}</span>
                     <span class="block text-xs text-gray-400 font-medium mt-1.5 dark:text-gray-500">
-                        {{ $totalStudents > 0 ? round($maleStudents / $totalStudents * 100) : 0 }}% of cohort
+                        {{ $totalStudents > 0 ? round($maleStudents / $totalStudents * 100) : 0 }}% {{ __('of cohort') }}
                     </span>
                 </div>
                 <div class="h-12 w-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 dark:bg-sky-950 dark:text-sky-400">
@@ -46,10 +46,10 @@
 
             <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between dark:bg-gray-800 dark:border-gray-700">
                 <div>
-                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">Female Students</span>
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">{{ __('Female Students') }}</span>
                     <span class="block text-3xl font-bold text-gray-900 mt-1 tracking-tight dark:text-gray-100">{{ number_format($femaleStudents) }}</span>
                     <span class="block text-xs text-gray-400 font-medium mt-1.5 dark:text-gray-500">
-                        {{ $totalStudents > 0 ? round($femaleStudents / $totalStudents * 100) : 0 }}% of cohort
+                        {{ $totalStudents > 0 ? round($femaleStudents / $totalStudents * 100) : 0 }}% {{ __('of cohort') }}
                     </span>
                 </div>
                 <div class="h-12 w-12 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center shrink-0 dark:bg-pink-950 dark:text-pink-400">
@@ -61,12 +61,12 @@
 
             <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between dark:bg-gray-800 dark:border-gray-700">
                 <div>
-                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">Your Access Level</span>
+                    <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider dark:text-gray-500">{{ __('Your Access Level') }}</span>
                     <span class="block text-2xl font-bold text-gray-900 mt-2 tracking-tight uppercase dark:text-gray-100">
                         {{ Auth::user()->role ?? 'Staff' }}
                     </span>
                     <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-md mt-2 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800">
-                        ● Connection Secure
+                        ● {{ __('Connection Secure') }}
                     </span>
                 </div>
                 <div class="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 dark:bg-emerald-950 dark:text-emerald-400">
@@ -81,7 +81,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:col-span-1 dark:bg-gray-800 dark:border-gray-700">
-                <h3 class="text-base font-bold text-gray-900 mb-4 dark:text-gray-100">Quick Navigation Links</h3>
+                <h3 class="text-base font-bold text-gray-900 mb-4 dark:text-gray-100">{{ __('Quick Navigation Links') }}</h3>
                 <div class="space-y-3">
 
                     <a href="/students" class="group flex items-center justify-between p-3.5 rounded-xl bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-100 transition-all dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-blue-950/30 dark:hover:border-blue-800">
@@ -91,7 +91,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                                 </svg>
                             </div>
-                            <span class="text-sm font-medium text-gray-700 group-hover:text-blue-900 transition-colors dark:text-gray-300 dark:group-hover:text-blue-300">View All Students</span>
+                            <span class="text-sm font-medium text-gray-700 group-hover:text-blue-900 transition-colors dark:text-gray-300 dark:group-hover:text-blue-300">{{ __('View All Students') }}</span>
                         </div>
                         <span class="text-gray-400 group-hover:text-blue-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5">→</span>
                     </a>
@@ -104,10 +104,10 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                                 </svg>
                             </div>
-                            <span class="text-sm font-medium text-gray-700 group-hover:text-indigo-900 transition-colors">Course Catalog</span>
+                            <span class="text-sm font-medium text-gray-700 group-hover:text-indigo-900 transition-colors">{{ __('Course Catalog') }}</span>
                         </div>
                         @if(($totalCourses ?? 0) > 0)
-                            <span class="text-[11px] font-semibold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded-md">{{ $totalCourses }} courses</span>
+                            <span class="text-[11px] font-semibold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded-md">{{ $totalCourses }} {{ __('courses') }}</span>
                         @else
                             <span class="text-gray-400 group-hover:text-indigo-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5">→</span>
                         @endif
@@ -120,10 +120,10 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                                 </svg>
                             </div>
-                            <span class="text-sm font-medium text-gray-700 group-hover:text-emerald-900 transition-colors">Attendance Dashboard</span>
+                            <span class="text-sm font-medium text-gray-700 group-hover:text-emerald-900 transition-colors">{{ __('Attendance Dashboard') }}</span>
                         </div>
                         @if(($markedToday ?? 0) > 0)
-                            <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">{{ $presentToday }} present today</span>
+                            <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">{{ $presentToday }} {{ __('present today') }}</span>
                         @else
                             <span class="text-gray-400 group-hover:text-emerald-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5">→</span>
                         @endif
@@ -137,7 +137,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                                     </svg>
                                 </div>
-                                <span class="text-sm font-medium text-gray-700 group-hover:text-blue-900 transition-colors">Add New Record</span>
+                                <span class="text-sm font-medium text-gray-700 group-hover:text-blue-900 transition-colors">{{ __('Add New Record') }}</span>
                             </div>
                         <span class="text-gray-400 group-hover:text-blue-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5 dark:text-gray-500 dark:group-hover:text-blue-400">→</span>
                         </a>
@@ -151,14 +151,14 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
                             </div>
-                            <span class="text-sm font-medium text-gray-700 group-hover:text-blue-900 transition-colors">Account Settings</span>
+                            <span class="text-sm font-medium text-gray-700 group-hover:text-blue-900 transition-colors">{{ __('Account Settings') }}</span>
                         </div>
                         <span class="text-gray-400 group-hover:text-blue-500 text-xs font-semibold transition-transform group-hover:translate-x-0.5">→</span>
                     </a>
 
                 </div>
 
-                <h3 class="text-base font-bold text-gray-900 mt-6 mb-4">Enrollment by Course</h3>
+                <h3 class="text-base font-bold text-gray-900 mt-6 mb-4">{{ __('Enrollment by Course') }}</h3>
                 <div class="space-y-3">
                     @forelse($courseData as $course)
                         <div>
@@ -171,15 +171,15 @@
                             </div>
                         </div>
                     @empty
-                        <p class="text-xs text-gray-400">No course data available yet.</p>
+                        <p class="text-xs text-gray-400">{{ __('No course data available yet.') }}</p>
                     @endforelse
                 </div>
             </div>
 
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:col-span-2">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-base font-bold text-gray-900">Recently Added Students</h3>
-                    <a href="/students" class="text-xs font-semibold text-blue-600 hover:underline">View all</a>
+                    <h3 class="text-base font-bold text-gray-900">{{ __('Recently Added Students') }}</h3>
+                    <a href="/students" class="text-xs font-semibold text-blue-600 hover:underline">{{ __('View all') }}</a>
                 </div>
 
                 <div class="divide-y divide-gray-50">
@@ -202,8 +202,8 @@
                         </a>
                     @empty
                         <div class="py-12 text-center">
-                            <h3 class="text-sm font-semibold text-gray-900">No students yet</h3>
-                            <p class="text-xs text-gray-500 mt-1">Records you add will appear here.</p>
+                            <h3 class="text-sm font-semibold text-gray-900">{{ __('No students yet') }}</h3>
+                            <p class="text-xs text-gray-500 mt-1">{{ __('Records you add will appear here.') }}</p>
                         </div>
                     @endforelse
                 </div>
@@ -215,7 +215,7 @@
                         </svg>
                     </div>
                     <div class="text-xs text-blue-800 leading-relaxed">
-                        <strong>Access notice:</strong> Users with the <strong>Staff</strong> role can view student records, while creating, editing, and deleting records is restricted to <strong>System Administrators</strong>.
+                        <strong>{{ __('Access notice:') }}</strong> {{ __('Users with the') }} <strong>{{ __('Staff') }}</strong> {{ __('role can view student records, while creating, editing, and deleting records is restricted to') }} <strong>{{ __('System Administrators') }}</strong>.
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Notification' }}</title>
+    <title>{{ $title ?? __('Notification') }}</title>
 </head>
 <body style="margin:0; padding:0; background-color:#f3f4f6; font-family:'Segoe UI', Arial, Helvetica, sans-serif;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f4f6; padding:32px 16px;">
@@ -26,7 +26,7 @@
                                             {{ $institution ?? \App\Models\SystemSetting::get('institution_name', 'Global Institute of Technology') }}
                                         </div>
                                         <div style="color:#bfdbfe; font-size:11px; text-transform:uppercase; letter-spacing:2px; margin-top:2px;">
-                                            Student Management System
+                                            {{ __('Student Management System') }}
                                         </div>
                                     </td>
                                 </tr>
@@ -47,8 +47,8 @@
                             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td style="color:#9ca3af; font-size:11px; line-height:1.6;">
-                                        This is an automated message from {{ $institution ?? \App\Models\SystemSetting::get('institution_name', 'Global Institute of Technology') }}.<br>
-                                        Please do not reply directly to this email.
+                                        {{ __('This is an automated message from') }} {{ $institution ?? \App\Models\SystemSetting::get('institution_name', 'Global Institute of Technology') }}.<br>
+                                        {{ __('Please do not reply directly to this email.') }}
                                     </td>
                                     <td align="right" style="color:#6b7280; font-size:11px; vertical-align:bottom;">
                                         &copy; {{ date('Y') }}

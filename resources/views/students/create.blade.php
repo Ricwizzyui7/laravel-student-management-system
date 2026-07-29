@@ -6,15 +6,15 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Back to Directory
+                {{ __('Back to Directory') }}
             </a>
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
             
             <div class="p-6 sm:p-8 border-b border-gray-50 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Add New Student Record</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Fill out the administrative profile below to register a new student path into the system.</p>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">{{ __('Add New Student Record') }}</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ __('Fill out the administrative profile below to register a new student path into the system.') }}</p>
             </div>
 
             <form action="/students" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8 space-y-6 m-0">
@@ -26,7 +26,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                             </svg>
-                            Please correct the errors listed below:
+                            {{ __('Please correct the errors listed below:') }}
                         </div>
                         <ul class="list-disc pl-5 space-y-1 text-xs text-red-700">
                             @foreach ($errors->all() as $error)
@@ -39,35 +39,35 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                     
                     <div class="flex flex-col items-center text-center p-4 bg-gray-50/60 dark:bg-gray-900/50 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
-                        <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Avatar Preview</span>
+                        <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">{{ __('Avatar Preview') }}</span>
                         <div class="relative h-28 w-28 rounded-full bg-white dark:bg-gray-800 shadow-inner border border-gray-100 dark:border-gray-700 overflow-hidden flex items-center justify-center">
                             <svg id="defaultAvatarIcon" class="w-14 h-14 text-gray-300 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
                             <img id="profileImagePreview" src="#" alt="preview" class="hidden h-full w-full object-cover">
                         </div>
-                        <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-2">Select a file below to populate this frame preview dynamically.</p>
+                        <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-2">{{ __('Select a file below to populate this frame preview dynamically.') }}</p>
                     </div>
 
                     <div class="md:col-span-2 space-y-5">
                         
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">Full Name</label>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">{{ __('Full Name') }}</label>
                             <input type="text"
                                    name="fullname"
                                    value="{{ old('fullname') }}"
                                    class="w-full bg-white dark:bg-gray-800 border @error('fullname') border-red-300 focus:ring-red-500 focus:border-red-500 @else border-gray-200 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 @enderror text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition"
-                                   placeholder="e.g. John Doe">
+                                   placeholder="{{ __('e.g. John Doe') }}">
                             @error('fullname')
                                 <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">Course</label>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">{{ __('Course') }}</label>
                             <select name="course_id"
                                     class="w-full bg-white dark:bg-gray-800 border @error('course_id') border-red-300 focus:ring-red-500 focus:border-red-500 @else border-gray-200 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 @enderror text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition appearance-none cursor-pointer">
-                                <option value="">— Select a course —</option>
+                                <option value="">{{ __('— Select a course —') }}</option>
                                 @foreach($courses as $course)
                                     <option value="{{ $course->id }}" @selected(old('course_id') == $course->id)>{{ $course->name }} ({{ $course->code }})</option>
                                 @endforeach
@@ -76,40 +76,40 @@
                                 <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p>
                             @enderror
                             @if($courses->isEmpty())
-                                <p class="text-[11px] text-amber-600 mt-1">No courses yet — <a href="{{ route('courses.create') }}" class="underline font-semibold">add one first</a>.</p>
+                                <p class="text-[11px] text-amber-600 mt-1">{{ __('No courses yet') }} — <a href="{{ route('courses.create') }}" class="underline font-semibold">{{ __('add one first') }}</a>.</p>
                             @endif
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">Gender Designation</label>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">{{ __('Gender Designation') }}</label>
                             <select name="gender"
                                     class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500 transition appearance-none cursor-pointer">
-                                <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
-                                <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
+                                <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>{{ __('Male') }}</option>
+                                <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>{{ __('Female') }}</option>
                             </select>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">Email <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">(optional)</span></label>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">{{ __('Email') }} <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">({{ __('optional') }})</span></label>
                             <input type="email"
                                    name="email"
                                    value="{{ old('email') }}"
                                    class="w-full bg-white dark:bg-gray-800 border @error('email') border-red-300 focus:ring-red-500 focus:border-red-500 @else border-gray-200 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 @enderror text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition"
-                                   placeholder="e.g. student@example.com">
+                                   placeholder="{{ __('e.g. student@example.com') }}">
                             @error('email') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">Phone <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">(optional)</span></label>
+                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">{{ __('Phone') }} <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">({{ __('optional') }})</span></label>
                                 <input type="text"
                                        name="phone"
                                        value="{{ old('phone') }}"
                                        class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition"
-                                       placeholder="e.g. +255 7XX XXX XXX">
+                                       placeholder="{{ __('e.g. +255 7XX XXX XXX') }}">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">Date of Birth <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">(optional)</span></label>
+                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">{{ __('Date of Birth') }} <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">({{ __('optional') }})</span></label>
                                 <input type="date"
                                        name="date_of_birth"
                                        value="{{ old('date_of_birth') }}"
@@ -120,15 +120,15 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">Linked Login Account <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">(optional)</span></label>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">{{ __('Linked Login Account') }} <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">({{ __('optional') }})</span></label>
                             <select name="user_id"
                                     class="w-full bg-white dark:bg-gray-800 border @error('user_id') border-red-300 @else border-gray-200 dark:border-gray-700 @enderror focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition appearance-none cursor-pointer">
-                                <option value="">— No linked account —</option>
+                                <option value="">{{ __('— No linked account —') }}</option>
                                 @foreach($linkableUsers as $user)
                                     <option value="{{ $user->id }}" @selected(old('user_id') == $user->id)>{{ $user->name }} ({{ $user->email }})</option>
                                 @endforeach
                             </select>
-                            <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-1">Link this student to a user login so they can view their own attendance record.</p>
+                            <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-1">{{ __('Link this student to a user login so they can view their own attendance record.') }}</p>
                             @error('user_id') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
                         </div>
 
@@ -138,7 +138,7 @@
                 <hr class="border-gray-100 dark:border-gray-700 my-2">
 
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">Upload Student Photo</label>
+                    <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 dark:text-gray-400 uppercase tracking-wider mb-1.5">{{ __('Upload Student Photo') }}</label>
                     <input type="file"
                            name="photo"
                            id="photoUploadInputElement"
@@ -151,10 +151,10 @@
 
                 <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-50 dark:border-gray-700">
                     <a href="/students" class="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 text-gray-700 dark:text-gray-300 dark:text-gray-400 font-semibold text-sm rounded-xl px-5 py-2.5 transition">
-                        Cancel
+                        {{ __('Cancel') }}
                     </a>
                     <button type="submit" class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl px-6 py-2.5 shadow-sm transition">
-                        Save Student Record
+                        {{ __('Save Student Record') }}
                     </button>
                 </div>
 

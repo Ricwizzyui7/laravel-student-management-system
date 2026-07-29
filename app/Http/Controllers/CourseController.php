@@ -78,7 +78,7 @@ class CourseController extends Controller
 
         return redirect()
             ->route('courses.index')
-            ->with('success', 'Course created successfully.');
+            ->with('success', __('Course created successfully.'));
     }
 
     /**
@@ -120,7 +120,7 @@ class CourseController extends Controller
 
         return redirect()
             ->route('courses.index')
-            ->with('success', 'Course updated successfully.');
+            ->with('success', __('Course updated successfully.'));
     }
 
     /**
@@ -135,13 +135,13 @@ class CourseController extends Controller
         if ($course->students_count > 0) {
             return redirect()
                 ->route('courses.index')
-                ->with('error', "Cannot delete \"{$course->name}\" — {$course->students_count} student(s) are still enrolled.");
+                ->with('error', __('Cannot delete ":name" — :count student(s) are still enrolled.', ['name' => $course->name, 'count' => $course->students_count]));
         }
 
         $course->delete();
 
         return redirect()
             ->route('courses.index')
-            ->with('success', 'Course deleted successfully.');
+            ->with('success', __('Course deleted successfully.'));
     }
 }

@@ -83,8 +83,8 @@ class StudentController extends Controller
             ]);
 
             User::notifyAdmins(new \App\Notifications\SystemNotification(
-                'New student added',
-                "{$student->fullname} was enrolled in {$course->name}.",
+                __('New student added'),
+                __(':name was enrolled in :course.', ['name' => $student->fullname, 'course' => $course->name]),
                 'user-plus',
                 url('/students/'.$student->id),
             ));
@@ -93,14 +93,14 @@ class StudentController extends Controller
                 \Mail::to($student->email)->queue(new \App\Mail\StudentRegisteredMail($student));
             }
 
-            return redirect('/students')->with('success', 'Student record created successfully.');
+            return redirect('/students')->with('success', __('Student record created successfully.'));
 
         } catch (\Exception $e) {
             report($e);
 
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'Could not save the student record. Please try again.');
+                ->with('error', __('Could not save the student record. Please try again.'));
         }
     }
 
@@ -195,14 +195,14 @@ class StudentController extends Controller
 
             $student->update($data);
 
-            return redirect('/students')->with('success', 'Student record updated successfully.');
+            return redirect('/students')->with('success', __('Student record updated successfully.'));
 
         } catch (\Exception $e) {
             report($e);
 
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'Could not update the student record. Please try again.');
+                ->with('error', __('Could not update the student record. Please try again.'));
         }
     }
 
@@ -247,7 +247,7 @@ class StudentController extends Controller
             $activities->push([
                 'icon'  => 'user-plus',
                 'color' => 'blue',
-                'title' => 'Student record created',
+                'title' => __('Student record created'),
                 'time'  => $student->created_at,
             ]);
         }
@@ -256,7 +256,7 @@ class StudentController extends Controller
             $activities->push([
                 'icon'  => 'pencil',
                 'color' => 'amber',
-                'title' => 'Profile information updated',
+                'title' => __('Profile information updated'),
                 'time'  => $student->updated_at,
             ]);
         }
@@ -265,7 +265,7 @@ class StudentController extends Controller
             $activities->push([
                 'icon'  => 'calendar-check',
                 'color' => $record->status === 'present' ? 'emerald' : ($record->status === 'late' ? 'amber' : 'red'),
-                'title' => 'Marked '.$record->status.' on '.$record->date->format('M d, Y'),
+                'title' => __('Marked :status on :date', ['status' => $record->status, 'date' => $record->date->format('M d, Y')]),
                 'time'  => $record->created_at ?? $record->date,
             ]);
         }
@@ -290,7 +290,7 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $student->delete();
 
-        return redirect('/students')->with('success', 'Student record deleted successfully.');
+        return redirect('/students')->with('success', __('Student record deleted successfully.'));
     }
 
     /**

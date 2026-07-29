@@ -16,27 +16,27 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="url('/students')" :active="request()->is('students*')">
-                            Students
+                            {{ __('Students') }}
                     </x-nav-link>
                     <x-nav-link :href="route('courses.index')" :active="request()->is('courses*')">
-                            Courses
+                            {{ __('Courses') }}
                     </x-nav-link>
                     <x-nav-link :href="route('attendance.dashboard')" :active="request()->is('attendance*')">
-                            Attendance
+                            {{ __('Attendance') }}
                     </x-nav-link>
                     <x-nav-link :href="route('finance.index')" :active="request()->is('finance*')">
-                            Finance
+                            {{ __('Finance') }}
                     </x-nav-link>
                     @if(Auth::user()->role == 'admin')
                     <x-nav-link :href="route('reports.index')" :active="request()->is('reports*')">
-                            Reports
+                            {{ __('Reports') }}
                     </x-nav-link>
                     <x-nav-link :href="route('exports.index')" :active="request()->is('exports*')">
-                            Exports
+                            {{ __('Exports') }}
                     </x-nav-link>
                     <x-nav-link :href="url('/students/create')"
                                 :active="request()->is('students/create')">
-                            Add Student
+                            {{ __('Add Student') }}
                     </x-nav-link>
 @endif
                 </div>

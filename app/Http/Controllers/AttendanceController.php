@@ -21,7 +21,7 @@ class AttendanceController extends Controller
     private function requireAdmin(): void
     {
         if (!Auth::user()->isAdmin()) {
-            abort(403, 'Only administrators can perform this action.');
+            abort(403, __('Only administrators can perform this action.'));
         }
     }
 
@@ -163,8 +163,8 @@ class AttendanceController extends Controller
 
         if ($saved > 0) {
             \App\Models\User::notifyAdmins(new \App\Notifications\SystemNotification(
-                'Attendance marked',
-                "Attendance was recorded for {$saved} student(s) on {$validated['date']}.",
+                __('Attendance marked'),
+                __('Attendance was recorded for :count student(s) on :date.', ['count' => $saved, 'date' => $validated['date']]),
                 'calendar',
                 route('attendance.history'),
             ));
@@ -172,7 +172,7 @@ class AttendanceController extends Controller
 
         return redirect()
             ->route('attendance.mark', ['date' => $validated['date']])
-            ->with('success', "Attendance saved for {$saved} student(s) on {$validated['date']}.");
+            ->with('success', __('Attendance saved for :count student(s) on :date.', ['count' => $saved, 'date' => $validated['date']]));
     }
 
     /* -----------------------------------------------------------------
@@ -255,7 +255,7 @@ class AttendanceController extends Controller
         if (!Auth::user()->isAdmin()) {
             $own = $this->currentStudent();
             if (!$own || $own->id !== $student->id) {
-                abort(403, 'You can only view your own attendance record.');
+                abort(403, __('You can only view your own attendance record.'));
             }
         }
 
@@ -305,7 +305,7 @@ class AttendanceController extends Controller
 
         return redirect()
             ->route('students.show', $student->id)
-            ->with('success', 'Attendance recorded successfully.');
+            ->with('success', __('Attendance recorded successfully.'));
     }
 
     /**
@@ -322,6 +322,6 @@ class AttendanceController extends Controller
 
         return redirect()
             ->route('students.show', $student->id)
-            ->with('success', 'Attendance record removed.');
+            ->with('success', __('Attendance record removed.'));
     }
 }

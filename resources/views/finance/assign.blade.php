@@ -63,7 +63,7 @@
                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Academic Year') }}</label>
                             <input type="text" name="academic_year" value="{{ old('academic_year') }}"
                                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500"
-                                   placeholder="e.g. 2025/2026">
+                                   placeholder="{{ __('e.g. 2025/2026') }}">
                         </div>
                     </div>
 
@@ -71,7 +71,7 @@
                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Term') }}</label>
                         <input type="text" name="term" value="{{ old('term') }}"
                                class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500"
-                               placeholder="e.g. Term 1, Semester 1">
+                               placeholder="{{ __('e.g. Term 1, Semester 1') }}">
                     </div>
 
                     <div class="mb-4">
