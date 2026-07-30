@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\FeeCategory;
 use App\Models\StudentFee;
 use App\Models\Payment;
@@ -91,16 +92,19 @@ class FinanceController extends Controller
     public function assign()
     {
         $students = Student::orderBy('fullname')->get();
+        $courses = Course::orderBy('name')->get();
         $categories = FeeCategory::where('is_active', true)->orderBy('name')->get();
-        $assignedFees = StudentFee::with(['student', 'feeCategory'])->latest()->paginate(20);
+        $assignedFees = StudentFee::with(['student', 'course', 'feeCategory'])->latest()->paginate(20);
 
-        return view('finance.assign', compact('students', 'categories', 'assignedFees'));
+        return view('finance.assign', compact('students', 'courses', 'categories', 'assignedFees'));
     }
 
     public function storeAssign(Request $request)
     {
         $request->validate([
-            'student_id' => 'required|exists:students,id',
+            'assignment_type' => 'required|in:student,course',
+            'student_id' => 'required_if:assignment_type,student|exists:students,id',
+            'course_id' => 'required_if:assignment_type,course|exists:courses,id',
             'fee_category_id' => 'required|exists:fee_categories,id',
             'amount' => 'required|numeric|min:0',
             'due_date' => 'nullable|date',
@@ -109,8 +113,7 @@ class FinanceController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        StudentFee::create([
-            'student_id' => $request->student_id,
+        $data = [
             'fee_category_id' => $request->fee_category_id,
             'amount' => $request->amount,
             'due_date' => $request->due_date,
@@ -118,7 +121,30 @@ class FinanceController extends Controller
             'term' => $request->term,
             'description' => $request->description,
             'status' => 'unpaid',
-        ]);
+        ];
+
+        if ($request->assignment_type === 'course') {
+            $students = Student::where('course_id', $request->course_id)->get();
+
+            if ($students->isEmpty()) {
+                return redirect('/finance/assign')
+                    ->with('error', __('No students found in this course.'));
+            }
+
+            foreach ($students as $student) {
+                StudentFee::create(array_merge($data, [
+                    'student_id' => $student->id,
+                    'course_id' => $request->course_id,
+                ]));
+            }
+
+            return redirect('/finance/assign')
+                ->with('success', __('Fee assigned to all students in the course.'));
+        }
+
+        StudentFee::create(array_merge($data, [
+            'student_id' => $request->student_id,
+        ]));
 
         return redirect('/finance/assign')->with('success', __('Fee assigned successfully.'));
     }

@@ -58,6 +58,7 @@
                             <h3 class="text-base font-bold text-gray-900 dark:text-gray-100">{{ $fee->feeCategory?->name ?? 'N/A' }}</h3>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                                 {{ __('Due') }}: {{ $fee->due_date?->format('M d, Y') ?? __('No due date') }}
+                                @if($fee->course) &middot; {{ $fee->course->name }} @endif
                                 @if($fee->academic_year) &middot; {{ $fee->academic_year }} @endif
                                 @if($fee->term) &middot; {{ $fee->term }} @endif
                             </p>
