@@ -92,21 +92,18 @@ class FinanceController extends Controller
 
     public function assign()
     {
-        $students = Student::orderBy('fullname')->get();
         $courses = Course::orderBy('name')->get();
         $categories = FeeCategory::where('is_active', true)->orderBy('name')->get();
         $assignedFees = StudentFee::with(['student', 'course', 'feeCategory'])->latest()->paginate(20);
         $courseFees = CourseFee::with(['course', 'feeCategory'])->latest()->get();
 
-        return view('finance.assign', compact('students', 'courses', 'categories', 'assignedFees', 'courseFees'));
+        return view('finance.assign', compact('courses', 'categories', 'assignedFees', 'courseFees'));
     }
 
     public function storeAssign(Request $request)
     {
         $request->validate([
-            'assignment_type' => 'required|in:student,course',
-            'student_id' => 'required_if:assignment_type,student|exists:students,id',
-            'course_id' => 'required_if:assignment_type,course|exists:courses,id',
+            'course_id' => 'required|exists:courses,id',
             'fee_category_id' => 'required|exists:fee_categories,id',
             'amount' => 'required|numeric|min:0',
             'due_date' => 'nullable|date',
@@ -125,47 +122,39 @@ class FinanceController extends Controller
             'status' => 'unpaid',
         ];
 
-        if ($request->assignment_type === 'course') {
-            $students = Student::where('course_id', $request->course_id)->get();
+        $students = Student::where('course_id', $request->course_id)->get();
 
-            DB::transaction(function () use ($request, $data, $students) {
-                foreach ($students as $student) {
-                    StudentFee::updateOrCreate(
-                        [
-                            'student_id' => $student->id,
-                            'course_id' => $request->course_id,
-                            'fee_category_id' => $data['fee_category_id'],
-                            'academic_year' => $data['academic_year'],
-                            'term' => $data['term'],
-                        ],
-                        $data + ['student_id' => $student->id, 'course_id' => $request->course_id]
-                    );
-                }
-
-                CourseFee::updateOrCreate(
+        DB::transaction(function () use ($request, $data, $students) {
+            foreach ($students as $student) {
+                StudentFee::updateOrCreate(
                     [
+                        'student_id' => $student->id,
                         'course_id' => $request->course_id,
                         'fee_category_id' => $data['fee_category_id'],
                         'academic_year' => $data['academic_year'],
                         'term' => $data['term'],
                     ],
-                    [
-                        'amount' => $data['amount'],
-                        'due_date' => $data['due_date'],
-                        'description' => $data['description'],
-                    ]
+                    $data + ['student_id' => $student->id, 'course_id' => $request->course_id]
                 );
-            });
+            }
 
-            return redirect('/finance/assign')
-                ->with('success', __('Fee assigned to all students in the course.'));
-        }
+            CourseFee::updateOrCreate(
+                [
+                    'course_id' => $request->course_id,
+                    'fee_category_id' => $data['fee_category_id'],
+                    'academic_year' => $data['academic_year'],
+                    'term' => $data['term'],
+                ],
+                [
+                    'amount' => $data['amount'],
+                    'due_date' => $data['due_date'],
+                    'description' => $data['description'],
+                ]
+            );
+        });
 
-        StudentFee::create(array_merge($data, [
-            'student_id' => $request->student_id,
-        ]));
-
-        return redirect('/finance/assign')->with('success', __('Fee assigned successfully.'));
+        return redirect('/finance/assign')
+            ->with('success', __('Fee assigned to all students in the course.'));
     }
 
     public function recordPayment(Request $request, StudentFee $studentFee = null)

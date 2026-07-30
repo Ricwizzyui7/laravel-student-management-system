@@ -5,7 +5,7 @@
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">{{ __('Assign Fees') }}</h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ __('Assign fee types to students for the academic period.') }}</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ __('Assign fee types to courses. Students will get fees automatically based on their enrolled course.') }}</p>
                 </div>
                 <a href="/finance" class="inline-flex items-center gap-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm rounded-xl px-4 py-2.5 transition">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
@@ -20,40 +20,11 @@
                 <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">{{ __('New Fee Assignment') }}</h3>
                 <form method="POST" action="/finance/assign">
                     @csrf
-
-                    <input type="hidden" name="assignment_type" id="assignment_type" value="student">
+                    <input type="hidden" name="assignment_type" value="course">
 
                     <div class="mb-4">
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('Assign To') }}</label>
-                        <div class="flex gap-2">
-                            <button type="button" id="btn-student" onclick="setType('student')"
-                                    class="flex-1 px-4 py-2 text-sm font-medium rounded-xl border-2 transition
-                                           bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-950 dark:border-blue-400 dark:text-blue-300">
-                                {{ __('Student') }}
-                            </button>
-                            <button type="button" id="btn-course" onclick="setType('course')"
-                                    class="flex-1 px-4 py-2 text-sm font-medium rounded-xl border-2 transition
-                                           bg-gray-50 border-gray-200 text-gray-600 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
-                                {{ __('Course') }}
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="student-select" class="mb-4">
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Student') }}</label>
-                        <select name="student_id"
-                                class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">{{ __('Select a student...') }}</option>
-                            @foreach($students as $student)
-                                <option value="{{ $student->id }}" @selected(old('student_id') == $student->id)>{{ $student->fullname }} (ID #{{ $student->id }})</option>
-                            @endforeach
-                        </select>
-                        @error('student_id') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
-                    </div>
-
-                    <div id="course-select" class="mb-4 hidden">
                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Course') }}</label>
-                        <select name="course_id"
+                        <select name="course_id" required
                                 class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500">
                             <option value="">{{ __('Select a course...') }}</option>
                             @foreach($courses as $course)
@@ -204,33 +175,4 @@
         @endif
 
     </div>
-
-    <script>
-        function setType(type) {
-            document.getElementById('assignment_type').value = type;
-
-            const btnStudent = document.getElementById('btn-student');
-            const btnCourse = document.getElementById('btn-course');
-            const studentSelect = document.getElementById('student-select');
-            const courseSelect = document.getElementById('course-select');
-            const studentInput = studentSelect.querySelector('select');
-            const courseInput = courseSelect.querySelector('select');
-
-            if (type === 'student') {
-                btnStudent.className = 'flex-1 px-4 py-2 text-sm font-medium rounded-xl border-2 transition bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-950 dark:border-blue-400 dark:text-blue-300';
-                btnCourse.className = 'flex-1 px-4 py-2 text-sm font-medium rounded-xl border-2 transition bg-gray-50 border-gray-200 text-gray-600 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400';
-                studentSelect.classList.remove('hidden');
-                courseSelect.classList.add('hidden');
-                studentInput.required = true;
-                courseInput.required = false;
-            } else {
-                btnStudent.className = 'flex-1 px-4 py-2 text-sm font-medium rounded-xl border-2 transition bg-gray-50 border-gray-200 text-gray-600 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400';
-                btnCourse.className = 'flex-1 px-4 py-2 text-sm font-medium rounded-xl border-2 transition bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-950 dark:border-blue-400 dark:text-blue-300';
-                studentSelect.classList.add('hidden');
-                courseSelect.classList.remove('hidden');
-                studentInput.required = false;
-                courseInput.required = true;
-            }
-        }
-    </script>
 </x-app-layout>
