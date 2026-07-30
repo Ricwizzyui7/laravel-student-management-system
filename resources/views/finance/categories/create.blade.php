@@ -15,8 +15,17 @@
                 @csrf
 
                 <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Name') }}</label>
-                    <input type="text" name="name" value="{{ old('name') }}" required
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('Name') }}</label>
+                    <div class="flex flex-wrap gap-1.5 mb-3">
+                        @php $presets = ['Tuition', 'Hostel', 'Food', 'Registration', 'Library', 'ICT', 'Sports', 'Examination', 'Laboratory', 'Transport', 'Uniform', 'Graduation'] @endphp
+                        @foreach($presets as $preset)
+                            <button type="button" onclick="fillPreset('{{ $preset }}')"
+                                    class="text-xs font-medium px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 dark:hover:bg-blue-950 dark:hover:border-blue-600 dark:hover:text-blue-300 transition">
+                                {{ $preset }}
+                            </button>
+                        @endforeach
+                    </div>
+                    <input type="text" name="name" id="category-name" value="{{ old('name') }}" required
                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500"
                            placeholder="{{ __('e.g. Tuition, Hostel, Food') }}">
                     @error('name') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
@@ -24,7 +33,7 @@
 
                 <div class="mb-6">
                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Description') }}</label>
-                    <textarea name="description" rows="3"
+                    <textarea name="description" id="category-description" rows="3"
                               class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 focus:ring-blue-500 focus:border-blue-500"
                               placeholder="{{ __('Brief description of this fee type') }}">{{ old('description') }}</textarea>
                 </div>
@@ -34,6 +43,30 @@
                     <a href="/finance/categories" class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition">{{ __('Cancel') }}</a>
                 </div>
             </form>
+
+            <script>
+                const descriptions = {
+                    'Tuition': '{{ __('Course tuition fees') }}',
+                    'Hostel': '{{ __('Accommodation and boarding fees') }}',
+                    'Food': '{{ __('Meal plan and catering fees') }}',
+                    'Registration': '{{ __('Annual registration and administrative fees') }}',
+                    'Library': '{{ __('Library and resource access fees') }}',
+                    'ICT': '{{ __('Information and communication technology fees') }}',
+                    'Sports': '{{ __('Sports and recreation fees') }}',
+                    'Examination': '{{ __('Examination and assessment fees') }}',
+                    'Laboratory': '{{ __('Science lab and practical fees') }}',
+                    'Transport': '{{ __('School transport and bus fees') }}',
+                    'Uniform': '{{ __('Uniform and dress code fees') }}',
+                    'Graduation': '{{ __('Graduation and ceremony fees') }}',
+                };
+
+                function fillPreset(name) {
+                    document.getElementById('category-name').value = name;
+                    if (descriptions[name]) {
+                        document.getElementById('category-description').value = descriptions[name];
+                    }
+                }
+            </script>
         </div>
 
     </div>

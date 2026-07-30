@@ -17,11 +17,13 @@ class Course extends Model
         'description',
     ];
 
-    /**
-     * Students enrolled in this course (linked by course_id).
-     */
     public function students(): HasMany
     {
         return $this->hasMany(Student::class);
+    }
+
+    public function courseFees(): HasMany
+    {
+        return $this->hasMany(CourseFee::class);
     }
 }

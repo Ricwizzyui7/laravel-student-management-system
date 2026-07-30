@@ -82,6 +82,8 @@ class StudentController extends Controller
                 'photo' => $photoPath
             ]);
 
+            FinanceController::assignCourseFeesForStudent($student);
+
             User::notifyAdmins(new \App\Notifications\SystemNotification(
                 __('New student added'),
                 __(':name was enrolled in :course.', ['name' => $student->fullname, 'course' => $course->name]),
@@ -194,6 +196,8 @@ class StudentController extends Controller
             }
 
             $student->update($data);
+
+            FinanceController::assignCourseFeesForStudent($student);
 
             return redirect('/students')->with('success', __('Student record updated successfully.'));
 

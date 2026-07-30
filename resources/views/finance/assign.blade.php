@@ -61,6 +61,7 @@
                             @endforeach
                         </select>
                         @error('course_id') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1.5">{{ __('Fee will be applied to all current and future students in this course.') }}</p>
                     </div>
 
                     <div class="mb-4">
@@ -161,6 +162,37 @@
             </div>
 
         </div>
+
+        @if($courseFees->count() > 0)
+        <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6">
+            <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4">{{ __('Course-Wide Fees') }}</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">{{ __('Fees assigned to a course are automatically applied to all enrolled students.') }}</p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider border-b border-gray-100 dark:border-gray-700">
+                            <th class="py-3 pr-3">{{ __('Course') }}</th>
+                            <th class="py-3 pr-3">{{ __('Category') }}</th>
+                            <th class="py-3 pr-3 text-right">{{ __('Amount') }}</th>
+                            <th class="py-3 pr-3">{{ __('Academic Year') }}</th>
+                            <th class="py-3">{{ __('Term') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50 dark:divide-gray-700/50 text-sm">
+                        @foreach($courseFees as $cf)
+                        <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
+                            <td class="py-3 pr-3 font-medium text-gray-900 dark:text-gray-100">{{ $cf->course?->name }}</td>
+                            <td class="py-3 pr-3 text-gray-600 dark:text-gray-400">{{ $cf->feeCategory?->name }}</td>
+                            <td class="py-3 pr-3 text-right font-semibold text-gray-900 dark:text-gray-100">TSh {{ number_format($cf->amount, 2) }}</td>
+                            <td class="py-3 pr-3 text-gray-500 dark:text-gray-400">{{ $cf->academic_year ?? '—' }}</td>
+                            <td class="py-3 text-gray-500 dark:text-gray-400">{{ $cf->term ?? '—' }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
 
     </div>
 

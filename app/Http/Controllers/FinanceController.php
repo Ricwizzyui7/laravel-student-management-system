@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CourseFee;
 use App\Models\FeeCategory;
 use App\Models\StudentFee;
 use App\Models\Payment;
@@ -95,8 +96,9 @@ class FinanceController extends Controller
         $courses = Course::orderBy('name')->get();
         $categories = FeeCategory::where('is_active', true)->orderBy('name')->get();
         $assignedFees = StudentFee::with(['student', 'course', 'feeCategory'])->latest()->paginate(20);
+        $courseFees = CourseFee::with(['course', 'feeCategory'])->latest()->get();
 
-        return view('finance.assign', compact('students', 'courses', 'categories', 'assignedFees'));
+        return view('finance.assign', compact('students', 'courses', 'categories', 'assignedFees', 'courseFees'));
     }
 
     public function storeAssign(Request $request)
@@ -126,17 +128,34 @@ class FinanceController extends Controller
         if ($request->assignment_type === 'course') {
             $students = Student::where('course_id', $request->course_id)->get();
 
-            if ($students->isEmpty()) {
-                return redirect('/finance/assign')
-                    ->with('error', __('No students found in this course.'));
-            }
+            DB::transaction(function () use ($request, $data, $students) {
+                foreach ($students as $student) {
+                    StudentFee::updateOrCreate(
+                        [
+                            'student_id' => $student->id,
+                            'course_id' => $request->course_id,
+                            'fee_category_id' => $data['fee_category_id'],
+                            'academic_year' => $data['academic_year'],
+                            'term' => $data['term'],
+                        ],
+                        $data + ['student_id' => $student->id, 'course_id' => $request->course_id]
+                    );
+                }
 
-            foreach ($students as $student) {
-                StudentFee::create(array_merge($data, [
-                    'student_id' => $student->id,
-                    'course_id' => $request->course_id,
-                ]));
-            }
+                CourseFee::updateOrCreate(
+                    [
+                        'course_id' => $request->course_id,
+                        'fee_category_id' => $data['fee_category_id'],
+                        'academic_year' => $data['academic_year'],
+                        'term' => $data['term'],
+                    ],
+                    [
+                        'amount' => $data['amount'],
+                        'due_date' => $data['due_date'],
+                        'description' => $data['description'],
+                    ]
+                );
+            });
 
             return redirect('/finance/assign')
                 ->with('success', __('Fee assigned to all students in the course.'));
@@ -240,6 +259,31 @@ class FinanceController extends Controller
         $studentFee->delete();
 
         return redirect('/finance/student/' . $studentId)->with('success', __('Fee record deleted successfully.'));
+    }
+
+    public static function assignCourseFeesForStudent(Student $student): void
+    {
+        if (!$student->course_id) return;
+
+        $courseFees = CourseFee::where('course_id', $student->course_id)->get();
+
+        foreach ($courseFees as $courseFee) {
+            StudentFee::firstOrCreate(
+                [
+                    'student_id' => $student->id,
+                    'course_id' => $student->course_id,
+                    'fee_category_id' => $courseFee->fee_category_id,
+                    'academic_year' => $courseFee->academic_year,
+                    'term' => $courseFee->term,
+                ],
+                [
+                    'amount' => $courseFee->amount,
+                    'due_date' => $courseFee->due_date,
+                    'description' => $courseFee->description,
+                    'status' => 'unpaid',
+                ]
+            );
+        }
     }
 
     public function paymentHistory(StudentFee $studentFee)
