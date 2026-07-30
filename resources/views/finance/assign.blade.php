@@ -189,6 +189,15 @@
                         </tr>
                         @endforeach
                     </tbody>
+                    <tfoot>
+                        <tr class="border-t border-gray-100 dark:border-gray-700">
+                            <td class="py-3 pr-3 font-semibold text-gray-900 dark:text-gray-100">{{ __('Total') }}</td>
+                            <td></td>
+                            <td class="py-3 pr-3 text-right font-bold text-lg text-gray-900 dark:text-gray-100">TSh {{ number_format($courseFees->sum('amount'), 2) }}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
