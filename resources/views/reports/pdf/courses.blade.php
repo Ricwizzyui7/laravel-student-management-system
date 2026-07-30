@@ -25,7 +25,7 @@
                     <td>{{ $i + 1 }}</td>
                     <td><strong>{{ $course->code }}</strong></td>
                     <td>{{ $course->name }}</td>
-                    <td>{{ $course->department ?? '—' }}</td>
+                    <td>{{ $course->department_name ?? '—' }}</td>
                     <td class="muted">{{ $course->duration ?? '—' }}</td>
                     <td class="text-center"><strong>{{ $course->students_count }}</strong></td>
                 </tr>

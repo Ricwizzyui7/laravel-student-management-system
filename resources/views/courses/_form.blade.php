@@ -29,11 +29,15 @@
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
     <div>
-        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1.5">{{ __('Department') }} <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">({{ __('optional') }})</span></label>
-        <input type="text" name="department" value="{{ old('department', $course->department ?? '') }}"
-               class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition"
-               placeholder="{{ __('e.g. Computing & IT') }}">
-        @error('department') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
+        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1.5">{{ __('Department') }}</label>
+        <select name="department_id"
+                class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl px-4 py-2.5 transition">
+            <option value="">{{ __('Select a department...') }}</option>
+            @foreach($departments as $dept)
+                <option value="{{ $dept->id }}" @selected(old('department_id', $course->department_id ?? '') == $dept->id)>{{ $dept->name }}</option>
+            @endforeach
+        </select>
+        @error('department_id') <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p> @enderror
     </div>
     <div>
         <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-1.5">{{ __('Duration') }} <span class="text-gray-400 dark:text-gray-500 font-medium normal-case">({{ __('optional') }})</span></label>

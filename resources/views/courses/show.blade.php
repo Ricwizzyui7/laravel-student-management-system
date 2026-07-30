@@ -22,8 +22,8 @@
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 flex-wrap">
                         <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-100/60 dark:border-blue-800/60 tracking-wider">{{ $course->code }}</span>
-                        @if($course->department)
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400">{{ $course->department }}</span>
+                        @if($course->department_name)
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400">{{ $course->department_name }}</span>
                         @endif
                     </div>
                     <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight mt-2">{{ $course->name }}</h1>
@@ -45,7 +45,7 @@
                 <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">{{ __('Duration') }}</div>
             </div>
             <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm col-span-2 sm:col-span-1">
-                <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 truncate">{{ $course->department ?? '—' }}</div>
+                <div class="text-2xl font-bold text-gray-900 dark:text-gray-100 truncate">{{ $course->department_name ?? '—' }}</div>
                 <div class="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">{{ __('Department') }}</div>
             </div>
         </div>

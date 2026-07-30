@@ -147,7 +147,7 @@ class ReportController extends Controller
     {
         $this->requireAdmin();
 
-        $courses = Course::withCount('students')->orderBy('name')->get();
+        $courses = Course::withCount('students')->with('department')->orderBy('name')->get();
 
         return $this->makePdf('reports.pdf.courses', [
             'title'    => __('Course Report'),
